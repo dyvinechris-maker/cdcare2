@@ -1,0 +1,1832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CDcare</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./script.js">
+
+  <!-- Bootstrap 3 CSS (Glyphicons included) -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <!-- Font Awesome 4.7.0 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    /* === HEADER === */
+    header {
+      font-family: sans-serif;
+      background: #fff;
+      padding: 1px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    
+    }
+    .header-content { display: flex; align-items: center; flex-grow: 1;margin-left: 100px; }
+    .logo-container { display: flex; align-items: center; gap: 12px; margin-left: 100px; }
+    .logo-img { width: 44px; height: 44px; object-fit: cover; border-radius: 50%; }
+    .site-title { font-size: 32px; font-weight: 400; color: #00008b; }
+    nav ul { list-style: none; display: flex; gap: 27px; flex-wrap: wrap; }
+    nav a { text-decoration: none; color: darkblue; font-size: 12px; padding: 8px 0; transition: color 0.3s; }
+    nav a:hover { color: #ffa500; font-weight: 500; }
+    .contact-info { font-size: 10px; color: #555; margin-left: 1000px; margin-top: 0px; }
+    .contact-info a { color: #061754; text-decoration: underline; }
+    .contact-info a:hover { color: #000; }
+
+    /* Dropdown */
+    .more-menu { position: relative; }
+    .more-menu:hover .dropdown { display: block; }
+    .dropdown {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: white; border: 1px solid #eee; border-radius: 4px;
+      min-width: 160px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 100;
+    }
+    .dropdown li { padding: 8px 12px; }
+    .dropdown a { font-size: 14px; }
+
+    /* === HERO === */
+    .cta-button {
+      background-color: #2764ED; color: white; border: none;
+      padding: 15px 137px; font-size: 16px; border-radius: 10px;
+      margin-left: 50px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px;
+    }
+    .cta-button:hover { background-color: orange; }
+    .download-btn {
+      margin-left: 50px; padding: 15px 45px; background: white; color: #000;
+      border: 2px solid #2764ED; border-radius: 5px; font-size: 16px; cursor: pointer;
+      border: double;
+    }
+    .download-btn:hover { color: orange; }
+
+    /* === MARQUEE === */
+    .marquee-container {
+      margin: 60px auto;
+      width: 70%;
+      overflow: hidden;
+      padding: 20px 0;
+      position: relative;
+    }
+    .marquee {
+      display: flex;
+      gap: 50px;
+      will-change: transform;
+    }
+    .marquee img {
+      width: 150px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 4px;
+      transition: transform 0.2s;
+    }
+    .marquee img:hover {
+      transform: scale(1.05);
+    }
+
+    /* === ARROWS (NOW VISIBLE & WORKING) === */
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      background: white;
+      color: whitesmoke;
+      font-size: 50px;
+      line-height: 5px;
+      text-align: center;
+      border-radius: 5%;
+      cursor: pointer;
+      user-select: none;
+      z-index: 20;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .nav-arrow:hover {
+      background: white;
+      transform: translateY(-50%) scale(1.1);
+    }
+    .nav-arrow.left  { left: 1px; }
+    .nav-arrow.right { right: 1px; }
+
+    /* === FEATURES === */
+    .section-title {
+      font-size: 48px; line-height: 1.375; text-align: center;
+      color: #061754; margin: 60px 0 50px; font-weight: 500;
+    }
+    .feature-box { text-align: center; padding: 30px 20px; transition: transform 0.2s; background-color: white;}
+    .feature-box:hover { transform: translateY(-5px); }
+    .feature-icon { width: 96px; height: 96px; object-fit: contain; margin-bottom: 20px; }
+    .feature-title { font-size: 18px; color: #061754; margin-bottom: 12px; font-weight: 500; }
+    .feature-desc { font-size: 14px; color: #061754; line-height: 1.5; margin-bottom: 20px; }
+    .btn-first {
+      background-color: #0000ff; color: white; border: none;
+      padding: 10px 24px; border-radius: 4px; font-size: 14px; font-weight: 300;
+    }
+    .btn-first:hover { background-color: orange;color: #ffffff;}
+
+    @media (max-width: 768px) {
+      .logo-container, .cta-button, .download-btn { margin-left: 0; text-align: center; }
+      .section-title { font-size: 36px; }
+      .marquee-container { width: 90%; }
+      .nav-arrow { width: 40px; height: 40px; line-height: 40px; font-size: 20px; }
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+    }
+
+    /* Main Section */
+    .how-it-works {
+      padding: 60px 0;
+      background: linear-gradient(135deg, #2764ED 0%, #0a2a7a 100%);
+      color: white;
+    }
+
+    .section-heading {
+      font-size: 50px;
+      line-height: 1.25;
+      margin-bottom: 60px;
+      text-align: left;
+    }
+    .section-heading .light {
+      font-weight: 300;
+    }
+
+    .mockup-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      margin: 50px;
+    }
+
+    /* Step Item */
+    .step-item {
+      position: relative;
+      padding-left: 50px;
+      margin-bottom: 40px;
+    }
+    .step-item::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 40px;
+      bottom: -40px;
+      width: 2px;
+      background: orange;
+    }
+    .step-item:last-child::before {
+      display: none;
+    }
+
+    .step-title {
+      font-size: 28px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      color: #ffffff;
+    }
+
+    .step-desc {
+      font-size: 12px;
+      line-height: 1.6;
+      color: #e0e0e0;
+      margin-bottom: 0;
+    }
+
+    /* Button */
+    .btn-start {
+      background-color: white;
+      border: 2px #ffffff;
+      color: #2764ED;
+      padding: 12px 50px;
+      font-size: 20px;
+      font-weight: 300;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      transition: all 0.3s ease;
+      margin-top: 30px;
+      margin-left: 30px;
+    }
+    .btn-start:hover {
+      background-color: #ffa500;
+      color: #ffffff;
+    }
+    .btn-start .glyphicon {
+      font-size: 18px;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .section-heading {
+        font-size: 38px;
+        text-align: center;
+      }
+      .mockup-img {
+        margin: 40px 0;
+      }
+      .step-item {
+        padding-left: 0;
+        text-align: center;
+      }
+      .step-item::before {
+        display: none;
+      }
+      .btn-start {
+        display: block;
+        width: fit-content;
+        margin: 40px auto 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .how-it-works {
+        padding: 60px 0;
+      }
+      .section-heading {
+        font-size: 32px;
+      }
+      .step-title {
+        font-size: 24px;
+      }
+    }
+/* Custom Styles */
+    .section-stories {
+      padding: 80px 0;
+      background-color: white;
+    }
+
+    .section-title {
+      font-size: 50px;
+      font-family: 'Cinzel', serif;
+      color: #131c2c;
+      margin-bottom: 40px;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    /* Logo Grid: 2 per row */
+    .logo-item {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo-item img {
+      max-height: 70px;
+      width: auto;
+      transition: transform 0.3s ease;
+    }
+
+    /* Square Testimonial Box */
+    .testimonial-box {
+      margin-top: 50px;
+      background-color: whitesmoke;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      overflow: hidden;
+      position: relative;
+      height: 0;
+      padding-bottom: 80%; /* Makes it square */
+    }
+
+    .testimonial-content {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .testimonial-text {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #131c2c;
+      font-style: italic;
+      margin-bottom: 20px;
+      font-family: 'Georgia', serif;
+      letter-spacing: 0.05em;
+    }
+
+    .testimonial-author {
+      font-size: 18px;
+      font-weight: bold;
+      color: #131c2c;
+      margin-bottom: 5px;
+    }
+
+    .testimonial-handle {
+      font-size: 15px;
+      color: #131c2c;
+      font-family: 'Raleway', sans-serif;
+      margin-bottom: 20px;
+    }
+
+    .read-more-link {
+      color: #FA7A18;
+      font-style: italic;
+      text-decoration: none;
+      font-size: 16px;
+      display: inline-flex;
+      align-items: center;
+      margin-left: 50%;
+    }
+
+    .read-more-link:hover {
+      text-decoration: underline;
+      color: #e06a00;
+    }
+
+    .arrow-icon {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 181 59" fill="%23FA7A18"><path d="M159 0l-2.2 2.4L183.6 29H9v3h174.6l-26.2 25.3 2.1 2.6 30.5-29.3-31-29.7z"/></svg>') no-repeat center;
+      background-size: contain;
+      margin-left: 8px;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .section-title {
+        font-size: 28px;
+      }
+      .logo-item img {
+        max-height: 40px;
+      }
+      .testimonial-content {
+        padding: 20px;
+      }
+    }
+    .app-badges {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .app-badges img {
+      height: 40px;
+      width: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .app-badges img:hover {
+      transform: translateY(-3px);
+    }
+
+     .faq-accordion {
+      max-width: 1000px;
+      margin: 40px auto;  
+      border-radius: 8px;
+      overflow: hidden;
+     
+    }
+
+    .panel-heading {
+      background-color: #fff;
+      border: none;
+      padding: 0;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 18px;
+      padding: 10px;
+      background-color: white;
+    }
+
+    .panel-title a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 20px;
+      color: #333;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+   
+
+    .panel-title a .chevron {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.panel-title a .chevron svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: #666;
+  transition: transform 0.3s ease;
+}
+
+.panel-title a .chevron.rotated svg {
+  transform: rotate(180deg);
+}
+
+    .panel-body {
+      padding: 20px;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #444;
+    }
+
+    .panel-body p {
+      margin-bottom: 12px;
+    }
+
+    .social-share {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #f5f5f5;
+      border: none;
+      color: #666;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .social-btn:hover {
+     
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .copy-feedback {
+      font-size: 14px;
+      color: #28a745;
+      margin-left: 8px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .copy-feedback.show {
+      opacity: 1;
+    }
+
+    /* Chevron SVG */
+    .chevron-svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .btn-faq {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+     margin-bottom: 50px;
+      padding: 0.75rem 3.10rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      background-color: #007bff;
+      color: white !important;
+      border-color: #007bff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-left: 1060px;
+    }
+
+    .btn-faq:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .btn-faq:focus-visible {
+      outline: 3px solid #4dabf7;
+      outline-offset: 2px;
+    }
+
+    .btn-faq .icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-faq:hover .icon {
+      transform: translateX(4px);
+    }
+
+    /* Optional: Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      .btn-faq {
+        background-color: #0d6efd;
+      }
+      .btn-faq:hover {
+        background-color: #0b5ed7;
+      }
+    }
+
+    footer {
+      background:#072354;
+      color:#fff;
+      padding:30px 0 20px;
+      font-family:'Inter',Helvetica,Arial,sans-serif;
+      font-size:12px;
+      line-height:2.67;
+      display: flex;
+      flex-direction: center;
+      align-items: center;
+    }
+    .footer-logo img{height:83px;width:auto;object-fit:contain}
+    .footer-tagline,.footer-address{color:#fff;margin:10px 0}
+    .footer-links h5{color:#93999f;font-size:12px;margin-bottom:15px;}
+    .footer-links ul{list-style:none;padding:0;margin:0;line-height: 5.17;}
+    .footer-links ul li{margin-bottom:8px}
+    .footer-links ul li a{color:#fff;text-decoration:underline}
+    .social-icons{display:flex;gap:12px;margin:20px 0}
+    .social-icons img{width:39px;height:39px;object-fit:contain;transition:transform .2s}
+    .social-icons img:hover{transform:scale(1.1)}
+    .chat-bubble img{width:38px;height:38px}
+    .app-badges img{height:35px;margin-right:8px}
+    .divider{border-top:1px solid #ffffff;margin:25px 0}
+    .copyright{color:#93999f;font-size:12px;font-style:italic;text-align:left}
+    @media (max-width:768px){
+      .footer-col{margin-bottom:30px}
+      .social-icons{justify-content:center}
+      .app-badges{text-align:center}
+    }
+    /* Chat Button */
+    .chat-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #fa7a18; /* Orange */
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Avenir', 'Helvetica Neue', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      box-shadow: 0 4px 12px rgba(250, 122, 24, 0.4);
+      transition: all 0.3s ease;
+      z-index: 9999;
+      cursor: pointer;
+    }
+
+    .chat-btn:hover {
+      background-color: #e66a0d;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(250, 122, 24, 0.5);
+    }
+
+    .chat-btn:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(250, 122, 24, 0.3);
+    }
+
+    .chat-btn svg {
+      width: 26px;
+      height: 26px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* Optional: Chat Widget (hidden by default) */
+    .chat-widget {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 320px;
+      height: 480px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 9998;
+      overflow: hidden;
+    }
+
+    .chat-widget iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-content">
+    <div class="logo-container">
+      <a href="https://www.cdcare.ng">
+        <img src="https://static.wixstatic.com/media/a499f3_ae963ed81cf24fd3815ded55ea00bd1b~mv2.png/v1/fill/w_44,h_44,al_c,q_85,enc_avif/Untitled%20(100%20%C3%97%20100%20px)%20(80%20%C3%97%2080%20px)%20(1).png" 
+             alt="CDcare Logo" class="logo-img">
+      </a>
+      <h1 class="site-title">CDcare</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="#">About us</a></li>
+        <li><a href="#">CDcare Promo</a></li>
+        <li><a href="contactUs.html">Contact Us</a></li>
+        <li><a href="#">Shipping & Delivery</a></li>
+        <li><a href="#">Return & Refund</a></li>
+        <li><a href="#">Enquiry/Pick Up</a></li>
+        <li class="more-menu">
+          <a href="#">More...</a>
+          <ul class="dropdown">
+            <li><a href="#">Cars</a></li>
+            <li><a href="#">Sign Up</a></li>
+            <li><a href="#">Testimonials</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="contact-info">
+    <section>
+      Feel free to call us <i class="fa fa-phone"></i> 
+      <a href="tel:">Toll free call</a> <i class="fa fa-envelope"></i>
+      <a href="mailto:hello@cdcare.ng">hello@cdcare.ng</a>
+    </section>
+  </div>
+</header>
+
+<!-- HERO SECTION -->
+<section class="container" style="padding-top: 0px;">
+  <div class="row">
+    <div class="col-sm-6">
+      <h1 style="margin-left:50px; font-size:80px; color:blue;">
+        <span>Own</span><br><span>Everything</span><br><span>Easily.</span>
+      </h1>
+      <br>
+      <br>
+      <p style="margin-left:50px; font-size:30px;">
+        <span style="color:#0000ff;">Pay small small</span> at the<br>normal market price.<br>0% Interest.
+      </p>
+      <br>
+      <button class="cta-button">Start now <i class="fa fa-shopping-cart"></i></button><br><br>
+      <button class="download-btn"><i class="fa fa-mobile"></i> Download CDcare on Android & iOS</button>
+    </div>
+    <div class="col-sm-6" style="padding-top: 40px;">
+      <div id="mycarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#mycarousel" data-slide-to="1"></li>
+          <li data-target="#mycarousel" data-slide-to="2"></li>
+          <li data-target="#mycarousel" data-slide-to="3"></li>
+          <li data-target="#mycarousel" data-slide-to="4"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="item active"><img src="./Assets/blue.jpg" class="img-responsive" style="width:800px;height:500px;"></div>
+          <div class="item"><img src="./Assets/dice.jpg" class="img-responsive" style="width:800px;height:500px;"></div>
+          <div class="item"><img src="./Assets/locker.jpg" class="img-responsive" style="width:800px;height:500px;"></div>
+          <div class="item"><img src="./Assets/stone.jpg" class="img-responsive" style="width:800px;height:500px;"></div>
+          <div class="item"><img src="./Assets/umbrella.jpg" class="img-responsive" style="width:800px;height:500px;"></div>
+        </div>
+        <a class="left carousel-control" href="#mycarousel" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right carousel-control" href="#mycarousel" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE WITH WORKING GLYPHICONS -->
+<div class="marquee-container" role="region" aria-label="Brand Gallery">
+  <!-- Left Arrow -->
+  <div class="nav-arrow left" aria-label="Scroll left">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </div>
+  <!-- Right Arrow -->
+  <div class="nav-arrow right" aria-label="Scroll right">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </div>
+
+  <!-- Track -->
+  <div class="marquee" id="marqueeTrack">
+    <!-- First Set -->
+    <img src="./Assets/apple.jpg" alt="Apple">
+    <img src="./Assets/Lg logo.jpg" alt="LG">
+    <img src="./Assets/lontor.jpg" alt="Lontor">
+    <img src="./Assets/Panasonic.jpg" alt="Panasonic">
+    <img src="./Assets/maxi.jpg" alt="Maxi">
+    <img src="./Assets/Mercedes-Benz.jpg" alt="Mercedes-Benz">
+    <img src="./Assets/oraimo.jpg" alt="Oraimo">
+    <img src="./Assets/Panasonic.jpg" alt="Panasonic">
+    <img src="./Assets/toyota.jpg" alt="Toyota">
+    <img src="./Assets/hisense.jpg" alt="Hisense">
+    <img src="./Assets/samsung.jpg" alt="Samsung">
+
+    <!-- Duplicate Set -->
+    <img src="./Assets/apple.jpg" alt="Apple">
+    <img src="./Assets/Lg logo.jpg" alt="LG">
+    <img src="./Assets/lontor.jpg" alt="Lontor">
+    <img src="./Assets/Panasonic.jpg" alt="Panasonic">
+    <img src="./Assets/maxi.jpg" alt="Maxi">
+    <img src="./Assets/Mercedes-Benz.jpg" alt="Mercedes-Benz">
+    <img src="./Assets/oraimo.jpg" alt="Oraimo">
+    <img src="./Assets/Panasonic.jpg" alt="Panasonic">
+    <img src="./Assets/toyota.jpg" alt="Toyota">
+    <img src="./Assets/hisense.jpg" alt="Hisense">
+    <img src="./Assets/samsung.jpg" alt="Samsung">
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="container">
+  <h2 class="section-title">CDcare is Faster, Easier, Less Evasive<br>and Risk-Free</h2>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="feature-box" style="border-radius: 30px;border: double;padding: 70px">
+        <img src="https://static.wixstatic.com/media/a499f3_b80d9c25749d4cf5aa5f0879a45e0a00~mv2.png/v1/fill/w_96,h_96,al_c,q_85,enc_avif/a499f3_b80d9c25749d4cf5aa5f0879a45e0a00~mv2.png" alt="No BVN" class="feature-icon">
+        <h3 class="feature-title">No BVN<br>No Bank Login</h3>
+        <p class="feature-desc">Your BVN is not required & you don't have to input your bank login.</p>
+        <a href="http://www.cdcare.app" target="_blank" class="btn btn-first" >
+          Start now <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="feature-box"style="border-radius: 30px;border: double;padding: 80px">
+        <img src="https://static.wixstatic.com/media/a499f3_7977eb8f74184c338107a78d7b4381fd~mv2.png/v1/fill/w_96,h_96,al_c,q_85,enc_avif/interest.png" alt="Zero Interest" class="feature-icon">
+        <h3 class="feature-title">Zero Interest<br>No kobo added</h3>
+        <p class="feature-desc">We sell at the normal market price and charge no interest.</p>
+        <a href="http://www.cdcare.app" target="_blank" class="btn btn-first">
+          Start now <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="feature-box"style="border-radius: 30px;border: double; padding: 80px">
+        <img src="https://static.wixstatic.com/media/a499f3_70fc8439f59d4d8da681a3b9fd00fc5c~mv2.png/v1/fill/w_96,h_96,al_c,q_85,enc_avif/Delivery.png" alt="Fast Delivery" class="feature-icon">
+        <h3 class="feature-title">We deliver faster<br>We deliver Original</h3>
+        <p class="feature-desc">We ship only original items fast to you before full payment.</p>
+        <a href="http://www.cdcare.app" target="_blank" class="btn btn-first">
+          Start now <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const track = document.getElementById('marqueeTrack');
+  const left = document.querySelector('.nav-arrow.left');
+  const right = document.querySelector('.nav-arrow.right');
+
+  let rafId = null;
+  let currentX = 0;
+  const setSize = track.scrollWidth / 2;
+  const STEP = 6;
+
+  function loopScroll(dir) {
+    if (rafId) return;
+
+    function frame() {
+      currentX += dir * STEP;
+      if (dir < 0 && currentX <= -setSize) currentX += setSize;
+      if (dir > 0 && currentX >= 0) currentX -= setSize;
+
+      track.style.transform = `translateX(${currentX}px)`;
+      rafId = requestAnimationFrame(frame);
+    }
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function stop() {
+    cancelAnimationFrame(rafId);
+    rafId = null;
+  }
+
+  left.addEventListener('mouseenter', () => loopScroll(-1));
+  right.addEventListener('mouseenter', () => loopScroll(1));
+  left.addEventListener('mouseleave', stop);
+  right.addEventListener('mouseleave', stop);
+  document.querySelector('.marquee-container').addEventListener('mouseleave', stop);
+</script>
+ <br>
+ <br>
+ <br>
+ <br>
+<!-- How It Works Section -->
+<section class="how-it-works">
+  <div class="container">
+    <div class="row">
+
+      <!-- LEFT: Content (Heading + Steps + Button) -->
+      <div class="col-sm-6">
+        <h2 class="section-heading">
+          Take control of your finances,&nbsp;<span class="light">you can<br>start immediately.</span>
+        </h2>
+
+        <!-- Step 1 -->
+        <div class="step-item">
+          <h3 class="step-title">Search & Find</h3>
+          <p class="step-desc">
+            Visit the CDcare app (web or mobile) to find your desired item from our wide range of product offerings, select it and check the properties.
+          </p>
+        </div>
+<br>
+        <!-- Step 2 -->
+        <div class="step-item">
+          <h3 class="step-title">Plan & start your installment</h3>
+          <p class="step-desc">
+            Choose your desired installment. You can choose between 4 - 40 weeks or 2 - 12 months. For cars, we allow up to 106 weeks or 36 months. Then proceed to pay your first payment.
+          </p>
+        </div>
+<br>
+        <!-- Step 3 -->
+        <div class="step-item">
+          <h3 class="step-title">We will deliver at 50%</h3>
+          <p class="step-desc">
+            Your desired item will be shipped to you before full payment at the mid-point of your installment. On a 2 months plan, the delivery process starts immediately, while on a six months plan, the delivery process starts on the 3rd month.
+          </p>
+        </div>
+
+        <!-- Start Now Button -->
+        <a href="./sign-up.html" target="_blank" class="btn btn-start">
+          Start now <span class="glyphicon glyphicon-shopping-cart"></span>
+        </a>
+      </div>
+<br><br><br><br><br><br><br><br>
+      <!-- RIGHT: Image -->
+      <div class="col-sm-6">
+        <img src="https://static.wixstatic.com/media/a499f3_fc9f6d83ca924a89b7c294202ff66353~mv2.png/v1/fill/w_642,h_753,al_c,q_90,enc_avif/CD%20Care%20iPhone%20in%20Hand%20Mockup_edited_edi.png"
+             alt="CDcare App on iPhone"
+             class="img-responsive mockup-img">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section-stories">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <h2 class="section-title">Read our stories</h2>
+
+          <!-- Logos: 2 per row -->
+          <div class="row">
+            <div class="col-sm-6 logo-item">
+              <a href="https://finance.yahoo.com/news/nigeria-buy-now-pay-later-121100062.html?guccounter=1" target="_blank">
+                <img src="https://static.wixstatic.com/media/a499f3_0bceb04fc07644f1a28a707877901b2a~mv2.png/v1/fill/w_182,h_26,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/yahoo1.png" alt="Yahoo Finance" class="img-responsive center-block">
+              </a>
+            </div>
+            <div class="col-sm-6 logo-item">
+              <a href="https://techpoint.africa/2022/03/02/cdcare-pay-small-small" target="_blank">
+                <img src="https://static.wixstatic.com/media/a499f3_bc60b0f64af04e2db2d5d56615db9149~mv2.png/v1/fill/w_171,h_41,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/techpoint1.png" alt="Techpoint" class="img-responsive center-block">
+              </a>
+            </div>
+            <div class="col-sm-6 logo-item">
+              <a href="https://flutterwave.com/gb/blog/how-cdcare-is-helping-nigerians-buy-their-favourite-gadgets-while-paying-instalmentally" target="_blank">
+                <img src="https://static.wixstatic.com/media/a499f3_7d39b20f2f204b77a2ef5124111a8705~mv2.png/v1/fill/w_175,h_33,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Flutterwave_Logo%20(1).png" alt="Flutterwave" class="img-responsive center-block">
+              </a>
+            </div>
+            <div class="col-sm-6 logo-item">
+              <a href="https://technext.ng/2021/02/10/app-review-cd-care-offers-instalmental-payment-and-zero-interest-for-gadgets-and-home-essentials/" target="_blank">
+                <img src="https://static.wixstatic.com/media/a499f3_7ae02dfcfcd645029f5c0e825838c401~mv2.png/v1/fill/w_177,h_28,al_c,q_85,enc_avif,quality_auto/%20technet1.png" alt="Technext" class="img-responsive center-block">
+              </a>
+            </div>
+             <div class="col-sm-6 logo-item">
+              <a href="https://disrupt-africa.com/2021/05/14/nigerias-cdcare-lets-you-buy-appliances-and-pay-over-time-with-zero-interest/" target="_blank">
+                <img src="https://static.wixstatic.com/media/a499f3_79dc96c41e5d4379a5d6ff9c5477e314~mv2.png/v1/fill/w_130,h_68,al_c,q_85,enc_avif,quality_auto/disrupt1.png" alt="Disrupt Africa" class="img-responsive center-block">
+              </a>
+            </div>
+            <div class="col-sm-6 logo-item">
+              <a href="https://koboline.com.ng/cdcare-review-nigeria/" target="_blank">
+                <img src="https://static.wixstatic.com/media/a499f3_b2fce2bb1ca14c5c9cac89b3fbaf572f~mv2.png/v1/fill/w_127,h_42,al_c,q_85,enc_avif,quality_auto/koboline1.png" alt="Koboline" class="img-responsive center-block">
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Square Testimonial Box -->
+        <div class="col-sm-6">
+          <div class="testimonial-box">
+            <div class="testimonial-content">
+              <p class="testimonial-text">
+                “I have always wanted to buy some cool <br> gadgets and CDcare made owning <br>these things very easy for me.I have bought four items already from CDcare. I like the fact that CDcare doesn't require much from me as a user.”
+              </p>
+              <h4 class="testimonial-author">Tosin Amuda</h4>
+              <p class="testimonial-handle">@tosinamuda</p>
+
+              <a href="https://www.cdcare.ng/testimonial" target="_blank" class="read-more-link">
+                Read more testimonials <span class="arrow-icon"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+<!-- Delivery Section -->
+  <section class="delivery-section" style="background-color: whitesmoke; padding: 50px 50px 50px 50px;">
+    <div class="container jumbotron" style="background-color: #1267f8; /* Dark background */ color: #ffffff; padding: 80px 0;text-align: center;border-radius: 50px;">
+      <div class="row">
+        <div class="col-md-12">
+          <h2 class="delivery-title" style="font-size: 36px;
+      font-weight: 500;
+      line-height: 1.25;
+      margin-bottom: 20px">We can't wait to deliver to you too soon.</h2>
+          
+          <p class="delivery-text" style="font-size: 16px;
+      line-height: 1.75;
+      font-family: 'Georgia', serif;
+      max-width: 700px;
+      margin: 0 auto 30px">
+            35,000+ items have been shipped to 17,000+ Nigerians across 36 states. We cannot wait to ship yours too.
+          </p>
+
+          <div class="app-badges">
+            <!-- Google Play Badge -->
+            <a href="https://play.google.com/store/apps/details?id=com.nipek.cdcare&hl=en" target="_blank">
+              <img src="https://static.wixstatic.com/media/a499f3_243b8e5b356a4c95827be5ee00233f97~mv2.png/v1/fill/w_118,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a499f3_243b8e5b356a4c95827be5ee00233f97~mv2.png" 
+                   alt="Get it on Google Play" 
+                   class="img-responsive">
+            </a>
+
+            <!-- App Store Badge (non-clickable in original, kept as image) -->
+            <img src="https://static.wixstatic.com/media/a499f3_da3b381bbd4946fba2505ff838809d2d~mv2.png/v1/fill/w_113,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a499f3_da3b381bbd4946fba2505ff838809d2d~mv2.png" 
+                 alt="Download on the App Store" 
+                 class="img-responsive">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <h1 style="color: #0000ff; margin-left: 70px; font-size: 50px; margin-top: 50px;">Frequently asked questions</h1>
+  <div class="faq-accordion">
+    <div class="panel panel-default">
+      <!-- Accordion Header -->
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a 
+            class="collapsed" 
+            data-toggle="collapse" 
+            data-parent=".faq-accordion" 
+            href="#faqCollapse1"
+            aria-expanded="false"
+             style="background-color: #ffffff;"
+          >
+            When will I collect the item that I am paying for?
+            <span class="chevron">
+              <svg class="chevron-svg" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M18.2546728,8.18171329 L18.9617796,8.88882007 L12.5952867,15.2537133 L12.5978964,15.2558012 L11.8907896,15.962908 L11.8882867,15.9607133 L11.8874628,15.9617796 L11.180356,15.2546728 L11.1812867,15.2527133 L4.81828671,8.88882007 L5.52539349,8.18171329 L11.8882867,14.5457133 L18.2546728,8.18171329 Z"></path>
+              </svg>
+            </span>
+          </a>
+        </h4>
+      </div>
+
+      <!-- Accordion Body -->
+      <div id="faqCollapse1" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Your item will be shipped when you reach the middle of your instalment period and meet all our delivery conditions, and at that time you must have paid half of the cost of the item in equal instalments.</p>
+
+          <p>For example:</p>
+          <p>• On a 2 months plan, the delivery is processed immediately,</p>
+          <p>• on a 6 months plan, the delivery is processed on the 3rd month,</p>
+          <p>• on a 12 months plan, the delivery is processed on the 6th month.</p>
+
+          <!-- Social Share Bar -->
+          <div class="social-share">
+            <button class="social-btn" title="Share on Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20,12 C20,7.58171875 16.4182812,4 12,4 C7.58171875,4 4,7.58171875 4,12 C4,15.9930312 6.92548437,19.3026562 10.75,19.9028125 L10.75,14.3125 L8.71875,14.3125 L8.71875,12 L10.75,12 L10.75,10.2375 C10.75,8.2325 11.9443437,7.125 13.7717187,7.125 C14.6469844,7.125 15.5625,7.28125 15.5625,7.28125 L15.5625,9.25 L14.5537187,9.25 C13.5599219,9.25 13.25,9.86667187 13.25,10.4993281 L13.25,12 L15.46875,12 L15.1140625,14.3125 L13.25,14.3125 L13.25,19.9028125 C17.0745156,19.3026562 20,15.9930312 20,12"></path>
+              </svg>
+            </button>
+
+            <button class="social-btn" title="Share on Twitter">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M13.303 10.771 19.123 4h-1.38L12.69 9.88 8.655 4H4l6.103 8.89L4 19.993h1.38l5.335-6.21 4.262 6.21h4.655l-6.33-9.22h.001Zm-1.889 2.198-.618-.885-4.92-7.045h2.118l3.97 5.686.619.885 5.16 7.39h-2.117l-4.212-6.03Z"></path>
+              </svg>
+            </button>
+
+            <button class="social-btn" title="Share on LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.6348754,17.6337778 L15.2626394,17.6337778 L15.2626394,13.9202963 C15.2626394,13.0346667 15.2469351,11.8957037 14.0294085,11.8957037 C12.7943998,11.8957037 12.6059484,12.861037 12.6059484,13.8568889 L12.6059484,17.6337778 L10.2337124,17.6337778 L10.2337124,9.99822222 L12.5099448,9.99822222 L12.5099448,11.0423704 L12.5425386,11.0423704 C12.8592911,10.4417778 13.633542,9.80888889 14.7879551,9.80888889 C17.1913034,9.80888889 17.6348754,11.3899259 17.6348754,13.4459259 L17.6348754,17.6337778 Z M7.55835401,8.95496296 C6.79773325,8.95496296 6.18289566,8.33837037 6.18289566,7.57925926 C6.18289566,6.81925926 6.79773325,6.20266667 7.55835401,6.20266667 C8.31690063,6.20266667 8.93351606,6.81925926 8.93351606,7.57925926 C8.93351606,8.33837037 8.31690063,8.95496296 7.55835401,8.95496296 Z M6.37134709,17.6337778 L8.74536094,17.6337778 L8.74536094,9.99822222 L6.37134709,9.99822222 L6.37134709,17.6337778 Z M18.8165488,4 L5.18078447,4 C4.52950109,4 4,4.51674074 4,5.15377778 L4,18.8456296 C4,19.4826667 4.52950109,20 5.18078447,20 L18.8165488,20 C19.4693137,20 20,19.4826667 20,18.8456296 L20,5.15377778 C20,4.51674074 19.4693137,4 18.8165488,4 L18.8165488,4 Z"></path>
+              </svg>
+            </button>
+
+            <button class="social-btn" id="copyLinkBtn" title="Copy Link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" d="M7.7859,10.3591 C9.3999,8.7461 12.0259,8.7461 13.6399,10.3591 L13.6399,10.3591 L14.0689,10.7891 L13.3619,11.4961 L12.9329,11.0661 C11.7089,9.8451 9.7179,9.8431 8.4929,11.0661 L8.4929,11.0661 L5.9199,13.6411 C5.3269,14.2331 4.9999,15.0211 4.9999,15.8601 C4.9999,16.6991 5.3269,17.4871 5.9199,18.0801 C7.1059,19.2661 9.1729,19.2661 10.3599,18.0801 L10.3599,18.0801 L11.9429,16.4981 L12.6499,17.2051 L11.0669,18.7871 C10.2849,19.5691 9.2459,20.0001 8.1399,20.0001 C7.0339,20.0001 5.9939,19.5691 5.2129,18.7871 C4.4309,18.0061 3.9999,16.9661 3.9999,15.8601 C3.9999,14.7551 4.4309,13.7151 5.2129,12.9341 L5.2129,12.9341 Z M15.8606,3.9999 C16.9666,3.9999 18.0056,4.4309 18.7876,5.2129 C19.5696,5.9939 19.9996,7.0339 19.9996,8.1399 C19.9996,9.2449 19.5696,10.2849 18.7876,11.0669 L18.7876,11.0669 L16.2136,13.6409 C15.4066,14.4469 14.3466,14.8509 13.2866,14.8509 C12.2266,14.8509 11.1666,14.4469 10.3596,13.6409 L10.3596,13.6409 L9.9306,13.2109 L10.6376,12.5039 L11.0666,12.9339 C12.2926,14.1569 14.2836,14.1579 15.5066,12.9339 L15.5066,12.9339 L18.0806,10.3589 C18.6736,9.7669 18.9996,8.9789 18.9996,8.1399 C18.9996,7.3009 18.6736,6.5129 18.0806,5.9199 C16.8936,4.7339 14.8266,4.7339 13.6406,5.9199 L13.6406,5.9199 L12.0576,7.5019 L11.3506,6.7949 L12.9336,5.2129 C13.7146,4.4309 14.7546,3.9999 15.8606,3.9999 Z"></path>
+              </svg>
+            </button>
+            <span class="copy-feedback" id="copyFeedback">Copied!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+  <!-- Accordion Header -->
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <a 
+        class="collapsed" 
+        data-toggle="collapse" 
+        data-parent=".faq-accordion" 
+        href="#faqCollapse2"
+        aria-expanded="false"
+        style="background-color: #ffffff;"
+      >
+        What are the requirements?
+        <span class="chevron">
+              <svg class="chevron-svg" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M18.2546728,8.18171329 L18.9617796,8.88882007 L12.5952867,15.2537133 L12.5978964,15.2558012 L11.8907896,15.962908 L11.8882867,15.9607133 L11.8874628,15.9617796 L11.180356,15.2546728 L11.1812867,15.2527133 L4.81828671,8.88882007 L5.52539349,8.18171329 L11.8882867,14.5457133 L18.2546728,8.18171329 Z"></path>
+              </svg>
+            </span>
+      </a>
+    </h4>
+  </div>
+
+  <!-- Accordion Body -->
+  <div id="faqCollapse2" class="panel-collapse collapse">
+    <div class="panel-body">
+      <p>To use CDcare, you need:</p>
+      <ul>
+        <li>A valid phone number and email address</li>
+        <li>Be 18 years or older</li>
+        <li>Have a source of income</li>
+        <li>No BVN or bank login required</li>
+      </ul>
+      <p>That's it — no paperwork, no credit checks!</p>
+
+      <!-- Optional: Reuse Social Share Bar -->
+      <div class="social-share">
+        <button class="social-btn" title="Share on Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20,12 C20,7.58171875 16.4182812,4 12,4 C7.58171875,4 4,7.58171875 4,12 C4,15.9930312 6.92548437,19.3026562 10.75,19.9028125 L10.75,14.3125 L8.71875,14.3125 L8.71875,12 L10.75,12 L10.75,10.2375 C10.75,8.2325 11.9443437,7.125 13.7717187,7.125 C14.6469844,7.125 15.5625,7.28125 15.5625,7.28125 L15.5625,9.25 L14.5537187,9.25 C13.5599219,9.25 13.25,9.86667187 13.25,10.4993281 L13.25,12 L15.46875,12 L15.1140625,14.3125 L13.25,14.3125 L13.25,19.9028125 C17.0745156,19.3026562 20,15.9930312 20,12"></path>
+          </svg>
+        </button>
+        <button class="social-btn" title="Share on Twitter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13.303 10.771 19.123 4h-1.38L12.69 9.88 8.655 4H4l6.103 8.89L4 19.993h1.38l5.335-6.21 4.262 6.21h4.655l-6.33-9.22h.001Zm-1.889 2.198-.618-.885-4.92-7.045h2.118l3.97 5.686.619.885 5.16 7.39h-2.117l-4.212-6.03Z"></path>
+          </svg>
+        </button>
+        <button class="social-btn" title="Share on LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.6348754,17.6337778 L15.2626394,17.6337778 L15.2626394,13.9202963 C15.2626394,13.0346667 15.2469351,11.8957037 14.0294085,11.8957037 C12.7943998,11.8957037 12.6059484,12.861037 12.6059484,13.8568889 L12.6059484,17.6337778 L10.2337124,17.6337778 L10.2337124,9.99822222 L12.5099448,9.99822222 L12.5099448,11.0423704 L12.5425386,11.0423704 C12.8592911,10.4417778 13.633542,9.80888889 14.7879551,9.80888889 C17.1913034,9.80888889 17.6348754,11.3899259 17.6348754,13.4459259 L17.6348754,17.6337778 Z M7.55835401,8.95496296 C6.79773325,8.95496296 6.18289566,8.33837037 6.18289566,7.57925926 C6.18289566,6.81925926 6.79773325,6.20266667 7.55835401,6.20266667 C8.31690063,6.20266667 8.93351606,6.81925926 8.93351606,7.57925926 C8.93351606,8.33837037 8.31690063,8.95496296 7.55835401,8.95496296 Z M6.37134709,17.6337778 L8.74536094,17.6337778 L8.74536094,9.99822222 L6.37134709,9.99822222 L6.37134709,17.6337778 Z M18.8165488,4 L5.18078447,4 C4.52950109,4 4,4.51674074 4,5.15377778 L4,18.8456296 C4,19.4826667 4.52950109,20 5.18078447,20 L18.8165488,20 C19.4693137,20 20,19.4826667 20,18.8456296 L20,5.15377778 C20,4.51674074 19.4693137,4 18.8165488,4 L18.8165488,4 Z"></path>
+          </svg>
+        </button>
+        <button class="social-btn" id="copyLinkBtn2" title="Copy Link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" d="M7.7859,10.3591 C9.3999,8.7461 12.0259,8.7461 13.6399,10.3591 L13.6399,10.3591 L14.0689,10.7891 L13.3619,11.4961 L12.9329,11.0661 C11.7089,9.8451 9.7179,9.8431 8.4929,11.0661 L8.4929,11.0661 L5.9199,13.6411 C5.3269,14.2331 4.9999,15.0211 4.9999,15.8601 C4.9999,16.6991 5.3269,17.4871 5.9199,18.0801 C7.1059,19.2661 9.1729,19.2661 10.3599,18.0801 L10.3599,18.0801 L11.9429,16.4981 L12.6499,17.2051 L11.0669,18.7871 C10.2849,19.5691 9.2459,20.0001 8.1399,20.0001 C7.0339,20.0001 5.9939,19.5691 5.2129,18.7871 C4.4309,18.0061 3.9999,16.9661 3.9999,15.8601 C3.9999,14.7551 4.4309,13.7151 5.2129,12.9341 L5.2129,12.9341 Z M15.8606,3.9999 C16.9666,3.9999 18.0056,4.4309 18.7876,5.2129 C19.5696,5.9939 19.9996,7.0339 19.9996,8.1399 C19.9996,9.2449 19.5696,10.2849 18.7876,11.0669 L18.7876,11.0669 L16.2136,13.6409 C15.4066,14.4469 14.3466,14.8509 13.2866,14.8509 C12.2266,14.8509 11.1666,14.4469 10.3596,13.6409 L10.3596,13.6409 L9.9306,13.2109 L10.6376,12.5039 L11.0666,12.9339 C12.2926,14.1569 14.2836,14.1579 15.5066,12.9339 L15.5066,12.9339 L18.0806,10.3589 C18.6736,9.7669 18.9996,8.9789 18.9996,8.1399 C18.9996,7.3009 18.6736,6.5129 18.0806,5.9199 C16.8936,4.7339 14.8266,4.7339 13.6406,5.9199 L13.6406,5.9199 L12.0576,7.5019 L11.3506,6.7949 L12.9336,5.2129 C13.7146,4.4309 14.7546,3.9999 15.8606,3.9999 Z"></path>
+          </svg>
+        </button>
+        <span class="copy-feedback" id="copyFeedback2">Copied!</span>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="panel panel-default">
+  <!-- Accordion Header -->
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <a 
+        class="collapsed" 
+        data-toggle="collapse" 
+        data-parent=".faq-accordion" 
+        href="#faqCollapse3"
+        aria-expanded="false"
+         style="background-color: #ffffff;"
+      >
+        Do you need my BVN or bank account login details?
+        <span class="chevron">
+              <svg class="chevron-svg" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M18.2546728,8.18171329 L18.9617796,8.88882007 L12.5952867,15.2537133 L12.5978964,15.2558012 L11.8907896,15.962908 L11.8882867,15.9607133 L11.8874628,15.9617796 L11.180356,15.2546728 L11.1812867,15.2527133 L4.81828671,8.88882007 L5.52539349,8.18171329 L11.8882867,14.5457133 L18.2546728,8.18171329 Z"></path>
+              </svg>
+            </span>
+      </a>
+    </h4>
+  </div>
+
+  <!-- Accordion Body -->
+  <div id="faqCollapse3" class="panel-collapse collapse">
+    <div class="panel-body">
+      <p>No, we do NOT require your BVN or any bank login details.</p>
+      <!-- Social Share Bar (same as the others) -->
+      <div class="social-share">
+        <button class="social-btn" title="Share on Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20,12 C20,7.58171875 16.4182812,4 12,4 C7.58171875,4 4,7.58171875 4,12 C4,15.9930312 6.92548437,19.3026562 10.75,19.9028125 L10.75,14.3125 L8.71875,14.3125 L8.71875,12 L10.75,12 L10.75,10.2375 C10.75,8.2325 11.9443437,7.125 13.7717187,7.125 C14.6469844,7.125 15.5625,7.28125 15.5625,7.28125 L15.5625,9.25 L14.5537187,9.25 C13.5599219,9.25 13.25,9.86667187 13.25,10.4993281 L13.25,12 L15.46875,12 L15.1140625,14.3125 L13.25,14.3125 L13.25,19.9028125 C17.0745156,19.3026562 20,15.9930312 20,12"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" title="Share on Twitter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13.303 10.771 19.123 4h-1.38L12.69 9.88 8.655 4H4l6.103 8.89L4 19.993h1.38l5.335-6.21 4.262 6.21h4.655l-6.33-9.22h.001Zm-1.889 2.198-.618-.885-4.92-7.045h2.118l3.97 5.686.619.885 5.16 7.39h-2.117l-4.212-6.03Z"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" title="Share on LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.6348754,17.6337778 L15.2626394,17.6337778 L15.2626394,13.9202963 C15.2626394,13.0346667 15.2469351,11.8957037 14.0294085,11.8957037 C12.7943998,11.8957037 12.6059484,12.861037 12.6059484,13.8568889 L12.6059484,17.6337778 L10.2337124,17.6337778 L10.2337124,9.99822222 L12.5099448,9.99822222 L12.5099448,11.0423704 L12.5425386,11.0423704 C12.8592911,10.4417778 13.633542,9.80888889 14.7879551,9.80888889 C17.1913034,9.80888889 17.6348754,11.3899259 17.6348754,13.4459259 L17.6348754,17.6337778 Z M7.55835401,8.95496296 C6.79773325,8.95496296 6.18289566,8.33837037 6.18289566,7.57925926 C6.18289566,6.81925926 6.79773325,6.20266667 7.55835401,6.20266667 C8.31690063,6.20266667 8.93351606,6.81925926 8.93351606,7.57925926 C8.93351606,8.33837037 8.31690063,8.95496296 7.55835401,8.95496296 Z M6.37134709,17.6337778 L8.74536094,17.6337778 L8.74536094,9.99822222 L6.37134709,9.99822222 L6.37134709,17.6337778 Z M18.8165488,4 L5.18078447,4 C4.52950109,4 4,4.51674074 4,5.15377778 L4,18.8456296 C4,19.4826667 4.52950109,20 5.18078447,20 L18.8165488,20 C19.4693137,20 20,19.4826667 20,18.8456296 L20,5.15377778 C20,4.51674074 19.4693137,4 18.8165488,4 L18.8165488,4 Z"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" id="copyLinkBtn3" title="Copy Link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" d="M7.7859,10.3591 C9.3999,8.7461 12.0259,8.7461 13.6399,10.3591 L13.6399,10.3591 L14.0689,10.7891 L13.3619,11.4961 L12.9329,11.0661 C11.7089,9.8451 9.7179,9.8431 8.4929,11.0661 L8.4929,11.0661 L5.9199,13.6411 C5.3269,14.2331 4.9999,15.0211 4.9999,15.8601 C4.9999,16.6991 5.3269,17.4871 5.9199,18.0801 C7.1059,19.2661 9.1729,19.2661 10.3599,18.0801 L10.3599,18.0801 L11.9429,16.4981 L12.6499,17.2051 L11.0669,18.7871 C10.2849,19.5691 9.2459,20.0001 8.1399,20.0001 C7.0339,20.0001 5.9939,19.5691 5.2129,18.7871 C4.4309,18.0061 3.9999,16.9661 3.9999,15.8601 C3.9999,14.7551 4.4309,13.7151 5.2129,12.9341 L5.2129,12.9341 Z M15.8606,3.9999 C16.9666,3.9999 18.0056,4.4309 18.7876,5.2129 C19.5696,5.9939 19.9996,7.0339 19.9996,8.1399 C19.9996,9.2449 19.5696,10.2849 18.7876,11.0669 L18.7876,11.0669 L16.2136,13.6409 C15.4066,14.4469 14.3466,14.8509 13.2866,14.8509 C12.2266,14.8509 11.1666,14.4469 10.3596,13.6409 L10.3596,13.6409 L9.9306,13.2109 L10.6376,12.5039 L11.0666,12.9339 C12.2926,14.1569 14.2836,14.1579 15.5066,12.9339 L15.5066,12.9339 L18.0806,10.3589 C18.6736,9.7669 18.9996,8.9789 18.9996,8.1399 C18.9996,7.3009 18.6736,6.5129 18.0806,5.9199 C16.8936,4.7339 14.8266,4.7339 13.6406,5.9199 L13.6406,5.9199 L12.0576,7.5019 L11.3506,6.7949 L12.9336,5.2129 C13.7146,4.4309 14.7546,3.9999 15.8606,3.9999 Z"></path>
+          </svg>
+        </button>
+        <span class="copy-feedback" id="copyFeedback3">Copied!</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <!-- Accordion Header -->
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <a 
+        class="collapsed" 
+        data-toggle="collapse" 
+        data-parent=".faq-accordion" 
+        href="#faqCollapse4"
+        aria-expanded="false"
+         style="background-color: #ffffff;"
+      >
+        Can I pay half of the gadget cost and collect my gadget immediately?
+        <span class="chevron">
+              <svg class="chevron-svg" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M18.2546728,8.18171329 L18.9617796,8.88882007 L12.5952867,15.2537133 L12.5978964,15.2558012 L11.8907896,15.962908 L11.8882867,15.9607133 L11.8874628,15.9617796 L11.180356,15.2546728 L11.1812867,15.2527133 L4.81828671,8.88882007 L5.52539349,8.18171329 L11.8882867,14.5457133 L18.2546728,8.18171329 Z"></path>
+              </svg>
+            </span>
+      </a>
+    </h4>
+  </div>
+
+  <!-- Accordion Body -->
+  <div id="faqCollapse4" class="panel-collapse collapse">
+    <div class="panel-body">
+      <p>To get your item early, you can choose the 2-month installment plan.
+<br>
+CDcare will run a check and your item will be delivered within 15 days.
+<br>
+However, the remaining balance must be paid in one instalment only.</p>
+      <!-- Social Share Bar -->
+      <div class="social-share">
+        <button class="social-btn" title="Share on Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20,12 C20,7.58171875 16.4182812,4 12,4 C7.58171875,4 4,7.58171875 4,12 C4,15.9930312 6.92548437,19.3026562 10.75,19.9028125 L10.75,14.3125 L8.71875,14.3125 L8.71875,12 L10.75,12 L10.75,10.2375 C10.75,8.2325 11.9443437,7.125 13.7717187,7.125 C14.6469844,7.125 15.5625,7.28125 15.5625,7.28125 L15.5625,9.25 L14.5537187,9.25 C13.5599219,9.25 13.25,9.86667187 13.25,10.4993281 L13.25,12 L15.46875,12 L15.1140625,14.3125 L13.25,14.3125 L13.25,19.9028125 C17.0745156,19.3026562 20,15.9930312 20,12"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" title="Share on Twitter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13.303 10.771 19.123 4h-1.38L12.69 9.88 8.655 4H4l6.103 8.89L4 19.993h1.38l5.335-6.21 4.262 6.21h4.655l-6.33-9.22h.001Zm-1.889 2.198-.618-.885-4.92-7.045h2.118l3.97 5.686.619.885 5.16 7.39h-2.117l-4.212-6.03Z"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" title="Share on LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.6348754,17.6337778 L15.2626394,17.6337778 L15.2626394,13.9202963 C15.2626394,13.0346667 15.2469351,11.8957037 14.0294085,11.8957037 C12.7943998,11.8957037 12.6059484,12.861037 12.6059484,13.8568889 L12.6059484,17.6337778 L10.2337124,17.6337778 L10.2337124,9.99822222 L12.5099448,9.99822222 L12.5099448,11.0423704 L12.5425386,11.0423704 C12.8592911,10.4417778 13.633542,9.80888889 14.7879551,9.80888889 C17.1913034,9.80888889 17.6348754,11.3899259 17.6348754,13.4459259 L17.6348754,17.6337778 Z M7.55835401,8.95496296 C6.79773325,8.95496296 6.18289566,8.33837037 6.18289566,7.57925926 C6.18289566,6.81925926 6.79773325,6.20266667 7.55835401,6.20266667 C8.31690063,6.20266667 8.93351606,6.81925926 8.93351606,7.57925926 C8.93351606,8.33837037 8.31690063,8.95496296 7.55835401,8.95496296 Z M6.37134709,17.6337778 L8.74536094,17.6337778 L8.74536094,9.99822222 L6.37134709,9.99822222 L6.37134709,17.6337778 Z M18.8165488,4 L5.18078447,4 C4.52950109,4 4,4.51674074 4,5.15377778 L4,18.8456296 C4,19.4826667 4.52950109,20 5.18078447,20 L18.8165488,20 C19.4693137,20 20,19.4826667 20,18.8456296 L20,5.15377778 C20,4.51674074 19.4693137,4 18.8165488,4 L18.8165488,4 Z"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" id="copyLinkBtn4" title="Copy Link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" d="M7.7859,10.3591 C9.3999,8.7461 12.0259,8.7461 13.6399,10.3591 L13.6399,10.3591 L14.0689,10.7891 L13.3619,11.4961 L12.9329,11.0661 C11.7089,9.8451 9.7179,9.8431 8.4929,11.0661 L8.4929,11.0661 L5.9199,13.6411 C5.3269,14.2331 4.9999,15.0211 4.9999,15.8601 C4.9999,16.6991 5.3269,17.4871 5.9199,18.0801 C7.1059,19.2661 9.1729,19.2661 10.3599,18.0801 L10.3599,18.0801 L11.9429,16.4981 L12.6499,17.2051 L11.0669,18.7871 C10.2849,19.5691 9.2459,20.0001 8.1399,20.0001 C7.0339,20.0001 5.9939,19.5691 5.2129,18.7871 C4.4309,18.0061 3.9999,16.9661 3.9999,15.8601 C3.9999,14.7551 4.4309,13.7151 5.2129,12.9341 L5.2129,12.9341 Z M15.8606,3.9999 C16.9666,3.9999 18.0056,4.4309 18.7876,5.2129 C19.5696,5.9939 19.9996,7.0339 19.9996,8.1399 C19.9996,9.2449 19.5696,10.2849 18.7876,11.0669 L18.7876,11.0669 L16.2136,13.6409 C15.4066,14.4469 14.3466,14.8509 13.2866,14.8509 C12.2266,14.8509 11.1666,14.4469 10.3596,13.6409 L10.3596,13.6409 L9.9306,13.2109 L10.6376,12.5039 L11.0666,12.9339 C12.2926,14.1569 14.2836,14.1579 15.5066,12.9339 L15.5066,12.9339 L18.0806,10.3589 C18.6736,9.7669 18.9996,8.9789 18.9996,8.1399 C18.9996,7.3009 18.6736,6.5129 18.0806,5.9199 C16.8936,4.7339 14.8266,4.7339 13.6406,5.9199 L13.6406,5.9199 L12.0576,7.5019 L11.3506,6.7949 L12.9336,5.2129 C13.7146,4.4309 14.7546,3.9999 15.8606,3.9999 Z"></path>
+          </svg>
+        </button>
+        <span class="copy-feedback" id="copyFeedback4">Copied!</span>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="panel panel-default">
+  <!-- Accordion Header -->
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <a 
+        class="collapsed" 
+        data-toggle="collapse" 
+        data-parent=".faq-accordion" 
+        href="#faqCollapse5"
+        aria-expanded="false"
+         style="background-color: #ffffff;"
+      >
+        Can I collect my money back if I change my mind?
+        <span class="chevron">
+              <svg class="chevron-svg" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M18.2546728,8.18171329 L18.9617796,8.88882007 L12.5952867,15.2537133 L12.5978964,15.2558012 L11.8907896,15.962908 L11.8882867,15.9607133 L11.8874628,15.9617796 L11.180356,15.2546728 L11.1812867,15.2527133 L4.81828671,8.88882007 L5.52539349,8.18171329 L11.8882867,14.5457133 L18.2546728,8.18171329 Z"></path>
+              </svg>
+            </span>
+      </a>
+    </h4>
+  </div>
+
+  <!-- Accordion Body -->
+  <div id="faqCollapse5" class="panel-collapse collapse">
+    <div class="panel-body">
+      <p>Yes, however, this attracts a fee of 10% of the instalment sum already paid to discourage unnecessary cancellation of orders.
+Kindly read article 13 of our <span style="color: #ffa500;"> Terms and Conditions</span> to know more cancellation of orders.</p>
+
+      <!-- Social Share Bar -->
+      <div class="social-share">
+        <button class="social-btn" title="Share on Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20,12 C20,7.58171875 16.4182812,4 12,4 C7.58171875,4 4,7.58171875 4,12 C4,15.9930312 6.92548437,19.3026562 10.75,19.9028125 L10.75,14.3125 L8.71875,14.3125 L8.71875,12 L10.75,12 L10.75,10.2375 C10.75,8.2325 11.9443437,7.125 13.7717187,7.125 C14.6469844,7.125 15.5625,7.28125 15.5625,7.28125 L15.5625,9.25 L14.5537187,9.25 C13.5599219,9.25 13.25,9.86667187 13.25,10.4993281 L13.25,12 L15.46875,12 L15.1140625,14.3125 L13.25,14.3125 L13.25,19.9028125 C17.0745156,19.3026562 20,15.9930312 20,12"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" title="Share on Twitter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13.303 10.771 19.123 4h-1.38L12.69 9.88 8.655 4H4l6.103 8.89L4 19.993h1.38l5.335-6.21 4.262 6.21h4.655l-6.33-9.22h.001Zm-1.889 2.198-.618-.885-4.92-7.045h2.118l3.97 5.686.619.885 5.16 7.39h-2.117l-4.212-6.03Z"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" title="Share on LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.6348754,17.6337778 L15.2626394,17.6337778 L15.2626394,13.9202963 C15.2626394,13.0346667 15.2469351,11.8957037 14.0294085,11.8957037 C12.7943998,11.8957037 12.6059484,12.861037 12.6059484,13.8568889 L12.6059484,17.6337778 L10.2337124,17.6337778 L10.2337124,9.99822222 L12.5099448,9.99822222 L12.5099448,11.0423704 L12.5425386,11.0423704 C12.8592911,10.4417778 13.633542,9.80888889 14.7879551,9.80888889 C17.1913034,9.80888889 17.6348754,11.3899259 17.6348754,13.4459259 L17.6348754,17.6337778 Z M7.55835401,8.95496296 C6.79773325,8.95496296 6.18289566,8.33837037 6.18289566,7.57925926 C6.18289566,6.81925926 6.79773325,6.20266667 7.55835401,6.20266667 C8.31690063,6.20266667 8.93351606,6.81925926 8.93351606,7.57925926 C8.93351606,8.33837037 8.31690063,8.95496296 7.55835401,8.95496296 Z M6.37134709,17.6337778 L8.74536094,17.6337778 L8.74536094,9.99822222 L6.37134709,9.99822222 L6.37134709,17.6337778 Z M18.8165488,4 L5.18078447,4 C4.52950109,4 4,4.51674074 4,5.15377778 L4,18.8456296 C4,19.4826667 4.52950109,20 5.18078447,20 L18.8165488,20 C19.4693137,20 20,19.4826667 20,18.8456296 L20,5.15377778 C20,4.51674074 19.4693137,4 18.8165488,4 L18.8165488,4 Z"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" id="copyLinkBtn5" title="Copy Link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" d="M7.7859,10.3591 C9.3999,8.7461 12.0259,8.7461 13.6399,10.3591 L13.6399,10.3591 L14.0689,10.7891 L13.3619,11.4961 L12.9329,11.0661 C11.7089,9.8451 9.7179,9.8431 8.4929,11.0661 L8.4929,11.0661 L5.9199,13.6411 C5.3269,14.2331 4.9999,15.0211 4.9999,15.8601 C4.9999,16.6991 5.3269,17.4871 5.9199,18.0801 C7.1059,19.2661 9.1729,19.2661 10.3599,18.0801 L10.3599,18.0801 L11.9429,16.4981 L12.6499,17.2051 L11.0669,18.7871 C10.2849,19.5691 9.2459,20.0001 8.1399,20.0001 C7.0339,20.0001 5.9939,19.5691 5.2129,18.7871 C4.4309,18.0061 3.9999,16.9661 3.9999,15.8601 C3.9999,14.7551 4.4309,13.7151 5.2129,12.9341 L5.2129,12.9341 Z M15.8606,3.9999 C16.9666,3.9999 18.0056,4.4309 18.7876,5.2129 C19.5696,5.9939 19.9996,7.0339 19.9996,8.1399 C19.9996,9.2449 19.5696,10.2849 18.7876,11.0669 L18.7876,11.0669 L16.2136,13.6409 C15.4066,14.4469 14.3466,14.8509 13.2866,14.8509 C12.2266,14.8509 11.1666,14.4469 10.3596,13.6409 L10.3596,13.6409 L9.9306,13.2109 L10.6376,12.5039 L11.0666,12.9339 C12.2926,14.1569 14.2836,14.1579 15.5066,12.9339 L15.5066,12.9339 L18.0806,10.3589 C18.6736,9.7669 18.9996,8.9789 18.9996,8.1399 C18.9996,7.3009 18.6736,6.5129 18.0806,5.9199 C16.8936,4.7339 14.8266,4.7339 13.6406,5.9199 L13.6406,5.9199 L12.0576,7.5019 L11.3506,6.7949 L12.9336,5.2129 C13.7146,4.4309 14.7546,3.9999 15.8606,3.9999 Z"></path>
+          </svg>
+        </button>
+        <span class="copy-feedback" id="copyFeedback5">Copied!</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <!-- Accordion Header -->
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <a 
+        class="collapsed" 
+        data-toggle="collapse" 
+        data-parent=".faq-accordion" 
+        href="#faqCollapse6"
+        aria-expanded="false"
+         style="background-color: #ffffff;"
+      >
+        What if the product I want to buy is no more available in the market when I have reached my half payment mark?
+         <span class="chevron">
+              <svg class="chevron-svg" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M18.2546728,8.18171329 L18.9617796,8.88882007 L12.5952867,15.2537133 L12.5978964,15.2558012 L11.8907896,15.962908 L11.8882867,15.9607133 L11.8874628,15.9617796 L11.180356,15.2546728 L11.1812867,15.2527133 L4.81828671,8.88882007 L5.52539349,8.18171329 L11.8882867,14.5457133 L18.2546728,8.18171329 Z"></path>
+              </svg>
+            </span>
+      </a>
+    </h4>
+  </div>
+
+  <!-- Accordion Body -->
+  <div id="faqCollapse6" class="panel-collapse collapse">
+    <div class="panel-body">
+      <p>This is an unavoidable possibility so we will present the following options to you:</p>
+      <p><strong>i.</strong> That you give CDcare a short period (most likely 1 to 3 days) to make available the actual product to you, if possible.</p>
+      <p><strong>ii.</strong> That you choose another product of the same price range as your ordered product which is now unavailable.</p>
+      <p><strong>iii.</strong> That we refund your money in full if (i) & (ii) above fail.</p>
+
+      <!-- Social Share Bar -->
+      <div class="social-share">
+        <button class="social-btn" title="Share on Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20,12 C20,7.58171875 16.4182812,4 12,4 C7.58171875,4 4,7.58171875 4,12 C4,15.9930312 6.92548437,19.3026562 10.75,19.9028125 L10.75,14.3125 L8.71875,14.3125 L8.71875,12 L10.75,12 L10.75,10.2375 C10.75,8.2325 11.9443437,7.125 13.7717187,7.125 C14.6469844,7.125 15.5625,7.28125 15.5625,7.28125 L15.5625,9.25 L14.5537187,9.25 C13.5599219,9.25 13.25,9.86667187 13.25,10.4993281 L13.25,12 L15.46875,12 L15.1140625,14.3125 L13.25,14.3125 L13.25,19.9028125 C17.0745156,19.3026562 20,15.9930312 20,12"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" title="Share on Twitter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13.303 10.771 19.123 4h-1.38L12.69 9.88 8.655 4H4l6.103 8.89L4 19.993h1.38l5.335-6.21 4.262 6.21h4.655l-6.33-9.22h.001Zm-1.889 2.198-.618-.885-4.92-7.045h2.118l3.97 5.686.619.885 5.16 7.39h-2.117l-4.212-6.03Z"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" title="Share on LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.6348754,17.6337778 L15.2626394,17.6337778 L15.2626394,13.9202963 C15.2626394,13.0346667 15.2469351,11.8957037 14.0294085,11.8957037 C12.7943998,11.8957037 12.6059484,12.861037 12.6059484,13.8568889 L12.6059484,17.6337778 L10.2337124,17.6337778 L10.2337124,9.99822222 L12.5099448,9.99822222 L12.5099448,11.0423704 L12.5425386,11.0423704 C12.8592911,10.4417778 13.633542,9.80888889 14.7879551,9.80888889 C17.1913034,9.80888889 17.6348754,11.3899259 17.6348754,13.4459259 L17.6348754,17.6337778 Z M7.55835401,8.95496296 C6.79773325,8.95496296 6.18289566,8.33837037 6.18289566,7.57925926 C6.18289566,6.81925926 6.79773325,6.20266667 7.55835401,6.20266667 C8.31690063,6.20266667 8.93351606,6.81925926 8.93351606,7.57925926 C8.93351606,8.33837037 8.31690063,8.95496296 7.55835401,8.95496296 Z M6.37134709,17.6337778 L8.74536094,17.6337778 L8.74536094,9.99822222 L6.37134709,9.99822222 L6.37134709,17.6337778 Z M18.8165488,4 L5.18078447,4 C4.52950109,4 4,4.51674074 4,5.15377778 L4,18.8456296 C4,19.4826667 4.52950109,20 5.18078447,20 L18.8165488,20 C19.4693137,20 20,19.4826667 20,18.8456296 L20,5.15377778 C20,4.51674074 19.4693137,4 18.8165488,4 L18.8165488,4 Z"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" id="copyLinkBtn6" title="Copy Link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" d="M7.7859,10.3591 C9.3999,8.7461 12.0259,8.7461 13.6399,10.3591 L13.6399,10.3591 L14.0689,10.7891 L13.3619,11.4961 L12.9329,11.0661 C11.7089,9.8451 9.7179,9.8431 8.4929,11.0661 L8.4929,11.0661 L5.9199,13.6411 C5.3269,14.2331 4.9999,15.0211 4.9999,15.8601 C4.9999,16.6991 5.3269,17.4871 5.9199,18.0801 C7.1059,19.2661 9.1729,19.2661 10.3599,18.0801 L10.3599,18.0801 L11.9429,16.4981 L12.6499,17.2051 L11.0669,18.7871 C10.2849,19.5691 9.2459,20.0001 8.1399,20.0001 C7.0339,20.0001 5.9939,19.5691 5.2129,18.7871 C4.4309,18.0061 3.9999,16.9661 3.9999,15.8601 C3.9999,14.7551 4.4309,13.7151 5.2129,12.9341 L5.2129,12.9341 Z M15.8606,3.9999 C16.9666,3.9999 18.0056,4.4309 18.7876,5.2129 C19.5696,5.9939 19.9996,7.0339 19.9996,8.1399 C19.9996,9.2449 19.5696,10.2849 18.7876,11.0669 L18.7876,11.0669 L16.2136,13.6409 C15.4066,14.4469 14.3466,14.8509 13.2866,14.8509 C12.2266,14.8509 11.1666,14.4469 10.3596,13.6409 L10.3596,13.6409 L9.9306,13.2109 L10.6376,12.5039 L11.0666,12.9339 C12.2926,14.1569 14.2836,14.1579 15.5066,12.9339 L15.5066,12.9339 L18.0806,10.3589 C18.6736,9.7669 18.9996,8.9789 18.9996,8.1399 C18.9996,7.3009 18.6736,6.5129 18.0806,5.9199 C16.8936,4.7339 14.8266,4.7339 13.6406,5.9199 L13.6406,5.9199 L12.0576,7.5019 L11.3506,6.7949 L12.9336,5.2129 C13.7146,4.4309 14.7546,3.9999 15.8606,3.9999 Z"></path>
+          </svg>
+        </button>
+        <span class="copy-feedback" id="copyFeedback6">Copied!</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <!-- Accordion Header -->
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <a 
+        class="collapsed" 
+        data-toggle="collapse" 
+        data-parent=".faq-accordion" 
+        href="#faqCollapse7"
+        aria-expanded="false"
+         style="background-color: #ffffff;"
+      >
+        What if the product I want to buy becomes cheaper when I reached my half payment mark?
+         <span class="chevron">
+              <svg class="chevron-svg" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M18.2546728,8.18171329 L18.9617796,8.88882007 L12.5952867,15.2537133 L12.5978964,15.2558012 L11.8907896,15.962908 L11.8882867,15.9607133 L11.8874628,15.9617796 L11.180356,15.2546728 L11.1812867,15.2527133 L4.81828671,8.88882007 L5.52539349,8.18171329 L11.8882867,14.5457133 L18.2546728,8.18171329 Z"></path>
+              </svg>
+            </span>
+      </a>
+    </h4>
+  </div>
+
+  <!-- Accordion Body -->
+  <div id="faqCollapse7" class="panel-collapse collapse">
+    <div class="panel-body">
+      <p>The terms of purchase is subject to the availability of the item as at when you reach the half payment mark, likewise the price of the item, so if the price of the item becomes cheaper, CDcare will credit the excess amount in your CDcare account which can be used for subsequent instalments.</p>
+    
+      <!-- Social Share Bar -->
+      <div class="social-share">
+        <button class="social-btn" title="Share on Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20,12 C20,7.58171875 16.4182812,4 12,4 C7.58171875,4 4,7.58171875 4,12 C4,15.9930312 6.92548437,19.3026562 10.75,19.9028125 L10.75,14.3125 L8.71875,14.3125 L8.71875,12 L10.75,12 L10.75,10.2375 C10.75,8.2325 11.9443437,7.125 13.7717187,7.125 C14.6469844,7.125 15.5625,7.28125 15.5625,7.28125 L15.5625,9.25 L14.5537187,9.25 C13.5599219,9.25 13.25,9.86667187 13.25,10.4993281 L13.25,12 L15.46875,12 L15.1140625,14.3125 L13.25,14.3125 L13.25,19.9028125 C17.0745156,19.3026562 20,15.9930312 20,12"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" title="Share on Twitter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13.303 10.771 19.123 4h-1.38L12.69 9.88 8.655 4H4l6.103 8.89L4 19.993h1.38l5.335-6.21 4.262 6.21h4.655l-6.33-9.22h.001Zm-1.889 2.198-.618-.885-4.92-7.045h2.118l3.97 5.686.619.885 5.16 7.39h-2.117l-4.212-6.03Z"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" title="Share on LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.6348754,17.6337778 L15.2626394,17.6337778 L15.2626394,13.9202963 C15.2626394,13.0346667 15.2469351,11.8957037 14.0294085,11.8957037 C12.7943998,11.8957037 12.6059484,12.861037 12.6059484,13.8568889 L12.6059484,17.6337778 L10.2337124,17.6337778 L10.2337124,9.99822222 L12.5099448,9.99822222 L12.5099448,11.0423704 L12.5425386,11.0423704 C12.8592911,10.4417778 13.633542,9.80888889 14.7879551,9.80888889 C17.1913034,9.80888889 17.6348754,11.3899259 17.6348754,13.4459259 L17.6348754,17.6337778 Z M7.55835401,8.95496296 C6.79773325,8.95496296 6.18289566,8.33837037 6.18289566,7.57925926 C6.18289566,6.81925926 6.79773325,6.20266667 7.55835401,6.20266667 C8.31690063,6.20266667 8.93351606,6.81925926 8.93351606,7.57925926 C8.93351606,8.33837037 8.31690063,8.95496296 7.55835401,8.95496296 Z M6.37134709,17.6337778 L8.74536094,17.6337778 L8.74536094,9.99822222 L6.37134709,9.99822222 L6.37134709,17.6337778 Z M18.8165488,4 L5.18078447,4 C4.52950109,4 4,4.51674074 4,5.15377778 L4,18.8456296 C4,19.4826667 4.52950109,20 5.18078447,20 L18.8165488,20 C19.4693137,20 20,19.4826667 20,18.8456296 L20,5.15377778 C20,4.51674074 19.4693137,4 18.8165488,4 L18.8165488,4 Z"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" id="copyLinkBtn7" title="Copy Link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" d="M7.7859,10.3591 C9.3999,8.7461 12.0259,8.7461 13.6399,10.3591 L13.6399,10.3591 L14.0689,10.7891 L13.3619,11.4961 L12.9329,11.0661 C11.7089,9.8451 9.7179,9.8431 8.4929,11.0661 L8.4929,11.0661 L5.9199,13.6411 C5.3269,14.2331 4.9999,15.0211 4.9999,15.8601 C4.9999,16.6991 5.3269,17.4871 5.9199,18.0801 C7.1059,19.2661 9.1729,19.2661 10.3599,18.0801 L10.3599,18.0801 L11.9429,16.4981 L12.6499,17.2051 L11.0669,18.7871 C10.2849,19.5691 9.2459,20.0001 8.1399,20.0001 C7.0339,20.0001 5.9939,19.5691 5.2129,18.7871 C4.4309,18.0061 3.9999,16.9661 3.9999,15.8601 C3.9999,14.7551 4.4309,13.7151 5.2129,12.9341 L5.2129,12.9341 Z M15.8606,3.9999 C16.9666,3.9999 18.0056,4.4309 18.7876,5.2129 C19.5696,5.9939 19.9996,7.0339 19.9996,8.1399 C19.9996,9.2449 19.5696,10.2849 18.7876,11.0669 L18.7876,11.0669 L16.2136,13.6409 C15.4066,14.4469 14.3466,14.8509 13.2866,14.8509 C12.2266,14.8509 11.1666,14.4469 10.3596,13.6409 L10.3596,13.6409 L9.9306,13.2109 L10.6376,12.5039 L11.0666,12.9339 C12.2926,14.1569 14.2836,14.1579 15.5066,12.9339 L15.5066,12.9339 L18.0806,10.3589 C18.6736,9.7669 18.9996,8.9789 18.9996,8.1399 C18.9996,7.3009 18.6736,6.5129 18.0806,5.9199 C16.8936,4.7339 14.8266,4.7339 13.6406,5.9199 L13.6406,5.9199 L12.0576,7.5019 L11.3506,6.7949 L12.9336,5.2129 C13.7146,4.4309 14.7546,3.9999 15.8606,3.9999 Z"></path>
+          </svg>
+        </button>
+        <span class="copy-feedback" id="copyFeedback7">Copied!</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <!-- Accordion Header -->
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <a 
+        class="collapsed" 
+        data-toggle="collapse" 
+        data-parent=".faq-accordion" 
+        href="#faqCollapse8"
+        aria-expanded="false"
+         style="background-color: #ffffff;"
+      >
+        What if the product I want to buy becomes costlier when I reached my half payment mark?
+        <span class="chevron">
+              <svg class="chevron-svg" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M18.2546728,8.18171329 L18.9617796,8.88882007 L12.5952867,15.2537133 L12.5978964,15.2558012 L11.8907896,15.962908 L11.8882867,15.9607133 L11.8874628,15.9617796 L11.180356,15.2546728 L11.1812867,15.2527133 L4.81828671,8.88882007 L5.52539349,8.18171329 L11.8882867,14.5457133 L18.2546728,8.18171329 Z"></path>
+              </svg>
+            </span>
+      </a>
+    </h4>
+  </div>
+
+  <!-- Accordion Body -->
+  <div id="faqCollapse8" class="panel-collapse collapse">
+    <div class="panel-body">
+      <p>The terms of purchase is subject to the availability of the item as at when you reach the middle of your chosen installment period, likewise the price of the item, so if the price of the item becomes higher, CDcare will spread the excess amount on your subsequent installments or give you extended duration to pay the excess.</p>
+      
+      <!-- Social Share Bar -->
+      <div class="social-share">
+        <button class="social-btn" title="Share on Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20,12 C20,7.58171875 16.4182812,4 12,4 C7.58171875,4 4,7.58171875 4,12 C4,15.9930312 6.92548437,19.3026562 10.75,19.9028125 L10.75,14.3125 L8.71875,14.3125 L8.71875,12 L10.75,12 L10.75,10.2375 C10.75,8.2325 11.9443437,7.125 13.7717187,7.125 C14.6469844,7.125 15.5625,7.28125 15.5625,7.28125 L15.5625,9.25 L14.5537187,9.25 C13.5599219,9.25 13.25,9.86667187 13.25,10.4993281 L13.25,12 L15.46875,12 L15.1140625,14.3125 L13.25,14.3125 L13.25,19.9028125 C17.0745156,19.3026562 20,15.9930312 20,12"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" title="Share on Twitter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13.303 10.771 19.123 4h-1.38L12.69 9.88 8.655 4H4l6.103 8.89L4 19.993h1.38l5.335-6.21 4.262 6.21h4.655l-6.33-9.22h.001Zm-1.889 2.198-.618-.885-4.92-7.045h2.118l3.97 5.686.619.885 5.16 7.39h-2.117l-4.212-6.03Z"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" title="Share on LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.6348754,17.6337778 L15.2626394,17.6337778 L15.2626394,13.9202963 C15.2626394,13.0346667 15.2469351,11.8957037 14.0294085,11.8957037 C12.7943998,11.8957037 12.6059484,12.861037 12.6059484,13.8568889 L12.6059484,17.6337778 L10.2337124,17.6337778 L10.2337124,9.99822222 L12.5099448,9.99822222 L12.5099448,11.0423704 L12.5425386,11.0423704 C12.8592911,10.4417778 13.633542,9.80888889 14.7879551,9.80888889 C17.1913034,9.80888889 17.6348754,11.3899259 17.6348754,13.4459259 L17.6348754,17.6337778 Z M7.55835401,8.95496296 C6.79773325,8.95496296 6.18289566,8.33837037 6.18289566,7.57925926 C6.18289566,6.81925926 6.79773325,6.20266667 7.55835401,6.20266667 C8.31690063,6.20266667 8.93351606,6.81925926 8.93351606,7.57925926 C8.93351606,8.33837037 8.31690063,8.95496296 7.55835401,8.95496296 Z M6.37134709,17.6337778 L8.74536094,17.6337778 L8.74536094,9.99822222 L6.37134709,9.99822222 L6.37134709,17.6337778 Z M18.8165488,4 L5.18078447,4 C4.52950109,4 4,4.51674074 4,5.15377778 L4,18.8456296 C4,19.4826667 4.52950109,20 5.18078447,20 L18.8165488,20 C19.4693137,20 20,19.4826667 20,18.8456296 L20,5.15377778 C20,4.51674074 19.4693137,4 18.8165488,4 L18.8165488,4 Z"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" id="copyLinkBtn8" title="Copy Link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" d="M7.7859,10.3591 C9.3999,8.7461 12.0259,8.7461 13.6399,10.3591 L13.6399,10.3591 L14.0689,10.7891 L13.3619,11.4961 L12.9329,11.0661 C11.7089,9.8451 9.7179,9.8431 8.4929,11.0661 L8.4929,11.0661 L5.9199,13.6411 C5.3269,14.2331 4.9999,15.0211 4.9999,15.8601 C4.9999,16.6991 5.3269,17.4871 5.9199,18.0801 C7.1059,19.2661 9.1729,19.2661 10.3599,18.0801 L10.3599,18.0801 L11.9429,16.4981 L12.6499,17.2051 L11.0669,18.7871 C10.2849,19.5691 9.2459,20.0001 8.1399,20.0001 C7.0339,20.0001 5.9939,19.5691 5.2129,18.7871 C4.4309,18.0061 3.9999,16.9661 3.9999,15.8601 C3.9999,14.7551 4.4309,13.7151 5.2129,12.9341 L5.2129,12.9341 Z M15.8606,3.9999 C16.9666,3.9999 18.0056,4.4309 18.7876,5.2129 C19.5696,5.9939 19.9996,7.0339 19.9996,8.1399 C19.9996,9.2449 19.5696,10.2849 18.7876,11.0669 L18.7876,11.0669 L16.2136,13.6409 C15.4066,14.4469 14.3466,14.8509 13.2866,14.8509 C12.2266,14.8509 11.1666,14.4469 10.3596,13.6409 L10.3596,13.6409 L9.9306,13.2109 L10.6376,12.5039 L11.0666,12.9339 C12.2926,14.1569 14.2836,14.1579 15.5066,12.9339 L15.5066,12.9339 L18.0806,10.3589 C18.6736,9.7669 18.9996,8.9789 18.9996,8.1399 C18.9996,7.3009 18.6736,6.5129 18.0806,5.9199 C16.8936,4.7339 14.8266,4.7339 13.6406,5.9199 L13.6406,5.9199 L12.0576,7.5019 L11.3506,6.7949 L12.9336,5.2129 C13.7146,4.4309 14.7546,3.9999 15.8606,3.9999 Z"></path>
+          </svg>
+        </button>
+        <span class="copy-feedback" id="copyFeedback8">Copied!</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <!-- Accordion Header -->
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <a 
+        class="collapsed" 
+        data-toggle="collapse" 
+        data-parent=".faq-accordion" 
+        href="#faqCollapse9"
+        aria-expanded="false"
+         style="background-color: #ffffff;"
+      >
+        What do I do if the item I want is not on CDcare Marketplace?
+        <span class="chevron">
+              <svg class="chevron-svg" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M18.2546728,8.18171329 L18.9617796,8.88882007 L12.5952867,15.2537133 L12.5978964,15.2558012 L11.8907896,15.962908 L11.8882867,15.9607133 L11.8874628,15.9617796 L11.180356,15.2546728 L11.1812867,15.2527133 L4.81828671,8.88882007 L5.52539349,8.18171329 L11.8882867,14.5457133 L18.2546728,8.18171329 Z"></path>
+              </svg>
+            </span>
+      </a>
+    </h4>
+  </div>
+
+  <!-- Accordion Body -->
+  <div id="faqCollapse9" class="panel-collapse collapse">
+    <div class="panel-body">
+      <p>Just tell us by sharing a link and we will review and add it for you.</p>
+      <p>Please <a href="https://wa.me/chatcdcare" target="_blank" rel="noopener" style="color: orange;">click here</a> to contact a CDcare agent to add your desired items for you.</p>
+
+      <!-- Social Share Bar -->
+      <div class="social-share">
+        <button class="social-btn" title="Share on Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20,12 C20,7.58171875 16.4182812,4 12,4 C7.58171875,4 4,7.58171875 4,
+            12 C4,15.9930312 6.92548437,19.3026562 10.75,19.9028125 L10.75,14.3125
+             L8.71875,14.3125 L8.71875,12 L10.75,12 L10.75,10.2375 C10.75,8.2325
+              11.9443437,7.125 13.7717187,7.125 C14.6469844,7.125 15.5625,7.28125
+               15.5625,7.28125 L15.5625,9.25 L14.5537187,9.25 C13.5599219,9.25
+                13.25,9.86667187 13.25,10.4993281 L13.25,12 L15.46875,
+                12 L15.1140625,14.3125 L13.25,14.3125 L13.25,19.9028125 C17.0745156,19.3026562 20,15.9930312 20,12"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" title="Share on Twitter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13.303 10.771 19.123 4h-1.38L12.69 9.88 8.655 4H4l6.103 8.89L4
+             19.993h1.38l5.335-6.21 4.262 6.21h4.655l-6.33-9.22h.001Zm-1.889
+              2.198-.618-.885-4.92-7.045h2.118l3.97 5.686.619.885 5.16 7.39h-2.117l-4.212-6.03Z"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" title="Share on LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.6348754,17.6337778 L15.2626394,17.6337778 L15.2626394,
+            13.9202963 C15.2626394,13.0346667 15.2469351,11.8957037 14.0294085,
+            11.8957037 C12.7943998,11.8957037 12.6059484,12.861037 12.6059484,
+            13.8568889 L12.6059484,17.6337778 L10.2337124,17.6337778 L10.2337124,
+            9.99822222 L12.5099448,9.99822222 L12.5099448,11.0423704 L12.5425386,
+            11.0423704 C12.8592911,10.4417778 13.633542,9.80888889 14.7879551,
+            9.80888889 C17.1913034,9.80888889 17.6348754,11.3899259 17.6348754,
+            13.4459259 L17.6348754,17.6337778 Z M7.55835401,8.95496296 C6.79773325,
+            8.95496296 6.18289566,8.33837037 6.18289566,7.57925926 C6.18289566,
+            6.81925926 6.79773325,6.20266667 7.55835401,6.20266667 C8.31690063,
+            6.20266667 8.93351606,6.81925926 8.93351606,7.57925926 C8.93351606,
+            8.33837037 8.31690063,8.95496296 7.55835401,8.95496296 Z M6.37134709,
+            17.6337778 L8.74536094,17.6337778 L8.74536094,9.99822222 L6.37134709,
+            9.99822222 L6.37134709,17.6337778 Z M18.8165488,4 L5.18078447,
+            4 C4.52950109,4 4,4.51674074 4,5.15377778 L4,18.8456296 C4,
+            19.4826667 4.52950109,20 5.18078447,20 L18.8165488,20 C19.4693137,
+            20 20,19.4826667 20,18.8456296 L20,5.15377778 C20,4.51674074 19.4693137,
+            4 18.8165488,4 L18.8165488,4 Z"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" id="copyLinkBtn9" title="Copy Link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" d="M7.7859,10.3591 C9.3999,8.7461 12.0259,
+            8.7461 13.6399,10.3591 L13.6399,10.3591 L14.0689,10.7891 L13.3619,
+            11.4961 L12.9329,11.0661 C11.7089,9.8451 9.7179,9.8431 8.4929,
+            11.0661 L8.4929,11.0661 L5.9199,13.6411 C5.3269,14.2331 4.9999,
+            15.0211 4.9999,15.8601 C4.9999,16.6991 5.3269,17.4871 5.9199,
+            18.0801 C7.1059,19.2661 9.1729,19.2661 10.3599,18.0801 L10.3599,
+            18.0801 L11.9429,16.4981 L12.6499,17.2051 L11.0669,18.7871 C10.2849,
+            19.5691 9.2459,20.0001 8.1399,20.0001 C7.0339,20.0001 5.9939,
+            19.5691 5.2129,18.7871 C4.4309,18.0061 3.9999,16.9661 3.9999,
+            15.8601 C3.9999,14.7551 4.4309,13.7151 5.2129,12.9341 L5.2129,
+            12.9341 Z M15.8606,3.9999 C16.9666,3.9999 18.0056,4.4309 18.7876,
+            5.2129 C19.5696,5.9939 19.9996,7.0339 19.9996,8.1399 C19.9996,9.2449 19.5696,
+            10.2849 18.7876,11.0669 L18.7876,11.0669 L16.2136,13.6409 C15.4066,
+            14.4469 14.3466,14.8509 13.2866,14.8509 C12.2266,14.8509 11.1666,
+            14.4469 10.3596,13.6409 L10.3596,13.6409 L9.9306,13.2109 L10.6376,
+            12.5039 L11.0666,12.9339 C12.2926,14.1569 14.2836,14.1579 15.5066,
+            12.9339 L15.5066,12.9339 L18.0806,10.3589 C18.6736,9.7669 18.9996,
+            8.9789 18.9996,8.1399 C18.9996,7.3009 18.6736,6.5129 18.0806,
+            5.9199 C16.8936,4.7339 14.8266,4.7339 13.6406,5.9199 L13.6406,
+            5.9199 L12.0576,7.5019 L11.3506,6.7949 L12.9336,5.2129 C13.7146,4.4309 14.7546,3.9999 15.8606,3.9999 Z"></path>
+          </svg>
+        </button>
+        <span class="copy-feedback" id="copyFeedback9">Copied!</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <!-- Accordion Header -->
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <a 
+        class="collapsed" 
+        data-toggle="collapse" 
+        data-parent=".faq-accordion" 
+        href="#faqCollapse10"
+        aria-expanded="false"
+         style="background-color: #ffffff;"
+      >
+        What does insurance mean on CDcare?
+        <span class="chevron">
+              <svg class="chevron-svg" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M18.2546728,8.18171329 L18.9617796,8.88882007 
+                L12.5952867,15.2537133 L12.5978964,15.2558012 L11.8907896,15.962908
+                 L11.8882867,15.9607133 L11.8874628,15.9617796 L11.180356,15.2546728 
+                 L11.1812867,15.2527133 L4.81828671,8.88882007 L5.52539349,8.18171329 
+                 L11.8882867,14.5457133 L18.2546728,8.18171329 Z"></path>
+              </svg>
+            </span>
+      </a>
+    </h4>
+  </div>
+
+  <!-- Accordion Body -->
+  <div id="faqCollapse10" class="panel-collapse collapse">
+    <div class="panel-body">
+      <p>The insurance policy on CDcare provides cover against damages incurred on the purchased product.</p>
+      <p>In the event of this occurrence, CDcare will either replace or repair the damaged product.</p>
+      <p>The insurance is 10% of the cost of the product.</p>
+
+      <!-- Social Share Bar -->
+      <div class="social-share">
+        <button class="social-btn" title="Share on Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20,12 C20,7.58171875 16.4182812,4 12,
+            4 C7.58171875,4 4,7.58171875 4,12 C4,15.9930312
+             6.92548437,19.3026562 10.75,19.9028125 L10.75,14.3125 L8.71875,14.3125
+              L8.71875,12 L10.75,12 L10.75,10.2375 C10.75,8.2325 11.9443437,7.125
+               13.7717187,7.125 C14.6469844,7.125 15.5625,7.28125 15.5625,7.28125
+                L15.5625,9.25 L14.5537187,9.25 C13.5599219,9.25 13.25,9.86667187
+                 13.25,10.4993281 L13.25,12 L15.46875,12 L15.1140625,14.3125
+                  L13.25,14.3125 L13.25,19.9028125 C17.0745156,19.3026562 20,15.9930312 20,12"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" title="Share on Twitter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13.303 10.771 19.123 4h-1.38L12.69 9.88 8.655 4H4l6.103 8.89L4
+             19.993h1.38l5.335-6.21 4.262 6.21h4.655l-6.33-9.22h.001Zm-1.889
+              2.198-.618-.885-4.92-7.045h2.118l3.97 5.686.619.885 5.16 7.39h-2.117l-4.212-6.03Z"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" title="Share on LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.6348754,17.6337778 L15.2626394,17.6337778 L15.2626394,13.9202963
+             C15.2626394,13.0346667 15.2469351,11.8957037 14.0294085,11.8957037 C12.7943998,11.8957037 
+             12.6059484,12.861037 12.6059484,13.8568889 L12.6059484,17.6337778 L10.2337124,17.6337778 
+             L10.2337124,9.99822222 L12.5099448,9.99822222 L12.5099448,11.0423704 L12.5425386,11.0423704
+              C12.8592911,10.4417778 13.633542,9.80888889 14.7879551,9.80888889 C17.1913034,9.80888889 17.6348754,11.3899259 
+              17.6348754,13.4459259 L17.6348754,17.6337778 Z M7.55835401,8.95496296 C6.79773325,8.95496296 6.18289566
+              ,8.33837037 6.18289566,7.57925926 C6.18289566,6.81925926 6.79773325,6.20266667 7.55835401,6.20266667
+               C8.31690063,6.20266667 8.93351606,6.81925926 8.93351606,7.57925926 C8.93351606,8.33837037
+                8.31690063,8.95496296 7.55835401,8.95496296 Z M6.37134709,17.6337778 L8.74536094,17.6337778 
+                L8.74536094,9.99822222 L6.37134709,9.99822222 L6.37134709,17.6337778 Z M18.8165488,4 
+                L5.18078447,4 C4.52950109,4 4,4.51674074 4,5.15377778 L4,18.8456296 C4,19.4826667 
+                4.52950109,20 5.18078447,20 L18.8165488,20 C19.4693137,20 20,19.4826667 20,18.8456296
+                 L20,5.15377778 C20,4.51674074 19.4693137,4 18.8165488,4 L18.8165488,4 Z"></path>
+          </svg>
+        </button>
+
+        <button class="social-btn" id="copyLinkBtn10" title="Copy Link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" d="M7.7859,10.3591 C9.3999,8.7461 12.0259,8.7461
+             13.6399,10.3591 L13.6399,10.3591 L14.0689,10.7891 L13.3619,11.4961 L12.9329,11.0661
+              C11.7089,9.8451 9.7179,9.8431 8.4929,11.0661 L8.4929,11.0661 L5.9199,
+              13.6411 C5.3269,14.2331 4.9999,15.0211 4.9999,15.8601 C4.9999,16.6991
+               5.3269,17.4871 5.9199,18.0801 C7.1059,19.2661 9.1729,19.2661 10.3599,
+               18.0801 L10.3599,18.0801 L11.9429,16.4981 L12.6499,17.2051 L11.0669,18.7871 
+               C10.2849,19.5691 9.2459,20.0001 8.1399,20.0001 C7.0339,20.0001 5.9939,19.5691
+                5.2129,18.7871 C4.4309,18.0061 3.9999,16.9661 3.9999,15.8601 C3.9999,14.7551
+                 4.4309,13.7151 5.2129,12.9341 L5.2129,12.9341 Z M15.8606,3.9999 C16.9666,
+                 3.9999 18.0056,4.4309 18.7876,5.2129 C19.5696,5.9939 19.9996,7.0339
+                  19.9996,8.1399 C19.9996,9.2449 19.5696,10.2849 18.7876,11.0669
+                   L18.7876,11.0669 L16.2136,13.6409 C15.4066,14.4469 14.3466,14.8509
+                    13.2866,14.8509 C12.2266,14.8509 11.1666,14.4469 10.3596,13.6409 
+                    L10.3596,13.6409 L9.9306,13.2109 L10.6376,12.5039 L11.0666,12.9339 
+                    C12.2926,14.1569 14.2836,14.1579 15.5066,12.9339 L15.5066,12.9339 
+                    L18.0806,10.3589 C18.6736,9.7669 18.9996,8.9789 18.9996,8.1399
+                     C18.9996,7.3009 18.6736,6.5129 18.0806,5.9199 C16.8936,4.7339
+                      14.8266,4.7339 13.6406,5.9199 L13.6406,5.9199 L12.0576,7.5019 
+                      L11.3506,6.7949 L12.9336,5.2129 C13.7146,4.4309 14.7546,3.9999 15.8606,3.9999 Z"></path>
+          </svg>
+        </button>
+        <span class="copy-feedback" id="copyFeedback10">Copied!</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<section>
+  <!-- See All FAQs Button -->
+  <a href="https://www.cdcare.ng/faq" class="btn-faq" aria-label="See all FAQs">
+    <span>See all FAQs</span>
+    <svg class="icon" viewBox="0 0 60 60" fill="currentColor" aria-hidden="true">
+      <path d="M46.5 28.9L20.6 3c-.6-.6-1.6-.6-2.2 0l-4.8 4.8c-.6.6-.6 1.6 0 2.2l19.8 20-19.9 19.9c-.6.6-.6 1.6 0 2.2l4.8 4.8c.6.6 1.6.6 2.2 0l21-21 4.8-4.8c.8-.6.8-1.6.2-2.2z"/>
+    </svg>
+  </a>
+
+<footer>
+  <div class="container">
+
+    <!-- ==== 4 × 4 SECTION ==== -->
+    <div class="row">
+
+      <!-- LOGO + TAGLINE + ADDRESS -->
+      <div class="col-md-3 col-sm-6 footer-col">
+        <div class="footer-logo">
+          <a href="https://www.cdcare.ng">
+            <img src="https://static.wixstatic.com/media/a499f3_0111102514fe45629396e5e79611a7e0~mv2.png/v1/fill/w_119,h_83,al_c,lg_1,q_85,enc_avif,quality_auto/a499f3_0111102514fe45629396e5e79611a7e0~mv2.png" alt="cdcare logo">
+          </a>
+        </div>
+        <p class="footer-tagline">
+          <a href="https://computerdoctor.ng/" target="_blank" style="color:#fff;text-decoration:none;">
+            "We empower Africans to own easily using smart installments."
+          </a>
+        </p>
+        <br>
+        <br>
+        <p class="footer-address">
+          <a href="https://computerdoctor.ng/" target="_blank" style="color:#fff;text-decoration:none;">
+            6, Ike Asogwa Close, Anthony, Lagos.
+          </a>
+        </p>
+      </div>
+
+      <!-- COMPANY -->
+      <div class="col-md-3 col-sm-6 footer-col footer-links">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="https://www.cdcare.ng/about" target="_self">About us</a></li>
+          <li><a href="https://www.cdcare.ng/contact" target="_self">Contact us</a></li>
+          <li><a href="https://www.cdcare.ng/testimonial" target="_self">Testimonials</a></li>
+          <li><a href="https://www.cdcare.ng/enquiry-pickupcentres" target="_self">Enquiry/Pick Up Centres</a></li>
+        </ul>
+      </div>
+
+      <!-- BUSINESS -->
+      <div class="col-md-3 col-sm-6 footer-col footer-links">
+        <h5>Business</h5>
+        <ul>
+          <li><a href="https://app.cdcare.ng/Home" target="_blank">Shop on web</a></li>
+          <li><a href="http://cdcare.page.link/downloadcdcare" target="_blank">Get the app</a></li>
+          <li><a href="https://www.cdcare.ng/faq" target="_self">Help and FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- TERMS OF SERVICE -->
+      <div class="col-md-3 col-sm-6 footer-col footer-links">
+        <h5>Terms of Service</h5>
+        <ul>
+          <li><a href="https://www.cdcare.ng/terms-of-use" target="_self">Terms of Use</a></li>
+          <li><a href="https://www.cdcare.ng/cdcare-terms-and-conditions" target="_self">Terms and Conditions</a></li>
+          <li><a href="https://www.cdcare.ng/cdcare-app-privacy-policy" target="_self">Privacy Policy</a></li>
+          <li><a href="https://www.cdcare.ng/proprietory-right" target="_self">Proprietary Rights</a></li>
+          <li><a href="https://www.cdcare.ng/after-sales" target="_self">After sales Support &amp; General Warranty</a></li>
+        </ul>
+      </div>
+
+    </div>
+    <!-- ==== END 4 × 4 ==== -->
+<br>
+
+    <!-- ==== 6 × 6 SECTION (Chat + Badges) ==== -->
+    <div class="row">
+
+      <!-- EMPTY SPACE (6 cols) -->
+      <div class="col-md-6 hidden-sm hidden-xs"></div>
+
+      <!-- CHAT BUBBLE + APP BADGES (right-aligned with Terms column) -->
+      <div class="col-md-6 col-sm-12">
+
+        <div class="row">
+          <!-- Chat bubble -->
+          <div class="col-xs-6 text-right">
+            
+          </div>
+
+     
+        </div>
+
+      </div>
+    </div>
+    <!-- ==== END 6 × 6 ==== -->
+
+
+    <!-- ==== CONTACT + SOCIAL (still 4-col layout, placed under the 4×4) ==== -->
+    <div class="row">
+      <div class="col-md-3 col-sm-6 footer-col">
+        <p><a href="mailto:hello@cdcare.ng" style="color:#fff;text-decoration:underline;">hello@cdcare.ng</a></p>
+        <p><a href="https://caller.frecall.com/?roomId=wOYEtUdUBrRBq4ybBYXp&amp;userId=id" target="_blank" style="color:#fff;text-decoration:underline;">Call us on frecall - toll free</a></p>
+        <p><a href="tel:02012297900" style="color:#fff;text-decoration:underline;">0707-460-3897, 0707-445-2992</a></p>
+      </div>
+
+      <div class="col-md-9 col-sm-6">
+      
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8">
+          <div class="social-icons">
+          <a href="https://www.youtube.com/@cdcaremarketplace3881" target="_blank" aria-label="YouTube"><img src="https://static.wixstatic.com/media/11062b_c67939a99eaf442d95d3f851857ceedf~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_c67939a99eaf442d95d3f851857ceedf~mv2.png" alt="YouTube"></a>
+          <a href="https://www.tiktok.com/@cdcare_ng?_t=8YO6btUNEY9&amp;_r=1" target="_blank" aria-label="TikTok"><img src="https://static.wixstatic.com/media/11062b_7edd292d29b34c309100535a26dc5033~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_7edd292d29b34c309100535a26dc5033~mv2.png" alt="TikTok"></a>
+          <a href="https://www.linkedin.com/company/cdcare/" target="_blank" aria-label="LinkedIn"><img src="https://static.wixstatic.com/media/11062b_7dcffe5daf2944b7be0a46ac6d472634~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_7dcffe5daf2944b7be0a46ac6d472634~mv2.png" alt="LinkedIn"></a>
+          <a href="https://twitter.com/CDcareNG" target="_blank" aria-label="Twitter"><img src="https://static.wixstatic.com/media/11062b_2533d1d4c31245408717d17b946bc8d8~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_2533d1d4c31245408717d17b946bc8d8~mv2.png" alt="Twitter"></a>
+          <a href="https://www.facebook.com/cdcareng" target="_blank" aria-label="Facebook"><img src="https://static.wixstatic.com/media/11062b_f4e3e7f537ff4762a1914aa14e3e36b9~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_f4e3e7f537ff4762a1914aa14e3e36b9~mv2.png" alt="Facebook"></a>
+          <a href="https://www.instagram.com/cdcare_ng/?hl=en" target="_blank" aria-label="Instagram"><img src="https://static.wixstatic.com/media/11062b_603340b7bcb14e7785c7b65b233cd9f9~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_603340b7bcb14e7785c7b65b233cd9f9~mv2.png" alt="Instagram"></a>
+          <a href="https://www.cdcare.app/Chat" target="_blank">
+              <img src="https://static.wixstatic.com/media/a499f3_6b91d6e82daf41a6bca36f33a992f519~mv2.png/v1/fill/w_38,h_38,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Component%201%20(2).png" alt="Chat with us" class="chat-bubble">
+            </a>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+            <!-- App badge (Google Play) -->
+          <div class="col-xs-4 text-right">
+            <a href="https://play.google.com/store/apps/details?id=com.nipek.cdcare&amp;hl=en" target="_blank">
+              <img src="https://static.wixstatic.com/media/a499f3_9a2de122017846b7b15916213258fe0d~mv2.png/v1/fill/w_119,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Google%20Play%20Download_edited.png" alt="Google Play" class="app-badges">
+            </a>
+          </div>
+
+          <!-- App badge (App Store) -->
+          <div class="col-xs-4 text-right">
+            <a href="https://apps.apple.com/ng/app/cdcare/id1500264724" target="_blank">
+              <img src="https://static.wixstatic.com/media/a499f3_3f05240be5c1469796198cb43d443a22~mv2.png/v1/fill/w_119,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Apple%20Store%20Download_edited_edited.png" alt="App Store" class="app-badges">
+            </a>
+          </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+      <div class="col-md-12 copyright">
+        Copyright © 2025 CDcare Inc.
+      </div>
+    </div>
+
+  </div>
+</footer>
+<button class="chat-btn" id="chatToggle">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <path d="M21.133 16.933a1.4 1.4 0 11.001-2.8 1.4 1.4 0 010 2.8m-4.667 0a1.4 1.4 0 110-2.8 1.4 1.4 0 010 2.8m-5.6 0a1.4 1.4 0 110-2.8 1.4 1.4 0 010 2.8m18.904-3.656c-1.013-5.655-5.753-10.22-11.528-11.105-4.343-.667-8.642.627-11.807 3.547-3.168 2.917-4.763 7.043-4.38 11.318.59 6.582 6.08 11.952 12.768 12.487 1.153.095 2.303.05 3.428-.13a14.12 14.12 0 002.428-.612.59.59 0 01.364-.006l3.714 1.167c.785.246 1.588-.331 1.588-1.144l-.002-3.517c0-.17.086-.301.157-.38a14.028 14.028 0 001.58-2.147c1.705-2.862 2.29-6.14 1.69-9.478" fill="currentColor" fill-rule="nonzero"></path>
+    </svg>
+    <span>Let's Chat!</span>
+  </button>
+<script>
+
+</script>
+
+<!-- jQuery + Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

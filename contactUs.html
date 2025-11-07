@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- Bootstrap 3 CSS (Glyphicons included) -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <!-- Font Awesome 4.7.0 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Contact Us</title>
+    <style>
+         /* === HEADER === */
+    header {
+      font-family: sans-serif;
+      background: #fff;
+      padding: 1px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    
+    }
+    .header-content { display: flex; align-items: center; flex-grow: 1;margin-left: 100px; }
+    .logo-container { display: flex; align-items: center; gap: 12px; margin-left: 100px; }
+    .logo-img { width: 44px; height: 44px; object-fit: cover; border-radius: 50%; }
+    .site-title { font-size: 32px; font-weight: 400; color: #00008b; }
+    nav ul { list-style: none; display: flex; gap: 27px; flex-wrap: wrap; }
+    nav a { text-decoration: none; color: darkblue; font-size: 12px; padding: 8px 0; transition: color 0.3s; }
+    nav a:hover { color: #ffa500; font-weight: 500; }
+    .contact-info { font-size: 10px; color: #555; margin-left: 1000px; margin-top: 0px; }
+    .contact-info a { color: #061754; text-decoration: underline; }
+    .contact-info a:hover { color: #000; }
+
+    /* Dropdown */
+    .more-menu { position: relative; }
+    .more-menu:hover .dropdown { display: block; }
+    .dropdown {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: white; border: 1px solid #eee; border-radius: 4px;
+      min-width: 160px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 100;
+    }
+    .dropdown li { padding: 8px 12px; }
+    .dropdown a { font-size: 14px; }
+
+    .support-text{
+        text-align: center;
+        color: #0000ff;
+        line-height: 1.57;
+        word-spacing: 5.57px;
+    }
+    .form{
+        line-height: 2.57;
+        margin-left: 50px;
+    }
+    .send-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 1px 20px;
+      font-family: inherit;
+      font-size: 16px;
+      color: white;
+      background-color: #007bff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    .send-button:hover {
+      background-color: #ffa500;
+    }
+
+    .send-button:active {
+      transform: scale(0.98);
+    }
+
+    .send-button:focus-visible {
+      outline: 2px solid #4dabf7;
+      outline-offset: 2px;
+    }
+
+    .arrow-icon {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+.contact-section {
+      padding: 60px 0;
+      background-color: #ffffff;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: #464c53;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .form-control {
+      border-radius: 4px;
+      height: 45px;
+      font-size: 14px;
+    }
+
+    .form-control:focus {
+      border-color: #2764ED;
+      box-shadow: 0 0 0 2px rgba(39, 100, 237, 0.2);
+    }
+
+    .btn-send {
+      background-color: #2764ED;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-weight: 500;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-send:hover {
+      background-color: #1e50c7;
+      color: white;
+    }
+
+    .btn-send .arrow {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    .contact-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin-bottom: 25px;
+      padding: 15px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .contact-card:hover {
+      background-color: #f5f7fa;
+    }
+
+    .contact-icon {
+      width: 62px;
+      height: 62px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .contact-title {
+      font-size: 17px;
+      margin: 0 0 4px 0;
+      color: #131c2c;
+      font-weight: normal;
+    }
+
+    .contact-desc {
+      font-size: 12px;
+      color: #131c2c;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .contact-link {
+      font-size: 14px;
+      color: #2764ED;
+      text-decoration: underline;
+      font-weight: 400;
+    }
+
+    .contact-link:hover {
+      color: #1a4fb8;
+    }
+
+    @media (max-width: 768px) {
+      .contact-card {
+        flex-direction: column;
+        text-align: center;
+      }
+      .contact-icon {
+        align-self: center;
+      }
+    }
+    </style>
+</head>
+<body>
+    <header>
+  <div class="header-content">
+    <div class="logo-container">
+      <a href="https://www.cdcare.ng">
+        <img src="https://static.wixstatic.com/media/a499f3_ae963ed81cf24fd3815ded55ea00bd1b~mv2.png/v1/fill/w_44,h_44,al_c,q_85,enc_avif/Untitled%20(100%20%C3%97%20100%20px)%20(80%20%C3%97%2080%20px)%20(1).png" 
+             alt="CDcare Logo" class="logo-img">
+      </a>
+      <h1 class="site-title">CDcare</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="#">About us</a></li>
+        <li><a href="#">CDcare Promo</a></li>
+        <li><a href="contactUs.html">Contact Us</a></li>
+        <li><a href="#">Shipping & Delivery</a></li>
+        <li><a href="#">Return & Refund</a></li>
+        <li><a href="#">Enquiry/Pick Up</a></li>
+        <li class="more-menu">
+          <a href="#">More...</a>
+          <ul class="dropdown">
+            <li><a href="#">Cars</a></li>
+            <li><a href="#">Sign Up</a></li>
+            <li><a href="#">Testimonials</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="contact-info">
+    <section>
+      Feel free to call us <i class="fa fa-phone"></i> 
+      <a href="tel:">Toll free call</a> <i class="fa fa-envelope"></i>
+      <a href="mailto:hello@cdcare.ng">hello@cdcare.ng</a>
+    </section>
+  </div>
+</header>
+
+<section class="container">
+    <h1  class="support-text">
+        Our Support Team is always <br> here to help you.
+    </h1>
+</section>
+
+<div>
+    <img src="./Assets/support team.jpg" alt="" style="margin-left: 15%;margin-top: 10px;">
+</div>
+<br><br><br>
+ 
+<section class="contact-section">
+  <div class="container">
+    <div class="row">
+
+      <!-- Left: Contact Form -->
+      <div class="col-md-6">
+        <h2 class="section-title">We would love to hear from you</h2>
+
+        <form>
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" class="form-control" id="fullName" placeholder="Enter Full name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter Email Address" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" class="form-control" id="phone" placeholder="Enter Phone Number" required>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <input type="text" class="form-control" id="message" placeholder="What would you like to tell us?" required>
+          </div>
+
+          <button type="submit" class="btn btn-send">
+            Send message
+            <svg class="arrow" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 0 6.59 1.41 12.17 7H0v2h12.17l-5.58 5.59L8 16l8-8-8-8z"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Right: Contact Options -->
+      <div class="col-md-6">
+        <div class="contact-card">
+          <img src="https://static.wixstatic.com/media/a499f3_577113d4a60e417abbcf3d9bc68abeb5~mv2.png/v1/fill/w_60,h_51,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Group%20256.png" 
+               srcset="https://static.wixstatic.com/media/a499f3_577113d4a60e417abbcf3d9bc68abeb5~mv2.png/v1/fill/w_60,h_51,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Group%20256.png 1x,
+                       https://static.wixstatic.com/media/a499f3_577113d4a60e417abbcf3d9bc68abeb5~mv2.png/v1/fill/w_120,h_102,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Group%20256.png 2x"
+               alt="Live Chat Icon" class="contact-icon">
+          <div>
+            <h3 class="contact-title">Live Chat</h3>
+            <p class="contact-desc">For the fastest response, reach us through our</p>
+            <a href="https://www.cdcare.app/Chat" target="_blank" rel="noopener" class="contact-link">Live Chat</a>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <img src="https://static.wixstatic.com/media/a499f3_fd13b73789134924b4e07cab5dc15eb1~mv2.png/v1/fill/w_62,h_62,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a499f3_fd13b73789134924b4e07cab5dc15eb1~mv2.png" 
+               alt="Email Icon" class="contact-icon">
+          <div>
+            <h3 class="contact-title">Email</h3>
+            <p class="contact-desc">Send us a message at</p>
+            <a href="mailto:hello@cdcare.ng" class="contact-link">hello@cdcare.ng</a>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <img src="https://static.wixstatic.com/media/a499f3_7ba7a08a120e4cbfa3413f4c9ee84e16~mv2.png/v1/fill/w_62,h_62,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/office%20icon.png" 
+               alt="Office Icon" class="contact-icon">
+          <div>
+            <h3 class="contact-title">Our Office</h3>
+            <p class="contact-desc">You can visit us at our office headquarter.</p>
+            <p style="margin:0; font-size:14px; color:#2764ED;">
+              6A, Ike Asogwa Close, Anthony, Lagos.
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <img src="https://static.wixstatic.com/media/a499f3_163c9abdbf344d29b1589d87f1bdb096~mv2.png/v1/fill/w_62,h_62,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/call%20icon_.png" 
+               alt="Call Icon" class="contact-icon">
+          <div>
+            <h3 class="contact-title">Toll Free Call</h3>
+            <p class="contact-desc">You can reach out via call any day, anytime.</p>
+            <a href="https://caller.frecall.com/?roomId=wOYEtUdUBrRBq4ybBYXp&userId=id" target="_blank" rel="noopener" class="contact-link">
+              Toll - Free - Call - Line
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>
