@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us ⎮ CDcare</title>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+            /* === HEADER === */
+    header {
+      font-family: sans-serif;
+      background: #fff;
+      padding: 1px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    
+    }
+    .header-content { display: flex; align-items: center; flex-grow: 1;margin-left: 100px; }
+    .logo-container { display: flex; align-items: center; gap: 12px; margin-left: 100px; }
+    .logo-img { width: 44px; height: 44px; object-fit: cover; border-radius: 50%; }
+    .site-title { font-size: 32px; font-weight: 400; color: #00008b; }
+    nav ul { list-style: none; display: flex; gap: 27px; flex-wrap: wrap; }
+    nav a { text-decoration: none; color: darkblue; font-size: 12px; padding: 8px 0; transition: color 0.3s; }
+    nav a:hover { color: #ffa500; font-weight: 500; }
+    .contact-info { font-size: 10px; color: #555; margin-left: 1000px; margin-top: 0px; }
+    .contact-info a { color: #061754; text-decoration: underline; }
+    .contact-info a:hover { color: #000; }
+
+    /* Dropdown */
+    .more-menu { position: relative; }
+    .more-menu:hover .dropdown { display: block; }
+    .dropdown {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: white; border: 1px solid #eee; border-radius: 4px;
+      min-width: 160px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 100;
+    }
+    .dropdown li { padding: 8px 12px; }
+    .dropdown a { font-size: 14px; }
+    
+    /* === IMAGE STYLING FOR OVERLAP === */
+    .image-container {
+        /* Set the container to position: relative to allow for absolute positioning of children */
+        position: relative;
+        /* Ensures the container has height, important for when children are absolute */
+        height: 380px; /* Adjust height as needed to fit the content */
+        margin-top: 50px; /* Add some margin above the images */
+    }
+    .image-container img {
+        /* Base image style */
+        display: block;
+        width: 70%;
+        height: auto;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* Add shadow for depth */
+    }
+    .image-group-1 {
+        /* The main top image */
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 65%; /* Smaller width for the top image */
+        z-index: 10; /* Ensure it's above the second image if they overlap this way */
+    }
+    .image-group-2 {
+        position: absolute;
+        top: 60%;
+        bottom: 0; /* Position near the bottom */
+        left: 0; /* Aligned to the left edge */
+        width: 70%; /* Adjust width */
+        z-index: 20; /* Ensure it overlaps the first image */
+        /* Overlap effect: move up and right relative to its bottom-left position */
+        transform: translate(15%, -15%); /* Move right by 15% of its width, and up by 15% of its height */
+          padding: 10px; /* Optional: padding around the image */
+        border-radius: 4px; /* Optional: border radius */
+    }
+
+     footer {
+      background:#072354;
+      color:#fff;
+      padding:30px 0 20px;
+      font-family:'Inter',Helvetica,Arial,sans-serif;
+      font-size:12px;
+      line-height:2.67;
+      display: flex;
+      flex-direction: center;
+      align-items: center;
+    }
+    .footer-logo img{height:83px;width:auto;object-fit:contain}
+    .footer-tagline,.footer-address{color:#fff;margin:10px 0}
+    .footer-links h5{color:#93999f;font-size:12px;margin-bottom:15px;}
+    .footer-links ul{list-style:none;padding:0;margin:0;line-height: 5.17;}
+    .footer-links ul li{margin-bottom:8px}
+    .footer-links ul li a{color:#fff;text-decoration:underline}
+    .social-icons{display:flex;gap:12px;margin:20px 0}
+    .social-icons img{width:39px;height:39px;object-fit:contain;transition:transform .2s}
+    .social-icons img:hover{transform:scale(1.1)}
+    .chat-bubble img{width:38px;height:38px}
+    .app-badges img{height:35px;margin-right:8px}
+    .divider{border-top:1px solid #ffffff;margin:25px 0}
+    .copyright{color:#93999f;font-size:12px;font-style:italic;text-align:left}
+    @media (max-width:768px){
+      .footer-col{margin-bottom:30px}
+      .social-icons{justify-content:center}
+      .app-badges{text-align:center}
+    }
+
+    /* --- Stats Section Styling --- */
+.stats-section {
+    padding: 30px 20px;
+}
+    .stats-container {
+    /* Flexbox for layout */
+    display: flex;
+    /* Distribute items evenly in the available space */
+    justify-content: space-around;
+    /* Allow items to wrap on smaller screens */
+    flex-wrap: wrap; 
+    /* Max width to keep content centered on large screens */
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* --- Individual Stat Item Styling --- */
+.stat-item {
+    text-align: center;
+    padding: 20px 10px;
+    /* Allows items to grow/shrink, ensuring they are even */
+    flex: 1 1 200px; /* grow | shrink | basis (minimum width) */
+    min-width: 150px; /* Ensures they don't get too small */
+}
+.stat-number {
+    /* Mimicking the large, orange number style */
+    font-size: 30px;
+    line-height: 1.34em;
+    color: #FA7A18; /* The orange color from the original code */
+    font-weight: 500; /* Heavy/Bold font weight */
+    margin: 0 0 5px 0; /* Remove default margin and add slight bottom spacing */
+}
+.stat-description {
+    /* Mimicking the smaller, dark text style */
+    font-size: 14px;
+    line-height: 1.67em;
+    color: #131c2c; /* Dark text color */
+    margin: 0;
+    text-transform: capitalize;
+}
+/* --- Responsiveness for Smaller Screens (Mobile) --- */
+@media (max-width: 600px) {
+    .stats-container {
+        /* On small screens, stack two items per row */
+        justify-content: space-between;
+    }
+    .stat-item {
+        /* Make items take roughly half the width */
+        flex: 1 1 45%; 
+    }
+}
+
+  /* Brand Colors */
+        .text-brand {
+            color: #2764ED;
+        }
+
+        /* Spacing Utilities (since BS3 lacks them) */
+        .section-padding {
+            padding: 60px 0;
+        }
+        .mb-20 { margin-bottom: 20px; }
+        .mb-40 { margin-bottom: 40px; }
+        .mt-20 { margin-top: 20px; }
+
+        /* Typography Overrides */
+        h1.hero-title {
+            font-size: 36px; /* 50px in source is very large for mobile, scaled slightly */
+            font-weight: normal;
+        }
+        
+        h2.section-title {
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        /* Image handling */
+        .hero-img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        .team-img {
+            width: 268px;
+            height: 285px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin: 0 auto 20px auto; /* Center image */
+        }
+
+        /* Vision & Mission Strip */
+        .bg-light-blue {
+     
+            border-top: 1px #eee;
+            border-bottom: 1px #eee;
+        }
+     .cdcare-text-block {
+        text-align: center;
+    }
+
+    .cdcare-text-block h5 {
+        font-size: 24px;
+        line-height: 1.34em;
+        color: #131C2C;
+        font-weight: normal;
+        margin: 0;
+        font-family: "Cinagéo Medium", Arial, sans-serif;
+    }
+
+        /* Media Queries for specific responsiveness */
+        @media (min-width: 992px) {
+            h1.hero-title {
+                font-size: 48px; /* Restore larger size on desktop */
+            }
+            .hero-img {
+                margin-bottom: 0;
+            }
+        }
+        .testimonial-box{
+            background: white;
+            padding: 20px;
+        border-radius: 6px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.08);
+        margin-bottom: 30px;
+        min-height: 250px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+  <div class="header-content">
+    <div class="logo-container">
+      <a href="https://www.cdcare.ng">
+        <img src="https://static.wixstatic.com/media/a499f3_ae963ed81cf24fd3815ded55ea00bd1b~mv2.png/v1/fill/w_44,h_44,al_c,q_85,enc_avif/Untitled%20(100%20%C3%97%20100%20px)%20(80%20%C3%97%2080%20px)%20(1).png" 
+             alt="CDcare Logo" class="logo-img">
+      </a>
+      <h1 class="site-title">CDcare</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="AboutUs.html">About us</a></li>
+        <li><a href="#">CDcare Promo</a></li>
+        <li><a href="contactUs.html">Contact Us</a></li>
+        <li><a href="#">Shipping & Delivery</a></li>
+        <li><a href="#">Return & Refund</a></li>
+        <li><a href="#">Enquiry/Pick Up</a></li>
+        <li class="more-menu">
+          <a href="#">More...</a>
+          <ul class="dropdown">
+            <li><a href="#">Cars</a></li>
+            <li><a href="#">Sign Up</a></li>
+            <li><a href="#">Testimonials</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="contact-info">
+    <section>
+      Feel free to call us <i class="fa fa-phone"></i> 
+      <a href="tel:">Toll free call</a> <i class="fa fa-envelope"></i>
+      <a href="mailto:hello@cdcare.ng">hello@cdcare.ng</a>
+    </section>
+  </div>
+</header>
+
+<section class="container" style="margin-right: 50px;">
+    <div class="row">
+        <div class="col-sm-6">
+            <span style="color: #0000ff; font-size: 40px;font-weight: 500;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;">
+                    The smartest way to <br>
+                    buy anything in <br> Africa
+            </span>
+            <br>
+            <br>
+            <p style="font-family: Verdana, Geneva, Tahoma, sans-serif;line-height: 2.5;
+            font-weight: 700;"
+            >
+                     CDcare is Nigeria's leading “Pay-Small-Small” shopping platform,
+                     built to make quality products affordable for everyday people.
+                     We help Nigerians own the things they need, from gadgets and home
+                     appliances to cars and more, by letting them pay gradually at normal market prices, 
+                     with zero interest.
+            </p>
+            <br>
+            <p  style="font-family: Verdana, Geneva, Tahoma, sans-serif;line-height: 2.5;
+            font-weight: 700;"
+            >
+                 CDcare was founded with a mission to make financial convenience part of everyday life,
+                 we combines fintech innovation and e-commerce efficiency to deliver a simple,
+                  trustworthy way to shop responsibly.
+            </p>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="image-container">
+                <span class="image-group-1">
+                    <img src="./Assets/AboutUs1.jpg" alt="Person loading goods into a vehicle">
+                </span>
+                
+                <span class="image-group-2">
+                    <img src="./Assets/AboutUs2.jpg" alt="Team members looking at a tablet">
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="stats-section">
+    <div class="stats-container" style="justify-content: center;">
+        <div class="stat-item">
+            <h5 class="stat-number">30k+</h5>
+            <p class="stat-description">Number of items sold</p>
+        </div>
+
+        <div class="stat-item">
+            <h5 class="stat-number">13k+</h5>
+            <p class="stat-description">Total active customers</p>
+        </div>
+
+        <div class="stat-item">
+            <h5 class="stat-number">50+</h5>
+            <p class="stat-description">Number of merchants</p>
+        </div>
+
+        <div class="stat-item">
+            <h5 class="stat-number">36</h5>
+            <p class="stat-description">Delivers to all states</p>
+        </div>
+    </div>
+</section>
+
+ <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                 <img src="./Assets/CDCARE TEAM.jpg" 
+                         alt="CDcare Team" 
+                         class="img-responsive hero-img">
+                         <br><br>
+                <!-- Left Column: Image -->
+                <div class="col-md-6">
+                   <h1 class="hero-title text-brand mb-20">
+                        CDcare is the smartest way to buy and pay small small with no interest
+                    </h1>
+                </div>
+
+                <!-- Right Column: Text Content -->
+                <div class="col-md-6">
+                    <div class="content-block mb-40" style="line-height: 1.56;">
+                        <p>We grew up in the average Nigerian family where it took painfully saving for a period of time before simple house-hold appliances could be acquired. One of us waited for months for his mother to save for his first laptop and also realized that many Nigerian families also go through the same arduous circle.</p>
+                        <p>He realized that this is a big problem that he wanted to solve. After iterating different solutions to the problem over 10 years, CDcare was founded as the best solution to the Africans inability to easily pay in one lump-sum for items. CDcare is the smartest way to buy in Africa today and we are happy to give Africans the power to own.</p>
+                    </div>
+
+                    <!-- Structure -->
+                    <div class="content-block mb-40" style="line-height: 2.50;">
+                        <h3>Our Structure</h3>
+                        <p>
+                            <strong>CDcare Limited (RC 1844274)</strong> manages customer relationships, product listings, and nationwide deliveries.<br>
+                            <strong>Emaxie Limited (RC 1615996)</strong> builds and operates the CDcare App and technology infrastructure.<br>
+                            Both companies are fully registered in Nigeria and operate together to deliver the CDcare experience you trust.
+                        </p>
+                    </div>
+
+                    <!-- Model -->
+                    <div class="content-block mb-40" style="line-height: 2.50;">
+                        <h3>Our Model in Brief</h3>
+                        <ol>
+                            <li>Customers choose the product they want on the CDcare App or website.</li>
+                            <li>They select a payment plan that fits their budget.</li>
+                            <li>CDcare ships the item at the mid point of selected installment (both in payment and duration).</li>
+                            <li>Customers complete their remaining installment payments after delivery, within the same time frame as if they had paid before delivery.</li>
+                        </ol>
+                        <p>This “pay small small” model helps users stay debt-free while enjoying genuine, high-quality products.</p>
+                    </div>
+
+                    <!-- Value -->
+                    <div class="content-block" style="line-height: 2.50;">
+                        <h3>Our Value</h3>
+                        <ul>
+                            <li><strong>Transparency:</strong> clear pricing, zero hidden charges.</li>
+                            <li><strong>Trust:</strong> only original products from verified vendors.</li>
+                            <li><strong>Accessibility:</strong> everyone deserves access to quality products.</li>
+                            <li><strong>Empowerment:</strong> helping individuals and families build better lives responsibly.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VISION & MISSION SECTION -->
+    <section class="section-padding bg-light-blue">
+        <div class="container">
+            
+                <!-- Vision -->
+                <div class="text-center">
+                    <h2 class="section-title text-brand">Our Vision</h2>
+                    <div class="cdcare-text-block">
+                                <h5>
+                                             To make CDcare the choicest Pan-African <br>
+                                            household brand for installmental payment
+                                 </h5>
+                                 <br>
+                                 <p>
+                                    while making a good standard of living accessible for every income earner <br>
+                                     across every corporate and non-corporate sector of employment in  <br> Africa.
+                                 </p>
+                </div>
+                <br>
+                <!-- Mission -->
+                <div class="text-center">
+                    <h2 class="section-title text-brand">Our Mission</h2>
+                  <div class="cdcare-text-block">
+                    <h5>
+                         To make ownership simple, affordable, and <br>
+                         stress-free for every Nigerian, by helping people <br>
+                         buy what they need without paying <br>
+                          extra interest or hidden fees.
+                    </h5>
+                  </div>
+                        
+                </div>
+           
+        </div>
+    </section>
+
+    <!-- LEADERSHIP SECTION -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <h2 class="section-title text-brand">Meet Our Leadership</h2>
+                </div>
+            </div>
+
+            <div class="row mt-20">
+                <!-- Leader 1 -->
+                <div class="col-sm-6 text-center mb-40">
+                    <img src="./Assets/Odukoya.jpg" 
+                         alt="Odukoya Oluwatobi" 
+                         class="img-responsive img-circle team-img">
+                    <h3>Odukoya Oluwatobi</h3>
+                    <p class="text-muted">Founder and Chief Executive Officer</p>
+                </div>
+
+                <!-- Leader 2 -->
+                <div class="col-sm-6 text-center mb-40">
+                    <img src="./Assets/Farohun.jpg" 
+                         alt="Farohun Ayodeji" 
+                         class="img-responsive img-circle team-img">
+                    <h3>Farohun Ayodeji</h3>
+                    <p class="text-muted">Co-founder and Chief Operation Officer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" xintegrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" xintegrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+
+
+
+
+<br><br><br>
+<footer>
+  <div class="container">
+
+    <!-- ==== 4 × 4 SECTION ==== -->
+    <div class="row">
+
+      <!-- LOGO + TAGLINE + ADDRESS -->
+      <div class="col-md-3 col-sm-6 footer-col">
+        <div class="footer-logo">
+          <a href="https://www.cdcare.ng">
+            <img src="https://static.wixstatic.com/media/a499f3_0111102514fe45629396e5e79611a7e0~mv2.png/v1/fill/w_119,h_83,al_c,lg_1,q_85,enc_avif,quality_auto/a499f3_0111102514fe45629396e5e79611a7e0~mv2.png" alt="cdcare logo">
+          </a>
+        </div>
+        <p class="footer-tagline">
+          <a href="https://computerdoctor.ng/" target="_blank" style="color:#fff;text-decoration:none;">
+            "We empower Africans to own easily using smart installments."
+          </a>
+        </p>
+        <br>
+        <br>
+        <p class="footer-address">
+          <a href="https://computerdoctor.ng/" target="_blank" style="color:#fff;text-decoration:none;">
+            6, Ike Asogwa Close, Anthony, Lagos.
+          </a>
+        </p>
+      </div>
+
+      <!-- COMPANY -->
+      <div class="col-md-3 col-sm-6 footer-col footer-links">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="https://www.cdcare.ng/about" target="_self">About us</a></li>
+          <li><a href="https://www.cdcare.ng/contact" target="_self">Contact us</a></li>
+          <li><a href="https://www.cdcare.ng/testimonial" target="_self">Testimonials</a></li>
+          <li><a href="https://www.cdcare.ng/enquiry-pickupcentres" target="_self">Enquiry/Pick Up Centres</a></li>
+        </ul>
+      </div>
+
+      <!-- BUSINESS -->
+      <div class="col-md-3 col-sm-6 footer-col footer-links">
+        <h5>Business</h5>
+        <ul>
+          <li><a href="https://app.cdcare.ng/Home" target="_blank">Shop on web</a></li>
+          <li><a href="http://cdcare.page.link/downloadcdcare" target="_blank">Get the app</a></li>
+          <li><a href="https://www.cdcare.ng/faq" target="_self">Help and FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- TERMS OF SERVICE -->
+      <div class="col-md-3 col-sm-6 footer-col footer-links">
+        <h5>Terms of Service</h5>
+        <ul>
+          <li><a href="https://www.cdcare.ng/terms-of-use" target="_self">Terms of Use</a></li>
+          <li><a href="https://www.cdcare.ng/cdcare-terms-and-conditions" target="_self">Terms and Conditions</a></li>
+          <li><a href="https://www.cdcare.ng/cdcare-app-privacy-policy" target="_self">Privacy Policy</a></li>
+          <li><a href="https://www.cdcare.ng/proprietory-right" target="_self">Proprietary Rights</a></li>
+          <li><a href="https://www.cdcare.ng/after-sales" target="_self">After sales Support &amp; General Warranty</a></li>
+        </ul>
+      </div>
+
+    </div>
+    <!-- ==== END 4 × 4 ==== -->
+<br>
+
+    <!-- ==== 6 × 6 SECTION (Chat + Badges) ==== -->
+    <div class="row">
+
+      <!-- EMPTY SPACE (6 cols) -->
+      <div class="col-md-6 hidden-sm hidden-xs"></div>
+
+      <!-- CHAT BUBBLE + APP BADGES (right-aligned with Terms column) -->
+      <div class="col-md-6 col-sm-12">
+
+        <div class="row">
+          <!-- Chat bubble -->
+          <div class="col-xs-6 text-right">
+            
+          </div>
+
+     
+        </div>
+
+      </div>
+    </div>
+    <!-- ==== END 6 × 6 ==== -->
+
+
+    <!-- ==== CONTACT + SOCIAL (still 4-col layout, placed under the 4×4) ==== -->
+    <div class="row">
+      <div class="col-md-3 col-sm-6 footer-col">
+        <p><a href="mailto:hello@cdcare.ng" style="color:#fff;text-decoration:underline;">hello@cdcare.ng</a></p>
+        <p><a href="https://caller.frecall.com/?roomId=wOYEtUdUBrRBq4ybBYXp&amp;userId=id" target="_blank" style="color:#fff;text-decoration:underline;">Call us on frecall - toll free</a></p>
+        <p><a href="tel:02012297900" style="color:#fff;text-decoration:underline;">0707-460-3897, 0707-445-2992</a></p>
+      </div>
+
+      <div class="col-md-9 col-sm-6">
+      
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8">
+          <div class="social-icons">
+          <a href="https://www.youtube.com/@cdcaremarketplace3881" target="_blank" aria-label="YouTube"><img src="https://static.wixstatic.com/media/11062b_c67939a99eaf442d95d3f851857ceedf~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_c67939a99eaf442d95d3f851857ceedf~mv2.png" alt="YouTube"></a>
+          <a href="https://www.tiktok.com/@cdcare_ng?_t=8YO6btUNEY9&amp;_r=1" target="_blank" aria-label="TikTok"><img src="https://static.wixstatic.com/media/11062b_7edd292d29b34c309100535a26dc5033~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_7edd292d29b34c309100535a26dc5033~mv2.png" alt="TikTok"></a>
+          <a href="https://www.linkedin.com/company/cdcare/" target="_blank" aria-label="LinkedIn"><img src="https://static.wixstatic.com/media/11062b_7dcffe5daf2944b7be0a46ac6d472634~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_7dcffe5daf2944b7be0a46ac6d472634~mv2.png" alt="LinkedIn"></a>
+          <a href="https://twitter.com/CDcareNG" target="_blank" aria-label="Twitter"><img src="https://static.wixstatic.com/media/11062b_2533d1d4c31245408717d17b946bc8d8~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_2533d1d4c31245408717d17b946bc8d8~mv2.png" alt="Twitter"></a>
+          <a href="https://www.facebook.com/cdcareng" target="_blank" aria-label="Facebook"><img src="https://static.wixstatic.com/media/11062b_f4e3e7f537ff4762a1914aa14e3e36b9~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_f4e3e7f537ff4762a1914aa14e3e36b9~mv2.png" alt="Facebook"></a>
+          <a href="https://www.instagram.com/cdcare_ng/?hl=en" target="_blank" aria-label="Instagram"><img src="https://static.wixstatic.com/media/11062b_603340b7bcb14e7785c7b65b233cd9f9~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_603340b7bcb14e7785c7b65b233cd9f9~mv2.png" alt="Instagram"></a>
+          <a href="https://www.cdcare.app/Chat" target="_blank">
+              <img src="https://static.wixstatic.com/media/a499f3_6b91d6e82daf41a6bca36f33a992f519~mv2.png/v1/fill/w_38,h_38,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Component%201%20(2).png" alt="Chat with us" class="chat-bubble">
+            </a>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+            <!-- App badge (Google Play) -->
+          <div class="col-xs-4 text-right">
+            <a href="https://play.google.com/store/apps/details?id=com.nipek.cdcare&amp;hl=en" target="_blank">
+              <img src="https://static.wixstatic.com/media/a499f3_9a2de122017846b7b15916213258fe0d~mv2.png/v1/fill/w_119,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Google%20Play%20Download_edited.png" alt="Google Play" class="app-badges">
+            </a>
+          </div>
+
+          <!-- App badge (App Store) -->
+          <div class="col-xs-4 text-right">
+            <a href="https://apps.apple.com/ng/app/cdcare/id1500264724" target="_blank">
+              <img src="https://static.wixstatic.com/media/a499f3_3f05240be5c1469796198cb43d443a22~mv2.png/v1/fill/w_119,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Apple%20Store%20Download_edited_edited.png" alt="App Store" class="app-badges">
+            </a>
+          </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+      <div class="col-md-12 copyright">
+        Copyright © 2025 CDcare Inc.
+      </div>
+    </div>
+
+  </div>
+</footer>
+</body>
+</html>
