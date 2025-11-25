@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <!-- Bootstrap 3 CSS (Glyphicons included) -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <!-- Font Awesome 4.7.0 -->
+     <link rel="icon" href="./Assets/favicon_io (3)/favicon.ico">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <title>Contact Us</title>
     <style>
-         /* === HEADER === */
+    /* === HEADER === */
     header {
       font-family: sans-serif;
       background: #fff;
@@ -20,20 +19,24 @@
       align-items: center;
       flex-wrap: wrap;
       margin-bottom: 40px;
-    
+      /* FIX: Added position relative so the mobile menu aligns to the header */
+      position: relative; 
     }
     .header-content { display: flex; align-items: center; flex-grow: 1;margin-left: 100px; }
     .logo-container { display: flex; align-items: center; gap: 12px; margin-left: 100px; }
     .logo-img { width: 44px; height: 44px; object-fit: cover; border-radius: 50%; }
-    .site-title { font-size: 32px; font-weight: 400; color: #00008b; }
-    nav ul { list-style: none; display: flex; gap: 27px; flex-wrap: wrap; }
+    .site-title { font-size: 32px; font-weight: 400; color: #00008b;margin-right: 90px; }
+    nav ul { list-style: none; display: flex; gap: 27px; flex-wrap: wrap; padding: 0; margin: 0;margin-right: 90px; }
     nav a { text-decoration: none; color: darkblue; font-size: 12px; padding: 8px 0; transition: color 0.3s; }
     nav a:hover { color: #ffa500; font-weight: 500; }
-    .contact-info { font-size: 10px; color: #555; margin-left: 1000px; margin-top: 0px; }
+    .contact-info { font-size: 10px; color: #555; margin-left: auto; margin-top: 0px; padding-right: 20px; }
     .contact-info a { color: #061754; text-decoration: underline; }
     .contact-info a:hover { color: #000; }
 
-    /* Dropdown */
+    /* Hamburger Menu (Hidden on Desktop) */
+    .hamburger { display: none; font-size: 24px; color: #00008b; cursor: pointer; margin-right: 20px; }
+
+    /* Dropdown (Desktop) */
     .more-menu { position: relative; }
     .more-menu:hover .dropdown { display: block; }
     .dropdown {
@@ -44,6 +47,48 @@
     .dropdown li { padding: 8px 12px; }
     .dropdown a { font-size: 14px; }
 
+    /* === MOBILE RESPONSIVENESS === */
+    @media (max-width: 991px) {
+        header { justify-content: space-between; padding: 10px; }
+        .header-content { margin-left: 0; width: 100%; justify-content: space-between; }
+        .logo-container { margin-left: 10px; }
+        .contact-info { display: none; } /* Hide contact info on mobile */
+        
+        .hamburger { display: block; } /* Show Hamburger */
+
+        nav {
+            display: none; /* Hide nav by default */
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 20px;
+        }
+        
+        nav.nav-active { display: block; } /* JS toggles this class */
+        
+        nav ul {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+        
+        /* Mobile Dropdown adjustment */
+        .dropdown { 
+            position: static; /* Flows naturally in the list */
+            box-shadow: none; 
+            border: none; 
+            text-align: center; 
+            width: 100%; 
+            background-color: #f9f9f9;
+        }
+        .more-menu:hover .dropdown { display: block; }
+    }
+
+    /* === BODY STYLES === */
     .support-text{
         text-align: center;
         color: #0000ff;
@@ -89,7 +134,7 @@
       fill: currentColor;
     }
 
-.contact-section {
+    .contact-section {
       padding: 60px 0;
       background-color: #ffffff;
     }
@@ -192,10 +237,55 @@
         align-self: center;
       }
     }
+
+      footer {
+      background:#072354;
+      color:#fff;
+      padding:30px 0 20px;
+      font-family:'Inter',Helvetica,Arial,sans-serif;
+      font-size:12px;
+      line-height:2.67;
+      display: flex;
+      flex-direction: center;
+      align-items: center;
+    }
+    .footer-logo img{height:83px;width:auto;object-fit:contain}
+    .footer-tagline,.footer-address{color:#fff;margin:10px 0}
+    .footer-links h5{color:#93999f;font-size:12px;margin-bottom:15px;}
+    .footer-links ul{list-style:none;padding:0;margin:0;line-height: 5.17;}
+    .footer-links ul li{margin-bottom:8px}
+    .footer-links ul li a{color:#fff;text-decoration:underline}
+    .social-icons{display:flex;gap:12px;margin:20px 0}
+    .social-icons img{width:39px;height:39px;object-fit:contain;transition:transform .2s}
+    .social-icons img:hover{transform:scale(1.1)}
+    .chat-bubble img{width:38px;height:38px}
+    .app-badges img{height:35px;margin-right:8px}
+    .divider{border-top:1px solid #ffffff;margin:25px 0}
+    .copyright{color:#93999f;font-size:12px;font-style:italic;text-align:left}
+    @media (max-width:768px){
+      .footer-col{margin-bottom:30px}
+      .social-icons{justify-content:center}
+      .app-badges{text-align:center}
+    }
+
+     .map-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 ratio */
+      height: 0;
+      overflow: hidden;
+    }
+    .map-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
     </style>
 </head>
 <body>
-    <header>
+<header>
   <div class="header-content">
     <div class="logo-container">
       <a href="https://www.cdcare.ng">
@@ -204,12 +294,15 @@
       </a>
       <h1 class="site-title">CDcare</h1>
     </div>
-    <nav>
+    
+    <i class="fa fa-bars hamburger" onclick="document.getElementById('mobile-nav').classList.toggle('nav-active')"></i>
+
+    <nav id="mobile-nav">
       <ul>
-        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="AboutUs.html">About us</a></li>
         <li><a href="#">CDcare Promo</a></li>
-        <li><a href="contactUs.html">Contact Us</a></li>
+        <li><a href="contactUs.html" class="active">Contact Us</a></li>
         <li><a href="#">Shipping & Delivery</a></li>
         <li><a href="#">Return & Refund</a></li>
         <li><a href="#">Enquiry/Pick Up</a></li>
@@ -242,7 +335,7 @@
 </section>
 
 <div>
-    <img src="./Assets/support team.jpg" alt="" style="margin-left: 15%;margin-top: 10px;">
+    <img src="./Assets/support team.jpg" alt="" style="margin-left: 15%;margin-top: 10px; max-width: 100%; height: auto;">
 </div>
 <br><br><br>
  
@@ -250,7 +343,6 @@
   <div class="container">
     <div class="row">
 
-      <!-- Left: Contact Form -->
       <div class="col-md-6">
         <h2 class="section-title">We would love to hear from you</h2>
 
@@ -284,7 +376,6 @@
         </form>
       </div>
 
-      <!-- Right: Contact Options -->
       <div class="col-md-6">
         <div class="contact-card">
           <img src="https://static.wixstatic.com/media/a499f3_577113d4a60e417abbcf3d9bc68abeb5~mv2.png/v1/fill/w_60,h_51,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Group%20256.png" 
@@ -332,10 +423,160 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
+
+<section>
+       <div class="map-container" style="margin-top: 20px;">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.8552702084457!2d3.256738183126957!3d6.53995433062989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b85623815c3e9%3A0xe1b4f2ba62c45af!2sAbaranje%20Rd%20%26%20Kwaru%20Way%2C%20Ijegun%2C%20Ikotun%2FIjegun%20102213%2C%20Lagos!5e0!3m2!1sen!2sng!4v1764076393748!5m2!1sen!2sng"></iframe>
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+</section>
+
+
+<footer>
+  <div class="container">
+
+    <!-- ==== 4 × 4 SECTION ==== -->
+    <div class="row">
+
+      <!-- LOGO + TAGLINE + ADDRESS -->
+      <div class="col-md-3 col-sm-6 footer-col">
+        <div class="footer-logo">
+          <a href="https://www.cdcare.ng">
+            <img src="https://static.wixstatic.com/media/a499f3_0111102514fe45629396e5e79611a7e0~mv2.png/v1/fill/w_119,h_83,al_c,lg_1,q_85,enc_avif,quality_auto/a499f3_0111102514fe45629396e5e79611a7e0~mv2.png" alt="cdcare logo">
+          </a>
+        </div>
+        <p class="footer-tagline">
+          <a href="https://computerdoctor.ng/" target="_blank" style="color:#fff;text-decoration:none;font-size: 15px;">
+            "We empower Africans to own easily using smart installments."
+          </a>
+        </p>
+        <br>
+        <br>
+        <p class="footer-address">
+          <a href="https://computerdoctor.ng/" target="_blank" style="color:#fff;text-decoration:none;font-size: 15px;">
+            6, Ike Asogwa Close, Anthony, Lagos.
+          </a>
+        </p>
+      </div>
+
+      <!-- COMPANY -->
+      <div class="col-md-3 col-sm-6 footer-col footer-links">
+        <h5 style="font-size: 15px;">Company</h5>
+        <ul>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/about" target="_self">About us</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/contact" target="_self">Contact us</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/testimonial" target="_self">Testimonials</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/enquiry-pickupcentres" target="_self">Enquiry/Pick Up Centres</a></li>
+        </ul>
+      </div>
+
+      <!-- BUSINESS -->
+      <div class="col-md-3 col-sm-6 footer-col footer-links">
+        <h5 style="font-size: 15px;">Business</h5>
+        <ul>
+          <li style="font-size: 15px;"><a href="https://app.cdcare.ng/Home" target="_blank">Shop on web</a></li>
+          <li style="font-size: 15px;"><a href="http://cdcare.page.link/downloadcdcare" target="_blank">Get the app</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/faq" target="_self">Help and FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- TERMS OF SERVICE -->
+      <div class="col-md-3 col-sm-6 footer-col footer-links">
+        <h5 style="font-size: 15px;">Terms of Service</h5>
+        <ul>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/terms-of-use" target="_self">Terms of Use</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/cdcare-terms-and-conditions" target="_self">Terms and Conditions</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/cdcare-app-privacy-policy" target="_self">Privacy Policy</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/proprietory-right" target="_self">Proprietary Rights</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/after-sales" target="_self">After sales Support &amp; General Warranty</a></li>
+        </ul>
+      </div>
+
+    </div>
+    <!-- ==== END 4 × 4 ==== -->
+<br>
+
+    <!-- ==== 6 × 6 SECTION (Chat + Badges) ==== -->
+    <div class="row">
+
+      <!-- EMPTY SPACE (6 cols) -->
+      <div class="col-md-6 hidden-sm hidden-xs"></div>
+
+      <!-- CHAT BUBBLE + APP BADGES (right-aligned with Terms column) -->
+      <div class="col-md-6 col-sm-12">
+
+        <div class="row">
+          <!-- Chat bubble -->
+          <div class="col-xs-6 text-right">
+            
+          </div>
+
+     
+        </div>
+
+      </div>
+    </div>
+    <!-- ==== END 6 × 6 ==== -->
+
+
+    <!-- ==== CONTACT + SOCIAL (still 4-col layout, placed under the 4×4) ==== -->
+    <div class="row">
+      <div class="col-md-3 col-sm-6 footer-col">
+        <p style="font-size: 15px;"><a href="mailto:hello@cdcare.ng" style="color:#fff;text-decoration:underline;">hello@cdcare.ng</a></p>
+        <p style="font-size: 15px;"><a href="https://caller.frecall.com/?roomId=wOYEtUdUBrRBq4ybBYXp&amp;userId=id" target="_blank" style="color:#fff;text-decoration:underline;">Call us on frecall - toll free</a></p>
+        <p style="font-size: 15px;"><a href="tel:02012297900" style="color:#fff;text-decoration:underline;">0707-460-3897, 0707-445-2992</a></p>
+      </div>
+
+      <div class="col-md-9 col-sm-6">
+      
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8">
+          <div class="social-icons">
+          <a href="https://www.youtube.com/@cdcaremarketplace3881" target="_blank" aria-label="YouTube"><img src="https://static.wixstatic.com/media/11062b_c67939a99eaf442d95d3f851857ceedf~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_c67939a99eaf442d95d3f851857ceedf~mv2.png" alt="YouTube"></a>
+          <a href="https://www.tiktok.com/@cdcare_ng?_t=8YO6btUNEY9&amp;_r=1" target="_blank" aria-label="TikTok"><img src="https://static.wixstatic.com/media/11062b_7edd292d29b34c309100535a26dc5033~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_7edd292d29b34c309100535a26dc5033~mv2.png" alt="TikTok"></a>
+          <a href="https://www.linkedin.com/company/cdcare/" target="_blank" aria-label="LinkedIn"><img src="https://static.wixstatic.com/media/11062b_7dcffe5daf2944b7be0a46ac6d472634~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_7dcffe5daf2944b7be0a46ac6d472634~mv2.png" alt="LinkedIn"></a>
+          <a href="https://twitter.com/CDcareNG" target="_blank" aria-label="Twitter"><img src="https://static.wixstatic.com/media/11062b_2533d1d4c31245408717d17b946bc8d8~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_2533d1d4c31245408717d17b946bc8d8~mv2.png" alt="Twitter"></a>
+          <a href="https://www.facebook.com/cdcareng" target="_blank" aria-label="Facebook"><img src="https://static.wixstatic.com/media/11062b_f4e3e7f537ff4762a1914aa14e3e36b9~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_f4e3e7f537ff4762a1914aa14e3e36b9~mv2.png" alt="Facebook"></a>
+          <a href="https://www.instagram.com/cdcare_ng/?hl=en" target="_blank" aria-label="Instagram"><img src="https://static.wixstatic.com/media/11062b_603340b7bcb14e7785c7b65b233cd9f9~mv2.png/v1/fill/w_39,h_39,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_603340b7bcb14e7785c7b65b233cd9f9~mv2.png" alt="Instagram"></a>
+          <a href="https://www.cdcare.app/Chat" target="_blank">
+              <img src="https://static.wixstatic.com/media/a499f3_6b91d6e82daf41a6bca36f33a992f519~mv2.png/v1/fill/w_38,h_38,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Component%201%20(2).png" alt="Chat with us" class="chat-bubble">
+            </a>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+            <!-- App badge (Google Play) -->
+          <div class="col-xs-4 text-right">
+            <a href="https://play.google.com/store/apps/details?id=com.nipek.cdcare&amp;hl=en" target="_blank">
+              <img src="https://static.wixstatic.com/media/a499f3_9a2de122017846b7b15916213258fe0d~mv2.png/v1/fill/w_119,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Google%20Play%20Download_edited.png" alt="Google Play" class="app-badges">
+            </a>
+          </div>
+
+          <!-- App badge (App Store) -->
+          <div class="col-xs-4 text-right">
+            <a href="https://apps.apple.com/ng/app/cdcare/id1500264724" target="_blank">
+              <img src="https://static.wixstatic.com/media/a499f3_3f05240be5c1469796198cb43d443a22~mv2.png/v1/fill/w_119,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Apple%20Store%20Download_edited_edited.png" alt="App Store" class="app-badges">
+            </a>
+          </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+      <div class="col-md-12 copyright">
+        Copyright © 2025 CDcare Inc.
+      </div>
+    </div>
+
+  </div>
+</footer>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </body>

@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us ⎮ CDcare</title>
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <link rel="icon" href="./Assets/favicon_io (3)/favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
-            /* === HEADER === */
+    /* === HEADER === */
     header {
       font-family: sans-serif;
       background: #fff;
@@ -18,20 +19,24 @@
       align-items: center;
       flex-wrap: wrap;
       margin-bottom: 40px;
-    
+      /* FIX: Added position relative so the mobile menu aligns to the header */
+      position: relative; 
     }
     .header-content { display: flex; align-items: center; flex-grow: 1;margin-left: 100px; }
     .logo-container { display: flex; align-items: center; gap: 12px; margin-left: 100px; }
     .logo-img { width: 44px; height: 44px; object-fit: cover; border-radius: 50%; }
-    .site-title { font-size: 32px; font-weight: 400; color: #00008b; }
-    nav ul { list-style: none; display: flex; gap: 27px; flex-wrap: wrap; }
+    .site-title { font-size: 32px; font-weight: 400; color: #00008b;margin-right: 90px; }
+    nav ul { list-style: none; display: flex; gap: 27px; flex-wrap: wrap; padding: 0; margin: 0;margin-right: 90px; }
     nav a { text-decoration: none; color: darkblue; font-size: 12px; padding: 8px 0; transition: color 0.3s; }
     nav a:hover { color: #ffa500; font-weight: 500; }
-    .contact-info { font-size: 10px; color: #555; margin-left: 1000px; margin-top: 0px; }
+    .contact-info { font-size: 10px; color: #555; margin-left: auto; margin-top: 0px; padding-right: 20px;}
     .contact-info a { color: #061754; text-decoration: underline; }
     .contact-info a:hover { color: #000; }
 
-    /* Dropdown */
+    /* Hamburger Menu (Hidden on Desktop) */
+    .hamburger { display: none; font-size: 24px; color: #00008b; cursor: pointer; margin-right: 20px; }
+
+    /* Dropdown (Desktop Default) */
     .more-menu { position: relative; }
     .more-menu:hover .dropdown { display: block; }
     .dropdown {
@@ -41,41 +46,104 @@
     }
     .dropdown li { padding: 8px 12px; }
     .dropdown a { font-size: 14px; }
+
+    /* === MOBILE RESPONSIVENESS (Header) === */
+    @media (max-width: 991px) {
+        header { justify-content: space-between; padding: 10px; }
+        .header-content { margin-left: 0; width: 100%; justify-content: space-between; }
+        .logo-container { margin-left: 10px; }
+        .contact-info { display: none; } 
+        
+        .hamburger { display: block; } 
+
+        nav {
+            display: none; 
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 20px;
+        }
+        
+        nav.nav-active { display: block; } 
+        
+        nav ul {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+        
+        /* FIX: Mobile Dropdown adjustments */
+        .dropdown { 
+            position: static; /* Makes it flow naturally in the list */
+            box-shadow: none; 
+            border: none; 
+            text-align: center; 
+            width: 100%; 
+            background-color: #f9f9f9; /* Light grey to differentiate sub-menu */
+        }
+        .more-menu:hover .dropdown {
+            display: block;
+        }
+    }
     
-    /* === IMAGE STYLING FOR OVERLAP === */
+    /* === IMAGE STYLING FOR OVERLAP (Desktop Default) === */
     .image-container {
-        /* Set the container to position: relative to allow for absolute positioning of children */
         position: relative;
-        /* Ensures the container has height, important for when children are absolute */
-        height: 380px; /* Adjust height as needed to fit the content */
-        margin-top: 50px; /* Add some margin above the images */
+        height: 380px; 
+        margin-top: 50px; 
     }
     .image-container img {
-        /* Base image style */
         display: block;
-        width: 70%;
+        width: 100%; /* Changed from 70% to 100% to let parent control width */
         height: auto;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* Add shadow for depth */
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2); 
+        border-radius: 8px; /* Added border radius for aesthetic */
     }
     .image-group-1 {
-        /* The main top image */
         position: absolute;
         top: 0;
         right: 0;
-        width: 65%; /* Smaller width for the top image */
-        z-index: 10; /* Ensure it's above the second image if they overlap this way */
+        width: 65%; /* Desktop width */
+        z-index: 10; 
     }
     .image-group-2 {
         position: absolute;
         top: 60%;
-        bottom: 0; /* Position near the bottom */
-        left: 0; /* Aligned to the left edge */
-        width: 70%; /* Adjust width */
-        z-index: 20; /* Ensure it overlaps the first image */
-        /* Overlap effect: move up and right relative to its bottom-left position */
-        transform: translate(15%, -15%); /* Move right by 15% of its width, and up by 15% of its height */
-          padding: 10px; /* Optional: padding around the image */
-        border-radius: 4px; /* Optional: border radius */
+        bottom: 0; 
+        left: 0; 
+        width: 70%; /* Desktop width */
+        z-index: 20; 
+        transform: translate(15%, -15%); 
+        padding: 10px; 
+        border-radius: 4px; 
+    }
+
+    /* --- MOBILE IMAGE STACKING FIX (Max-width 768px for phones/small tablets) --- */
+    @media (max-width: 768px) {
+        .image-container {
+            /* Remove fixed height to allow images to stack and define height naturally */
+            height: auto; 
+            margin-top: 20px;
+        }
+        .image-group-1, .image-group-2 {
+            position: static; /* Force stacking behavior (no overlap) */
+            width: 100%; /* Take full width of the parent column */
+            margin-bottom: 20px; /* Add space between stacked images */
+            margin-left: 50px;
+        }
+        .image-group-2 {
+            /* Reset all absolute positioning/overlap styles */
+            top: auto; 
+            bottom: auto; 
+            left: auto; 
+            transform: none; 
+            padding: 0; /* Remove padding if added for overlap effect */
+            
+        }
     }
 
      footer {
@@ -113,13 +181,9 @@
     padding: 30px 20px;
 }
     .stats-container {
-    /* Flexbox for layout */
     display: flex;
-    /* Distribute items evenly in the available space */
     justify-content: space-around;
-    /* Allow items to wrap on smaller screens */
     flex-wrap: wrap; 
-    /* Max width to keep content centered on large screens */
     max-width: 1000px;
     margin: 0 auto;
 }
@@ -128,34 +192,29 @@
 .stat-item {
     text-align: center;
     padding: 20px 10px;
-    /* Allows items to grow/shrink, ensuring they are even */
-    flex: 1 1 200px; /* grow | shrink | basis (minimum width) */
-    min-width: 150px; /* Ensures they don't get too small */
+    flex: 1 1 200px; 
+    min-width: 150px; 
 }
 .stat-number {
-    /* Mimicking the large, orange number style */
     font-size: 30px;
     line-height: 1.34em;
-    color: #FA7A18; /* The orange color from the original code */
-    font-weight: 500; /* Heavy/Bold font weight */
-    margin: 0 0 5px 0; /* Remove default margin and add slight bottom spacing */
+    color: #FA7A18; 
+    font-weight: 500; 
+    margin: 0 0 5px 0; 
 }
 .stat-description {
-    /* Mimicking the smaller, dark text style */
     font-size: 14px;
     line-height: 1.67em;
-    color: #131c2c; /* Dark text color */
+    color: #131c2c; 
     margin: 0;
     text-transform: capitalize;
 }
 /* --- Responsiveness for Smaller Screens (Mobile) --- */
 @media (max-width: 600px) {
     .stats-container {
-        /* On small screens, stack two items per row */
         justify-content: space-between;
     }
     .stat-item {
-        /* Make items take roughly half the width */
         flex: 1 1 45%; 
     }
 }
@@ -175,7 +234,7 @@
 
         /* Typography Overrides */
         h1.hero-title {
-            font-size: 36px; /* 50px in source is very large for mobile, scaled slightly */
+            font-size: 36px; 
             font-weight: normal;
         }
         
@@ -197,12 +256,11 @@
             height: 285px;
             object-fit: cover;
             border-radius: 4px;
-            margin: 0 auto 20px auto; /* Center image */
+            margin: 0 auto 20px auto; 
         }
 
         /* Vision & Mission Strip */
         .bg-light-blue {
-     
             border-top: 1px #eee;
             border-bottom: 1px #eee;
         }
@@ -222,7 +280,7 @@
         /* Media Queries for specific responsiveness */
         @media (min-width: 992px) {
             h1.hero-title {
-                font-size: 48px; /* Restore larger size on desktop */
+                font-size: 48px; 
             }
             .hero-img {
                 margin-bottom: 0;
@@ -235,9 +293,11 @@
         border-radius: 20px;
         margin-bottom: 30px;
         min-height: 250px;
-        text-align: justify;
         margin-left: 20%;
-        padding-bottom: 5%; /* Makes it square */
+        padding-bottom: 5%; 
+          text-align: center;
+    max-width: 350px;        /* ⬅ reduce box width */
+    min-height: 200px;  
         }
 
         .testimonial-text{
@@ -245,11 +305,56 @@
           font-family: Georgia, 'Times New Roman', Times, serif;
           font-size: 15px;
         }
+
+        /* ---- MOBILE FIX ---- */
+@media (max-width: 768px) {
+    .testimonial-box {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: 100% !important;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+/* === SCROLL ANIMATION === */
+.reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: all 1s ease;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
     </style>
 </head>
+<script>
+document.addEventListener("scroll", revealOnScroll);
+
+function revealOnScroll() {
+    const reveals = document.querySelectorAll(".reveal");
+
+    for (let i = 0; i < reveals.length; i++) {
+        const windowHeight = window.innerHeight;
+        const revealTop = reveals[i].getBoundingClientRect().top;
+        const revealPoint = 120;
+
+        if (revealTop < windowHeight - revealPoint) {
+            reveals[i].classList.add("active");
+        } 
+    }
+}
+
+// Trigger animation if item is already in view on page load
+revealOnScroll();
+</script>
+
 <body>
 
-    <header>
+<header>
   <div class="header-content">
     <div class="logo-container">
       <a href="https://www.cdcare.ng">
@@ -258,10 +363,13 @@
       </a>
       <h1 class="site-title">CDcare</h1>
     </div>
-    <nav>
+    
+    <i class="fa fa-bars hamburger" onclick="document.getElementById('mobile-nav').classList.toggle('nav-active')"></i>
+
+    <nav id="mobile-nav">
       <ul>
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="AboutUs.html">About us</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="AboutUs.html" class="active">About us</a></li>
         <li><a href="#">CDcare Promo</a></li>
         <li><a href="contactUs.html">Contact Us</a></li>
         <li><a href="#">Shipping & Delivery</a></li>
@@ -289,7 +397,7 @@
   </div>
 </header>
 
-<section class="container" style="margin-right: 50px;">
+<section class="container reveal" style="margin-right: 50px;">
     <div class="row">
         <div class="col-sm-6">
             <span style="color: #0000ff; font-size: 40px;font-weight: 500;
@@ -320,10 +428,12 @@
 
         <div class="col-sm-6">
             <div class="image-container">
+                <!-- image-group-1 appears first (on top) in the stack -->
                 <span class="image-group-1">
                     <img src="./Assets/AboutUs1.jpg" alt="Person loading goods into a vehicle">
                 </span>
                 
+                <!-- image-group-2 appears second (beneath) in the stack -->
                 <span class="image-group-2">
                     <img src="./Assets/AboutUs2.jpg" alt="Team members looking at a tablet">
                 </span>
@@ -331,8 +441,8 @@
         </div>
     </div>
 </section>
-
-<section class="stats-section">
+<br><br> <br>
+<section class="stats-section reveal">
     <div class="stats-container" style="justify-content: center;">
         <div class="stat-item">
             <h5 class="stat-number">30k+</h5>
@@ -356,28 +466,36 @@
     </div>
 </section>
 
- <section class="section-padding">
+ <section class="section-padding reveal">
         <div class="container">
             <div class="row">
                  <img src="./Assets/CDCARE TEAM.jpg" 
                          alt="CDcare Team" 
                          class="img-responsive hero-img">
                          <br><br>
-                <!-- Left Column: Image -->
                 <div class="col-md-6">
                    <h1 class="hero-title text-brand mb-20">
                         CDcare is the smartest way to buy and pay small small with no interest
                     </h1>
                 </div>
 
-                <!-- Right Column: Text Content -->
                 <div class="col-md-6">
                     <div class="content-block mb-40" style="line-height: 1.56;">
-                        <p>We grew up in the average Nigerian family where it took painfully saving for a period of time before simple house-hold appliances could be acquired. One of us waited for months for his mother to save for his first laptop and also realized that many Nigerian families also go through the same arduous circle.</p>
-                        <p>He realized that this is a big problem that he wanted to solve. After iterating different solutions to the problem over 10 years, CDcare was founded as the best solution to the Africans inability to easily pay in one lump-sum for items. CDcare is the smartest way to buy in Africa today and we are happy to give Africans the power to own.</p>
+                        <p>We grew up in the average Nigerian family where it 
+                          took painfully saving for a period of time before 
+                          simple house-hold appliances could be acquired.
+                           One of us waited for months for his mother to save 
+                           for his first laptop and also realized that many 
+                           Nigerian families also go through the same arduous circle.</p>
+                        <p>He realized that this is a big problem that he wanted to solve.
+                           After iterating different solutions to the problem over 10 years,
+                            CDcare was founded as the best solution to
+                             the Africans inability to easily pay in one
+                              lump-sum for items. CDcare is the smartest
+                               way to buy in Africa today and we are happy
+                                to give Africans the power to own.</p>
                     </div>
 
-                    <!-- Structure -->
                     <div class="content-block mb-40" style="line-height: 2.50;">
                         <h3>Our Structure</h3>
                         <p>
@@ -387,7 +505,6 @@
                         </p>
                     </div>
 
-                    <!-- Model -->
                     <div class="content-block mb-40" style="line-height: 2.50;">
                         <h3>Our Model in Brief</h3>
                         <ol>
@@ -399,7 +516,6 @@
                         <p>This “pay small small” model helps users stay debt-free while enjoying genuine, high-quality products.</p>
                     </div>
 
-                    <!-- Value -->
                     <div class="content-block" style="line-height: 2.50;">
                         <h3>Our Value</h3>
                         <ul>
@@ -414,11 +530,9 @@
         </div>
     </section>
 
-    <!-- VISION & MISSION SECTION -->
     <section class="section-padding bg-light-blue">
         <div class="container">
             
-                <!-- Vision -->
                 <div class="text-center">
                     <h2 class="section-title text-brand">Our Vision</h2>
                     <div class="cdcare-text-block">
@@ -433,7 +547,6 @@
                                  </p>
                 </div>
                 <br>
-                <!-- Mission -->
                 <div class="text-center">
                     <h2 class="section-title text-brand">Our Mission</h2>
                   <div class="cdcare-text-block">
@@ -450,7 +563,6 @@
         </div>
     </section>
 
-    <!-- LEADERSHIP SECTION -->
     <section class="section-padding">
         <div class="container">
             <div class="row">
@@ -460,7 +572,6 @@
             </div>
 
             <div class="row mt-20">
-                <!-- Leader 1 -->
                 <div class="col-sm-6 text-center mb-40">
                     <img src="./Assets/Odukoya.jpg" 
                          alt="Odukoya Oluwatobi" 
@@ -469,7 +580,6 @@
                     <p class="text-muted">Founder and Chief Executive Officer</p>
                 </div>
 
-                <!-- Leader 2 -->
                 <div class="col-sm-6 text-center mb-40">
                     <img src="./Assets/Farohun.jpg" 
                          alt="Farohun Ayodeji" 
@@ -481,17 +591,17 @@
         </div>
     </section>
 
-      <section>
+      <section class="reveal">
         <div class="row" style="text-align: center; max-width: 100%;">
             <div class="col-sm-6" style="font-size: 20px;font-weight: 500;">
               What Our Customers <br> Have To Say About Us
               <div class="row">
                 <div class="col-sm-8 testimonial-box">
                  <p class="testimonial-text">
-                   CDcare made life easier for me when it was time <br>
-                    for me to get my home appliances. <br>
-                    The convenience I got from having to pay instalmentally <br>
-                    and I was able to use the extra to do other things. <br> <br> <br>
+                   CDcare made life easier for me when it was time 
+                    for me to get my home appliances. 
+                    The convenience I got from having to pay instalmentally 
+                    and I was able to use the extra to do other things. <br><br>
                     <span>
                       Victor Fatami
                     </span> <br>
@@ -502,10 +612,10 @@
                 </div>
                  <div class="col-sm-8 testimonial-box">
                  <p class="testimonial-text">
-                     I have always wanted to buy some cool  <br> gadgets and CDcare
-                     made owning these things <br> very easy for me.
-                     I have bought four items already from CDcare. <br>
-                     I like the fact that CDcare doesn't require much from me as a user. <br> <br> <br>
+                     I have always wanted to buy some cool gadgets and CDcare
+                     made owning these things very easy for me.
+                     I have bought four items already from CDcare.
+                     I like the fact that CDcare doesn't require much from me as a user.<br> <br>
                     <span>
                       Tosin Amadu
                     </span> <br>
@@ -516,17 +626,18 @@
                 </div>
               </div>
             </div>
+
             <div class="col-sm-6">
             <a href="https://www.cdcare.ng/testimonial" style="color: orange;">Read all Testimonials → </a> 
-            <br> <br> <br>
+            <br> <br> 
                         <div class="row">
                 <div class="col-sm-8 testimonial-box">
                  <p class="testimonial-text">
                       I doubted CDcare at first and I had to visit 
-                      their office <br> before I made my first instalment.
-                       I believed and <br> told many more people about CDcare <br>
+                      their office  before I made my first instalment.
+                       I believed and  told many more people about CDcare
                        when I collected my Fridge. I have made it my
-                        responsibility <br>to tell everybody about this wonderful product. <br> <br> 
+                        responsibility to tell everybody about this wonderful product. <br> <br> 
                     <span>
                       Paul Chinedu
                     </span> <br>
@@ -537,10 +648,10 @@
                 </div>
                  <div class="col-sm-8 testimonial-box">
                  <p class="testimonial-text">
-                  ..at first I was sceptical. Months later I <br>
-                  decided to change my laptop and chose <br> to use
+                  ..at first I was sceptical. Months later I 
+                  decided to change my laptop and chose to use
                    their instalment payments.
-                    It was a very good <br> experience and the
+                    It was a very good experience and the
                      flexibility helped me handle <br> other pressing expenses. <br> <br> 
                        <span>
                       Edward Israel-Ayide
@@ -560,12 +671,10 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" xintegrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" xintegrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 
-
-
-    
-
-
 <br><br><br>
+
+
+<!---footer---->
 <footer>
   <div class="container">
 
@@ -580,14 +689,14 @@
           </a>
         </div>
         <p class="footer-tagline">
-          <a href="https://computerdoctor.ng/" target="_blank" style="color:#fff;text-decoration:none;">
+          <a href="https://computerdoctor.ng/" target="_blank" style="color:#fff;text-decoration:none;font-size: 15px;">
             "We empower Africans to own easily using smart installments."
           </a>
         </p>
         <br>
         <br>
         <p class="footer-address">
-          <a href="https://computerdoctor.ng/" target="_blank" style="color:#fff;text-decoration:none;">
+          <a href="https://computerdoctor.ng/" target="_blank" style="color:#fff;text-decoration:none;font-size: 15px;">
             6, Ike Asogwa Close, Anthony, Lagos.
           </a>
         </p>
@@ -595,34 +704,34 @@
 
       <!-- COMPANY -->
       <div class="col-md-3 col-sm-6 footer-col footer-links">
-        <h5>Company</h5>
+        <h5 style="font-size: 15px;">Company</h5>
         <ul>
-          <li><a href="https://www.cdcare.ng/about" target="_self">About us</a></li>
-          <li><a href="https://www.cdcare.ng/contact" target="_self">Contact us</a></li>
-          <li><a href="https://www.cdcare.ng/testimonial" target="_self">Testimonials</a></li>
-          <li><a href="https://www.cdcare.ng/enquiry-pickupcentres" target="_self">Enquiry/Pick Up Centres</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/about" target="_self">About us</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/contact" target="_self">Contact us</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/testimonial" target="_self">Testimonials</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/enquiry-pickupcentres" target="_self">Enquiry/Pick Up Centres</a></li>
         </ul>
       </div>
 
       <!-- BUSINESS -->
       <div class="col-md-3 col-sm-6 footer-col footer-links">
-        <h5>Business</h5>
+        <h5 style="font-size: 15px;">Business</h5>
         <ul>
-          <li><a href="https://app.cdcare.ng/Home" target="_blank">Shop on web</a></li>
-          <li><a href="http://cdcare.page.link/downloadcdcare" target="_blank">Get the app</a></li>
-          <li><a href="https://www.cdcare.ng/faq" target="_self">Help and FAQ</a></li>
+          <li style="font-size: 15px;"><a href="https://app.cdcare.ng/Home" target="_blank">Shop on web</a></li>
+          <li style="font-size: 15px;"><a href="http://cdcare.page.link/downloadcdcare" target="_blank">Get the app</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/faq" target="_self">Help and FAQ</a></li>
         </ul>
       </div>
 
       <!-- TERMS OF SERVICE -->
       <div class="col-md-3 col-sm-6 footer-col footer-links">
-        <h5>Terms of Service</h5>
+        <h5 style="font-size: 15px;">Terms of Service</h5>
         <ul>
-          <li><a href="https://www.cdcare.ng/terms-of-use" target="_self">Terms of Use</a></li>
-          <li><a href="https://www.cdcare.ng/cdcare-terms-and-conditions" target="_self">Terms and Conditions</a></li>
-          <li><a href="https://www.cdcare.ng/cdcare-app-privacy-policy" target="_self">Privacy Policy</a></li>
-          <li><a href="https://www.cdcare.ng/proprietory-right" target="_self">Proprietary Rights</a></li>
-          <li><a href="https://www.cdcare.ng/after-sales" target="_self">After sales Support &amp; General Warranty</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/terms-of-use" target="_self">Terms of Use</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/cdcare-terms-and-conditions" target="_self">Terms and Conditions</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/cdcare-app-privacy-policy" target="_self">Privacy Policy</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/proprietory-right" target="_self">Proprietary Rights</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/after-sales" target="_self">After sales Support &amp; General Warranty</a></li>
         </ul>
       </div>
 
@@ -656,9 +765,9 @@
     <!-- ==== CONTACT + SOCIAL (still 4-col layout, placed under the 4×4) ==== -->
     <div class="row">
       <div class="col-md-3 col-sm-6 footer-col">
-        <p><a href="mailto:hello@cdcare.ng" style="color:#fff;text-decoration:underline;">hello@cdcare.ng</a></p>
-        <p><a href="https://caller.frecall.com/?roomId=wOYEtUdUBrRBq4ybBYXp&amp;userId=id" target="_blank" style="color:#fff;text-decoration:underline;">Call us on frecall - toll free</a></p>
-        <p><a href="tel:02012297900" style="color:#fff;text-decoration:underline;">0707-460-3897, 0707-445-2992</a></p>
+        <p style="font-size: 15px;"><a href="mailto:hello@cdcare.ng" style="color:#fff;text-decoration:underline;">hello@cdcare.ng</a></p>
+        <p style="font-size: 15px;"><a href="https://caller.frecall.com/?roomId=wOYEtUdUBrRBq4ybBYXp&amp;userId=id" target="_blank" style="color:#fff;text-decoration:underline;">Call us on frecall - toll free</a></p>
+        <p style="font-size: 15px;"><a href="tel:02012297900" style="color:#fff;text-decoration:underline;">0707-460-3897, 0707-445-2992</a></p>
       </div>
 
       <div class="col-md-9 col-sm-6">
@@ -706,5 +815,6 @@
 
   </div>
 </footer>
+
 </body>
 </html>
