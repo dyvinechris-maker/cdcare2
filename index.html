@@ -4,12 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CDcare Nigeria: Pay Small Small</title>
+  <link rel="icon" href="./Assets/favicon_io (3)/favicon.ico">
   <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./script.js">
 
-  <!-- Bootstrap 3 CSS (Glyphicons included) -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <!-- Font Awesome 4.7.0 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <style>
@@ -23,18 +22,21 @@
       align-items: center;
       flex-wrap: wrap;
       margin-bottom: 40px;
-    
+      position: relative; /* Added for mobile menu positioning */
     }
-    .header-content { display: flex; align-items: center; flex-grow: 1;margin-left: 100px; }
+    .header-content { display: flex; align-items: center; flex-grow: 1; margin-left: 100px; }
     .logo-container { display: flex; align-items: center; gap: 12px; margin-left: 100px; }
     .logo-img { width: 44px; height: 44px; object-fit: cover; border-radius: 50%; }
-    .site-title { font-size: 32px; font-weight: 400; color: #00008b; }
-    nav ul { list-style: none; display: flex; gap: 27px; flex-wrap: wrap; }
+    .site-title { font-size: 32px; font-weight: 400; color: #00008b;margin-right: 90px; }
+    nav ul { list-style: none; display: flex; gap: 27px; flex-wrap: wrap; margin: 0; padding: 0; margin-right: 90px;}
     nav a { text-decoration: none; color: darkblue; font-size: 12px; padding: 8px 0; transition: color 0.3s; }
     nav a:hover { color: #ffa500; font-weight: 500; }
-    .contact-info { font-size: 10px; color: #555; margin-left: 1000px; margin-top: 0px; }
+    .contact-info { font-size: 10px; color: #555; margin-left: auto; margin-top: 0px; padding-right: 20px; }
     .contact-info a { color: #061754; text-decoration: underline; }
     .contact-info a:hover { color: #000; }
+
+    /* Hamburger Menu (Hidden on Desktop) */
+    .hamburger { display: none; font-size: 24px; color: #00008b; cursor: pointer; margin-right: 20px; }
 
     /* Dropdown */
     .more-menu { position: relative; }
@@ -46,6 +48,39 @@
     }
     .dropdown li { padding: 8px 12px; }
     .dropdown a { font-size: 14px; }
+
+    /* === MOBILE HEADER RESPONSIVENESS === */
+    @media (max-width: 991px) {
+        header { justify-content: space-between; padding: 10px; }
+        .header-content { margin-left: 0; width: 100%; justify-content: space-between; }
+        .logo-container { margin-left: 10px; }
+        .contact-info { display: none; } /* Hide contact info header on mobile to save space */
+        
+        .hamburger { display: block; } /* Show Hamburger */
+
+        nav {
+            display: none; /* Hide nav by default on mobile */
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 20px;
+        }
+        
+        nav.nav-active { display: block; } /* Class to show nav */
+        
+        nav ul {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+        
+        /* Adjust dropdown for mobile */
+        .dropdown { position: relative; box-shadow: none; border: none; text-align: center; width: 100%; }
+    }
 
     /* === HERO === */
     .cta-button {
@@ -190,7 +225,7 @@
     }
 
     .step-desc {
-      font-size: 12px;
+      font-size: 20px;
       line-height: 1.6;
       color: #e0e0e0;
       margin-bottom: 0;
@@ -251,7 +286,7 @@
         font-size: 32px;
       }
       .step-title {
-        font-size: 24px;
+        font-size: 30px;
       }
     }
 /* Custom Styles */
@@ -384,7 +419,7 @@
       margin: 40px auto;  
       border-radius: 8px;
       overflow: hidden;
-     
+      
     }
 
     .panel-heading {
@@ -410,7 +445,7 @@
       transition: color 0.3s;
     }
 
-   
+    
 
     .panel-title a .chevron {
   display: inline-block;
@@ -468,7 +503,7 @@
     }
 
     .social-btn:hover {
-     
+      
       color: white;
       transform: translateY(-2px);
     }
@@ -567,8 +602,8 @@
       .social-icons{justify-content:center}
       .app-badges{text-align:center}
     }
-   
-   
+    
+    
     /* Chat Button */
     .chat-btn {
       position: fixed;
@@ -633,7 +668,6 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <div class="header-content">
     <div class="logo-container">
@@ -643,7 +677,10 @@
       </a>
       <h1 class="site-title">CDcare</h1>
     </div>
-    <nav>
+    
+    <i class="fa fa-bars hamburger" onclick="document.getElementById('mobile-nav').classList.toggle('nav-active')"></i>
+
+    <nav id="mobile-nav">
       <ul>
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="AboutUs.html">About us</a></li>
@@ -674,7 +711,6 @@
   </div>
 </header>
 
-<!-- HERO SECTION -->
 <section class="container" style="padding-top: 0px;">
   <div class="row">
     <div class="col-sm-6">
@@ -717,20 +753,15 @@
   </div>
 </section>
 
-<!-- MARQUEE WITH WORKING GLYPHICONS -->
 <div class="marquee-container" role="region" aria-label="Brand Gallery">
-  <!-- Left Arrow -->
   <div class="nav-arrow left" aria-label="Scroll left">
     <span class="glyphicon glyphicon-chevron-left"></span>
   </div>
-  <!-- Right Arrow -->
   <div class="nav-arrow right" aria-label="Scroll right">
     <span class="glyphicon glyphicon-chevron-right"></span>
   </div>
 
-  <!-- Track -->
   <div class="marquee" id="marqueeTrack">
-    <!-- First Set -->
     <img src="./Assets/apple.jpg" alt="Apple">
     <img src="./Assets/Lg logo.jpg" alt="LG">
     <img src="./Assets/lontor.jpg" alt="Lontor">
@@ -743,7 +774,6 @@
     <img src="./Assets/hisense.jpg" alt="Hisense">
     <img src="./Assets/samsung.jpg" alt="Samsung">
 
-    <!-- Duplicate Set -->
     <img src="./Assets/apple.jpg" alt="Apple">
     <img src="./Assets/Lg logo.jpg" alt="LG">
     <img src="./Assets/lontor.jpg" alt="Lontor">
@@ -758,7 +788,6 @@
   </div>
 </div>
 
-<!-- FEATURES -->
 <div class="container">
   <h2 class="section-title">CDcare is Faster, Easier, Less Evasive<br>and Risk-Free</h2>
   <div class="row">
@@ -834,18 +863,15 @@
  <br>
  <br>
  <br>
-<!-- How It Works Section -->
 <section class="how-it-works">
   <div class="container">
     <div class="row">
 
-      <!-- LEFT: Content (Heading + Steps + Button) -->
       <div class="col-sm-6">
         <h2 class="section-heading">
           Take control of your finances,&nbsp;<span class="light">you can<br>start immediately.</span>
         </h2>
 
-        <!-- Step 1 -->
         <div class="step-item">
           <h3 class="step-title">Search & Find</h3>
           <p class="step-desc">
@@ -853,7 +879,6 @@
           </p>
         </div>
 <br>
-        <!-- Step 2 -->
         <div class="step-item">
           <h3 class="step-title">Plan & start your installment</h3>
           <p class="step-desc">
@@ -861,7 +886,6 @@
           </p>
         </div>
 <br>
-        <!-- Step 3 -->
         <div class="step-item">
           <h3 class="step-title">We will deliver at 50%</h3>
           <p class="step-desc">
@@ -869,13 +893,11 @@
           </p>
         </div>
 
-        <!-- Start Now Button -->
         <a href="./sign-up.html" target="_blank" class="btn btn-start">
           Start now <span class="glyphicon glyphicon-shopping-cart"></span>
         </a>
       </div>
 <br><br><br><br><br><br><br><br>
-      <!-- RIGHT: Image -->
       <div class="col-sm-6">
         <img src="https://static.wixstatic.com/media/a499f3_fc9f6d83ca924a89b7c294202ff66353~mv2.png/v1/fill/w_642,h_753,al_c,q_90,enc_avif/CD%20Care%20iPhone%20in%20Hand%20Mockup_edited_edi.png"
              alt="CDcare App on iPhone"
@@ -894,7 +916,6 @@
         <div class="col-sm-6">
           <h2 class="section-title">Read our stories</h2>
 
-          <!-- Logos: 2 per row -->
           <div class="row">
             <div class="col-sm-6 logo-item">
               <a href="https://finance.yahoo.com/news/nigeria-buy-now-pay-later-121100062.html?guccounter=1" target="_blank">
@@ -929,7 +950,6 @@
           </div>
         </div>
 
-        <!-- Square Testimonial Box -->
         <div class="col-sm-6">
           <div class="testimonial-box">
             <div class="testimonial-content">
@@ -951,8 +971,7 @@
 
 
 
-<!-- Delivery Section -->
-  <section class="delivery-section" style="background-color: whitesmoke; padding: 50px 50px 50px 50px;">
+<section class="delivery-section" style="background-color: whitesmoke; padding: 50px 50px 50px 50px;">
     <div class="container jumbotron" style="background-color: #1267f8; /* Dark background */ color: #ffffff; padding: 80px 0;text-align: center;border-radius: 50px;">
       <div class="row">
         <div class="col-md-12">
@@ -960,7 +979,7 @@
       font-weight: 500;
       line-height: 1.25;
       margin-bottom: 20px">We can't wait to deliver to you too soon.</h2>
-          
+           
           <p class="delivery-text" style="font-size: 16px;
       line-height: 1.75;
       font-family: 'Georgia', serif;
@@ -970,14 +989,13 @@
           </p>
 
           <div class="app-badges">
-            <!-- Google Play Badge -->
             <a href="https://play.google.com/store/apps/details?id=com.nipek.cdcare&hl=en" target="_blank">
               <img src="https://static.wixstatic.com/media/a499f3_243b8e5b356a4c95827be5ee00233f97~mv2.png/v1/fill/w_118,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a499f3_243b8e5b356a4c95827be5ee00233f97~mv2.png" 
                    alt="Get it on Google Play" 
                    class="img-responsive">
             </a>
 
-            <!-- App Store Badge (non-clickable in original, kept as image) -->
+             <!-- App Store Badge (non-clickable in original, kept as image) -->
             <img src="https://static.wixstatic.com/media/a499f3_da3b381bbd4946fba2505ff838809d2d~mv2.png/v1/fill/w_113,h_35,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a499f3_da3b381bbd4946fba2505ff838809d2d~mv2.png" 
                  alt="Download on the App Store" 
                  class="img-responsive">
@@ -1691,14 +1709,14 @@ Kindly read article 13 of our <span style="color: #ffa500;"> Terms and Condition
           </a>
         </div>
         <p class="footer-tagline">
-          <a href="https://computerdoctor.ng/" target="_blank" style="color:#fff;text-decoration:none;">
+          <a href="https://computerdoctor.ng/" target="_blank" style="color:#fff;text-decoration:none;font-size: 15px;">
             "We empower Africans to own easily using smart installments."
           </a>
         </p>
         <br>
         <br>
         <p class="footer-address">
-          <a href="https://computerdoctor.ng/" target="_blank" style="color:#fff;text-decoration:none;">
+          <a href="https://computerdoctor.ng/" target="_blank" style="color:#fff;text-decoration:none;font-size: 15px;">
             6, Ike Asogwa Close, Anthony, Lagos.
           </a>
         </p>
@@ -1706,34 +1724,34 @@ Kindly read article 13 of our <span style="color: #ffa500;"> Terms and Condition
 
       <!-- COMPANY -->
       <div class="col-md-3 col-sm-6 footer-col footer-links">
-        <h5>Company</h5>
+        <h5 style="font-size: 15px;">Company</h5>
         <ul>
-          <li><a href="https://www.cdcare.ng/about" target="_self">About us</a></li>
-          <li><a href="https://www.cdcare.ng/contact" target="_self">Contact us</a></li>
-          <li><a href="https://www.cdcare.ng/testimonial" target="_self">Testimonials</a></li>
-          <li><a href="https://www.cdcare.ng/enquiry-pickupcentres" target="_self">Enquiry/Pick Up Centres</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/about" target="_self">About us</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/contact" target="_self">Contact us</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/testimonial" target="_self">Testimonials</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/enquiry-pickupcentres" target="_self">Enquiry/Pick Up Centres</a></li>
         </ul>
       </div>
 
       <!-- BUSINESS -->
       <div class="col-md-3 col-sm-6 footer-col footer-links">
-        <h5>Business</h5>
+        <h5 style="font-size: 15px;">Business</h5>
         <ul>
-          <li><a href="https://app.cdcare.ng/Home" target="_blank">Shop on web</a></li>
-          <li><a href="http://cdcare.page.link/downloadcdcare" target="_blank">Get the app</a></li>
-          <li><a href="https://www.cdcare.ng/faq" target="_self">Help and FAQ</a></li>
+          <li style="font-size: 15px;"><a href="https://app.cdcare.ng/Home" target="_blank">Shop on web</a></li>
+          <li style="font-size: 15px;"><a href="http://cdcare.page.link/downloadcdcare" target="_blank">Get the app</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/faq" target="_self">Help and FAQ</a></li>
         </ul>
       </div>
 
       <!-- TERMS OF SERVICE -->
       <div class="col-md-3 col-sm-6 footer-col footer-links">
-        <h5>Terms of Service</h5>
+        <h5 style="font-size: 15px;">Terms of Service</h5>
         <ul>
-          <li><a href="https://www.cdcare.ng/terms-of-use" target="_self">Terms of Use</a></li>
-          <li><a href="https://www.cdcare.ng/cdcare-terms-and-conditions" target="_self">Terms and Conditions</a></li>
-          <li><a href="https://www.cdcare.ng/cdcare-app-privacy-policy" target="_self">Privacy Policy</a></li>
-          <li><a href="https://www.cdcare.ng/proprietory-right" target="_self">Proprietary Rights</a></li>
-          <li><a href="https://www.cdcare.ng/after-sales" target="_self">After sales Support &amp; General Warranty</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/terms-of-use" target="_self">Terms of Use</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/cdcare-terms-and-conditions" target="_self">Terms and Conditions</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/cdcare-app-privacy-policy" target="_self">Privacy Policy</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/proprietory-right" target="_self">Proprietary Rights</a></li>
+          <li style="font-size: 15px;"><a href="https://www.cdcare.ng/after-sales" target="_self">After sales Support &amp; General Warranty</a></li>
         </ul>
       </div>
 
@@ -1767,9 +1785,9 @@ Kindly read article 13 of our <span style="color: #ffa500;"> Terms and Condition
     <!-- ==== CONTACT + SOCIAL (still 4-col layout, placed under the 4×4) ==== -->
     <div class="row">
       <div class="col-md-3 col-sm-6 footer-col">
-        <p><a href="mailto:hello@cdcare.ng" style="color:#fff;text-decoration:underline;">hello@cdcare.ng</a></p>
-        <p><a href="https://caller.frecall.com/?roomId=wOYEtUdUBrRBq4ybBYXp&amp;userId=id" target="_blank" style="color:#fff;text-decoration:underline;">Call us on frecall - toll free</a></p>
-        <p><a href="tel:02012297900" style="color:#fff;text-decoration:underline;">0707-460-3897, 0707-445-2992</a></p>
+        <p style="font-size: 15px;"><a href="mailto:hello@cdcare.ng" style="color:#fff;text-decoration:underline;">hello@cdcare.ng</a></p>
+        <p style="font-size: 15px;"><a href="https://caller.frecall.com/?roomId=wOYEtUdUBrRBq4ybBYXp&amp;userId=id" target="_blank" style="color:#fff;text-decoration:underline;">Call us on frecall - toll free</a></p>
+        <p style="font-size: 15px;"><a href="tel:02012297900" style="color:#fff;text-decoration:underline;">0707-460-3897, 0707-445-2992</a></p>
       </div>
 
       <div class="col-md-9 col-sm-6">

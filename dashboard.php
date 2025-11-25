@@ -121,6 +121,7 @@ $cars = [
         --text-dark: #333;
         --text-light: #666;
         --border-color: #ddd;
+        --danger-color: #e74c3c;
     }
 
     /* Reset and Base Styling */
@@ -252,11 +253,38 @@ $cars = [
         font-weight: bold;
     }
     
-    /* --- CRUCIAL CHANGE: Makes elements completely disappear --- */
     .option-btn.hidden {
         display: none !important; 
     }
-    /* -------------------------------------------------------- */
+
+    /* --- NEW EMAIL INPUT STYLES --- */
+    #email-input-group {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        background: #fdfdfd;
+        display: none; /* Hidden by default, shown by JS */
+    }
+    #user-email-input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+        margin-top: 8px;
+        transition: border-color 0.2s;
+    }
+    #user-email-input.invalid {
+        border-color: var(--danger-color);
+    }
+    #email-error {
+        color: var(--danger-color);
+        font-size: 0.9em;
+        margin-top: 5px;
+        display: none;
+    }
+    /* ------------------------------ */
 
     /* Payment Success Button */
     #pay-now-btn {
@@ -271,10 +299,16 @@ $cars = [
         font-size: 1.1em;
         font-weight: bold;
         cursor: pointer;
-        transition: background-color 0.2s;
+        transition: background-color 0.2s, opacity 0.2s;
     }
 
-    #pay-now-btn:hover {
+    #pay-now-btn:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    #pay-now-btn:hover:not(:disabled) {
         background-color: #006400;
     }
 
@@ -621,6 +655,46 @@ function hideDetails() {
 }
 
 /**
+ * Core function to validate email input.
+ * @returns {boolean} True if email is valid and non-empty.
+ */
+function validateEmail() {
+    const emailInput = document.getElementById('user-email-input');
+    const emailError = document.getElementById('email-error');
+    const emailValue = emailInput.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailValue) {
+        emailInput.classList.add('invalid');
+        emailError.textContent = 'Email is required to proceed.';
+        emailError.style.display = 'block';
+        return false;
+    } else if (!emailRegex.test(emailValue)) {
+        emailInput.classList.add('invalid');
+        emailError.textContent = 'Please enter a valid email address.';
+        emailError.style.display = 'block';
+        return false;
+    } else {
+        emailInput.classList.remove('invalid');
+        emailError.style.display = 'none';
+        return true;
+    }
+}
+
+
+/**
+ * Update the visibility and state of the Pay Now button.
+ */
+function updatePayButtonState() {
+    const payBtn = document.getElementById('pay-now-btn');
+    if (validateEmail()) {
+        payBtn.disabled = false;
+    } else {
+        payBtn.disabled = true;
+    }
+}
+
+/**
  * Reset and apply initial selection state - UPDATED LOGIC HERE
  */
 function resetInstallmentSelection(frequency) {
@@ -688,6 +762,12 @@ function calculateInstallment() {
         Total Payable: <strong>₦${totalPayable.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</strong><br>
         Your ${installmentLabel} Installment: <strong>₦${installmentAmount.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</strong> (for ${periods} payments)
     `;
+
+    // Show Email Input field after installment is calculated
+    document.getElementById('email-input-group').style.display = 'block';
+    
+    // Update button state based on email validity
+    updatePayButtonState();
 }
 
 /**
@@ -718,14 +798,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
         calculateInstallment();
     });
 
-    // 3. Payment Button Logic
+    // 3. Email Input Listener for validation and button state
+    document.getElementById('user-email-input').addEventListener('input', updatePayButtonState);
+
+    // 4. Payment Button Logic
     document.getElementById('pay-now-btn').addEventListener('click', function() {
-        hideDetails();
-        document.getElementById('success-modal').style.display = 'flex';
+        if (validateEmail()) {
+            hideDetails();
+            document.getElementById('success-modal').style.display = 'flex';
+        } else {
+            // Should not happen if button is disabled, but serves as fallback
+            alert('Please enter a valid email address.');
+        }
     });
 
     // Initialize the slider and default installment selection
-    // NOTE: This call will run the new logic, hiding monthly options initially.
     resetInstallmentSelection('W'); 
 });
 </script>
@@ -748,6 +835,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         <i class="fas fa-user"></i> Account
     </a>
 </div>
+
 <div id="product-modal" class="modal-overlay">
     <div class="modal-content">
         <span class="modal-close" onclick="hideDetails()">&times;</span>
@@ -795,10 +883,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
             <div id="installment-result">
                 Select your installment plan to see the payment breakdown.
             </div>
-            
-            <button id="pay-now-btn">Pay Now!</button>
-
         </div>
+
+        <div id="email-input-group">
+            <label for="user-email-input" style="font-weight: bold;">Enter Your Email Address to Continue:</label>
+            <input type="email" id="user-email-input" placeholder="Email" />
+            <p id="email-error">Please enter a valid email address.</p>
+        </div>
+        <button id="pay-now-btn" disabled>Pay Now!</button>
     </div>
 </div>
 
