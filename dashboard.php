@@ -77,12 +77,12 @@ $cars = [
         'description' => 'An ultra-luxury grand tourer combining supreme comfort, exquisite craftsmanship, and immense W12 engine power.',
         'image' => './Assets/bently.jpg',
     ],
-    'cupra' => [
+   'cupra' => [
         'name' => 'Cupra Formentor VZ5',
         'price' => 320000,
-        'description' => 'A sporty and stylish performance crossover from Seat\'s performance brand, featuring aggressive design and all-wheel-drive.',
+        'description' => 'A sporty and stylish performance crossover from Seats performance brand, featuring aggressive design and all-wheel-drive.',
         'image' => './Assets/cupra.jpg',
-    ],
+    ], 
     'maybach' => [
         'name' => 'Mercedes-Maybach S-Class',
         'price' => 810000,
