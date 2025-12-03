@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Your Dashboard — Fast Grid + Search</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    :root{
+        --primary:#ff6600;
+        --bg:#f9f0e8;
+        --card-bg:#fff;
+        --muted:#666;
+        --border:#e6e6e6;
+        --danger:#e74c3c;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+        font-family:Inter,Arial,Helvetica,sans-serif;
+        margin:0;
+        background:var(--bg);
+        color:#222;
+        -webkit-font-smoothing:antialiased;
+        -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Sticky search bar */
+    .sticky-search{
+        position:sticky;
+        top:0;
+        z-index:60;
+        background:var(--bg);
+        border-bottom:1px solid var(--border);
+        padding:12px;
+        display:flex;
+        justify-content:center;
+    }
+    .search-box{
+        width:100%;
+        max-width:920px;
+        display:flex;
+        gap:8px;
+        align-items:center;
+    }
+    .search-box input{
+        width:100%;
+        padding:12px 14px;
+        border-radius:10px;
+        border:1px solid #d2d2d2;
+        font-size:15px;
+    }
+    .search-box .count{
+        min-width:80px;
+        text-align:right;
+        color:var(--muted);
+        font-size:13px;
+    }
+
+    .main-wrapper{max-width:1100px;margin:18px auto;padding:0 12px;}
+
+    h2{text-align:center;margin:8px 0 18px;font-weight:600}
+
+    /* Grid */
+    .grid{
+        display:grid;
+        gap:18px;
+        grid-template-columns:repeat(3,1fr);
+        align-items:start;
+    }
+    @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:560px){.grid{grid-template-columns:1fr}}
+
+    .card{
+        background:var(--card-bg);
+        padding:12px;
+        border-radius:10px;
+        box-shadow:0 6px 20px rgba(15,15,15,0.04);
+        transition:transform .14s ease,box-shadow .14s ease;
+        cursor:pointer;
+        display:flex;
+        flex-direction:column;
+        gap:8px;
+    }
+    .card:focus{outline:3px solid rgba(255,102,0,0.14)}
+    .card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(15,15,15,0.06)}
+    .card img{width:100%;height:180px;object-fit:cover;border-radius:8px}
+    .card-title{font-weight:600;font-size:1rem}
+    .card-desc{color:var(--muted);font-size:13px;height:40px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+    .car-price{color:#008000;font-weight:700;font-size:1.04rem}
+
+    /* No results */
+    .no-results{display:none;padding:30px;text-align:center;color:var(--muted);font-style:italic}
+
+    /* Modal */
+    .modal-overlay{
+        position:fixed;inset:0;
+        display:none;align-items:center;justify-content:center;
+        background:rgba(0,0,0,0.55);z-index:3000;padding:18px;
+    }
+    .modal{
+        width:100%;max-width:760px;background:#fff;border-radius:12px;padding:18px;max-height:92vh;overflow:auto;
+        box-shadow:0 20px 50px rgba(0,0,0,0.25);
+    }
+    .modal-close{position:absolute;right:18px;top:18px;background:#f1f1f1;border-radius:6px;padding:6px 8px;border:none;cursor:pointer}
+    .modal-head{display:flex;gap:14px;align-items:flex-start}
+    .modal-img{width:44%;min-width:200px;max-height:300px;object-fit:cover;border-radius:8px}
+    .modal-body{flex:1}
+    .installment-options{margin-top:12px}
+    .option-btn{padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:#fff;cursor:pointer;margin-right:8px;margin-bottom:8px}
+    .option-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:700}
+    #installment-result{margin-top:12px;padding:10px;border-radius:8px;background:#f3fbff;border:1px solid #d6f0ff;color:#0b66a3;font-weight:700}
+    #pay-now-btn{width:100%;padding:12px;border-radius:10px;border:none;background:#008000;color:#fff;font-weight:700;cursor:pointer;margin-top:12px}
+    #pay-now-btn:disabled{opacity:0.6;cursor:not-allowed}
+
+    /* bottom nav */
+    .bottom-nav{
+        position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--border);display:flex;z-index:90;
+    }
+    .nav-item{flex:1;text-align:center;padding:8px 6px;text-decoration:none;color:var(--muted);font-size:12px}
+    .nav-item i{display:block;font-size:18px;margin-bottom:4px}
+    .nav-item.active{color:var(--primary);font-weight:700}
+
+</style>
+</head>
+<body>
+
+<div class="sticky-search" aria-hidden="false">
+    <div class="search-box" role="search" aria-label="Search products">
+        <input id="search-input" type="search" placeholder="Search cars by name or description..." aria-label="Search cars" autocomplete="off" />
+        <div class="count" aria-live="polite" id="result-count">All</div>
+    </div>
+</div>
+
+<main class="main-wrapper" id="main">
+    <h2>Featured Products</h2>
+
+    <div id="no-results" class="no-results" role="status" aria-live="polite">No cars found matching your search.</div>
+
+    <section id="grid" class="grid" aria-live="polite" aria-label="Product grid"></section>
+</main>
+
+<div class="bottom-nav" role="navigation" aria-label="Bottom navigation">
+    <a href="dashboard.html" class="nav-item"><i class="fas fa-store"></i> Shop</a>
+    <a href="#" class="nav-item"><i class="fas fa-shopping-cart"></i> Cart</a>
+    <a href="#" class="nav-item"><i class="fas fa-history"></i> History</a>
+    <a href="#" class="nav-item"><i class="fas fa-heart"></i> Wishlist</a>
+    <a href="account.php" class="nav-item"><i class="fas fa-user"></i> Account</a>
+</div>
+
+<!-- Product Modal -->
+<div id="product-modal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal" role="document">
+        <button class="modal-close" aria-label="Close product details" id="modal-close-btn">✕</button>
+        <div class="modal-head">
+            <img id="modal-img" class="modal-img" src="" alt="" />
+            <div class="modal-body">
+                <h3 id="modal-title"></h3>
+                <p><strong>Full Price:</strong> <span id="modal-price"></span></p>
+                <p id="modal-full-desc" style="color:var(--muted)"></p>
+
+                <div class="installment-options" aria-label="Installment options">
+                    <h4 style="margin:10px 0 6px">Payment Options (Simple Interest)</h4>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+                        <div id="freq-buttons" style="display:flex;gap:8px">
+                            <button class="option-btn active" data-frequency="W">Weekly</button>
+                            <button class="option-btn" data-frequency="M">Monthly</button>
+                        </div>
+                    </div>
+                    <div id="installments-selector" style="margin-top:8px;display:flex;flex-wrap:wrap"></div>
+                    <div id="installment-result">Select your installment plan to see the payment breakdown.</div>
+                </div>
+
+                <div id="email-input-group" style="display:none;margin-top:12px">
+                    <label style="font-weight:700">Enter your email to continue</label>
+                    <input id="user-email-input" type="email" placeholder="you@example.com" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);margin-top:8px" />
+                    <p id="email-error" style="color:var(--danger);display:none;margin-top:8px">Please enter a valid email address.</p>
+                </div>
+
+                <button id="pay-now-btn" disabled>Pay Now!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Modal (simple) -->
+<div id="success-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal" style="max-width:420px;text-align:center">
+        <i class="fas fa-check-circle" style="font-size:40px;color:var(--primary)"></i>
+        <h3>Payment Successful!</h3>
+        <p>Your installment plan has been successfully processed.</p>
+        <button id="success-close" style="padding:10px 18px;border-radius:8px;border:none;background:var(--primary);color:#fff;cursor:pointer">Close</button>
+    </div>
+</div>
+
+<script>
+/* --------------------------
+   Data (unchanged content but optimized access)
+-------------------------- */
+const allCarsData = {
+    mustang: { name: "Ford Mustang GT", price: 750000, description: "A legendary American muscle car...", image: "./Assets/mustang.jpg" },
+    raptor: { name: "Ford F-150 Raptor", price: 980000, description: "The ultimate off-road pickup...", image: "./Assets/ford raptor_small.jpg" },
+    mercedes: { name: "Mercedes-Benz G-Wagon", price: 550000, description: "An iconic luxury SUV...", image: "./Assets/mercedes_small.jpg" },
+    cybertruck: { name: "Tesla Cybertruck", price: 620000, description: "The futuristic, all-electric...", image: "./Assets/cyber 1.jpg" },
+    tesla: { name: "Tesla Model 3", price: 410000, description: "A performance-focused electric sedan...", image: "./Assets/tesla.jpg" },
+    old_mustang: { name: "Classic Mustang (1969)", price: 880000, description: "A beautifully restored classic...", image: "./Assets/mustang old.jpg" },
+    chevrolet: { name: "Chevrolet Corvette Z06", price: 790000, description: "A high-performance American...", image: "./Assets/chevrolet.jpg" },
+    ford_gt: { name: "Ford GT Supercar", price: 950000, description: "A rare, limited-production...", image: "./Assets/ford_small.jpg" },
+    bmw_m4: { name: "BMW M4 Competition", price: 510000, description: "A luxury performance coupe...", image: "./Assets/bmw1.jpg" },
+    audi_r8: { name: "Audi R8 V10 Plus", price: 840000, description: "A stunning supercar...", image: "./Assets/audi.jpg" },
+    bently_gt: { name: "Bentley Continental GT", price: 990000, description: "An ultra-luxury grand tourer...", image: "./Assets/bently.jpg" },
+    cupra: { name: "Cupra Formentor VZ5", price: 320000, description: "A sporty and stylish...", image: "./Assets/cupra.jpg" },
+    maybach: { name: "Mercedes-Maybach S-Class", price: 810000, description: "The pinnacle of sedan luxury...", image: "./Assets/maybach.jpg" },
+    mclaren: { name: "McLaren 720S", price: 770000, description: "A high-speed British supercar...", image: "./Assets/mclaren.jpg" },
+    ferrari: { name: "Ferrari 296 GTB", price: 910000, description: "A revolutionary plug-in hybrid...", image: "./Assets/ferrari.jpg" }
+};
+
+/* --------------------------
+   State & Precomputed Index
+-------------------------- */
+const state = {
+    currentCarKey: null,
+    selectedFrequency: 'W',
+    selectedInstallments: 4
+};
+
+// Precompute a small searchable index for each car to speed up search
+const carsIndex = Object.entries(allCarsData).map(([key, car]) => ({
+    key,
+    name: car.name,
+    desc: car.description,
+    combined: (car.name + ' ' + car.description).toLowerCase()
+}));
+
+/* --------------------------
+   Helpers
+-------------------------- */
+function formatNaira(n){ return n.toLocaleString(); }
+
+function createCardElement(key, car){
+    // Create card DOM element (reusable)
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.setAttribute('tabindex','0');
+    card.setAttribute('role','button');
+    card.dataset.key = key;
+
+    // content
+    const img = document.createElement('img');
+    img.src = car.image;
+    img.alt = car.name;
+    img.loading = 'lazy';
+
+    const title = document.createElement('div');
+    title.className = 'card-title';
+    title.textContent = car.name;
+
+    const desc = document.createElement('div');
+    desc.className = 'card-desc';
+    desc.textContent = car.description;
+
+    const price = document.createElement('div');
+    price.className = 'car-price';
+    price.textContent = `₦${formatNaira(car.price)}`;
+
+    // append
+    card.appendChild(img);
+    card.appendChild(title);
+    card.appendChild(desc);
+    card.appendChild(price);
+
+    // event handlers
+    card.addEventListener('click', () => showDetailsByKey(key));
+    card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+    });
+
+    return card;
+}
+
+/* --------------------------
+   Fast grid render
+-------------------------- */
+const gridEl = document.getElementById('grid');
+const noResultsEl = document.getElementById('no-results');
+const resultCountEl = document.getElementById('result-count');
+
+function renderAllCars(){
+    // Build fragment for first paint
+    const frag = document.createDocumentFragment();
+    for (const [key, car] of Object.entries(allCarsData)){
+        frag.appendChild(createCardElement(key, car));
+    }
+    gridEl.innerHTML = ''; // clear
+    gridEl.appendChild(frag);
+    noResultsEl.style.display = 'none';
+    resultCountEl.textContent = 'All';
+}
+
+// Render a list of matches (keys array)
+function renderMatches(matches){
+    // Use requestAnimationFrame to batch DOM writes
+    requestAnimationFrame(() => {
+        gridEl.innerHTML = '';
+        if (!matches || matches.length === 0){
+            noResultsEl.style.display = '';
+            resultCountEl.textContent = '0';
+            return;
+        }
+        noResultsEl.style.display = 'none';
+        resultCountEl.textContent = String(matches.length);
+        const frag = document.createDocumentFragment();
+        for (const m of matches){
+            frag.appendChild(createCardElement(m.key, allCarsData[m.key]));
+        }
+        gridEl.appendChild(frag);
+        // After attaching, images will lazy-load automatically
+    });
+}
+
+/* --------------------------
+   Search (debounced) - FAST
+-------------------------- */
+const searchInput = document.getElementById('search-input');
+let debounceTimer = null;
+const DEBOUNCE_MS = 200;
+
+function searchTermRaw(term){
+    // simple substring matching (case-insensitive) over precomputed index
+    const lower = term.toLowerCase();
+    // Give priority to startsWith matches first for a nicer UX
+    const starts = [];
+    const includes = [];
+    for (const entry of carsIndex){
+        if (entry.name.toLowerCase().startsWith(lower)) starts.push(entry);
+        else if (entry.combined.includes(lower)) includes.push(entry);
+    }
+    const merged = starts.concat(includes);
+    return merged; // array of entries {key,name,desc,combined}
+}
+
+function performSearch(){
+    const raw = searchInput.value.trim();
+    if (raw === '') {
+        renderAllCars();
+        return;
+    }
+    const matches = searchTermRaw(raw);
+    renderMatches(matches);
+}
+
+searchInput.addEventListener('input', () => {
+    // debounce to avoid too-frequent searches while typing
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(performSearch, DEBOUNCE_MS);
+});
+
+searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        searchInput.value = '';
+        performSearch();
+    }
+});
+
+/* --------------------------
+   Modal & Installment logic
+   (kept functional and simple)
+-------------------------- */
+const modalOverlay = document.getElementById('product-modal');
+const modalCloseBtn = document.getElementById('modal-close-btn');
+const modalImg = document.getElementById('modal-img');
+const modalTitle = document.getElementById('modal-title');
+const modalPrice = document.getElementById('modal-price');
+const modalFullDesc = document.getElementById('modal-full-desc');
+
+const freqButtons = document.getElementById('freq-buttons');
+const installmentsSelector = document.getElementById('installments-selector');
+const installmentResult = document.getElementById('installment-result');
+const payNowBtn = document.getElementById('pay-now-btn');
+const emailInputGroup = document.getElementById('email-input-group');
+const emailInput = document.getElementById('user-email-input');
+const emailError = document.getElementById('email-error');
+
+const successModal = document.getElementById('success-modal');
+const successCloseBtn = document.getElementById('success-close');
+
+function showDetailsByKey(key){
+    const car = allCarsData[key];
+    if (!car) return;
+    state.currentCarKey = key;
+    modalImg.src = car.image;
+    modalImg.alt = car.name;
+    modalTitle.textContent = car.name;
+    modalPrice.textContent = `₦${formatNaira(car.price)}`;
+    modalFullDesc.textContent = car.description;
+    // reset selections
+    state.selectedFrequency = 'W';
+    state.selectedInstallments = 4;
+    buildInstallmentButtons();
+    calculateInstallment();
+    payNowBtn.disabled = true;
+    emailInputGroup.style.display = 'none';
+    emailInput.value = '';
+    emailError.style.display = 'none';
+    // show
+    modalOverlay.style.display = 'flex';
+    modalOverlay.setAttribute('aria-hidden','false');
+}
+
+function hideDetails(){
+    modalOverlay.style.display = 'none';
+    modalOverlay.setAttribute('aria-hidden','true');
+}
+
+// When clicking outside modal, close
+modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) hideDetails();
+});
+modalCloseBtn.addEventListener('click', hideDetails);
+
+successCloseBtn.addEventListener('click', () => {
+    successModal.style.display = 'none';
+    successModal.setAttribute('aria-hidden','true');
+});
+
+// frequency buttons
+freqButtons.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    // toggle active class
+    freqButtons.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.selectedFrequency = btn.dataset.frequency || 'W';
+    // rebuild the installment options for that frequency
+    buildInstallmentButtons();
+    calculateInstallment();
+});
+
+// build installment buttons depending on frequency
+function buildInstallmentButtons(){
+    installmentsSelector.innerHTML = '';
+    const freq = state.selectedFrequency;
+    const weekly = ['4','6','8','10','12','14','16','18','20','22','24','26'];
+    const monthly = ['2','4','6','8','10','12'];
+    const set = (freq === 'W') ? weekly : monthly;
+    for (const n of set){
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = n;
+        btn.dataset.installments = n;
+        if (String(state.selectedInstallments) === n) btn.classList.add('active');
+        btn.addEventListener('click', () => {
+            state.selectedInstallments = Number(n);
+            // set active style
+            installmentsSelector.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            calculateInstallment();
+        });
+        installmentsSelector.appendChild(btn);
+    }
+}
+
+// Calculate simple interest installment (simple example)
+function calculateInstallment(){
+    const car = allCarsData[state.currentCarKey];
+    if (!car) return;
+    const price = car.price;
+    // simple interest rates (example): weekly has a slightly higher freq factor for demonstration
+    const annualRate = 0.12; // 12% annual nominal
+    // Convert to a simple per-period rate approximation:
+    const periods = state.selectedInstallments || 1;
+    const periodRate = (state.selectedFrequency === 'W') ? (annualRate/52) : (annualRate/12);
+    // total interest over chosen periods (simple interest)
+    const totalInterest = price * periodRate * periods;
+    const totalPayable = price + totalInterest;
+    const perInstallment = Math.round(totalPayable / periods);
+    // Update UI
+    installmentResult.textContent = `Pay ₦${formatNaira(perInstallment)} x ${periods} (${state.selectedFrequency === 'W' ? 'weekly' : 'monthly'}) — Total ₦${formatNaira(totalPayable)}`;
+    // If installments exceed a threshold, require email before enabling pay
+    payNowBtn.disabled = false;
+}
+
+// Email validation & pay
+emailInput.addEventListener('input', () => {
+    emailError.style.display = 'none';
+    const ok = validateEmail(emailInput.value);
+    payNowBtn.disabled = !ok;
+});
+
+payNowBtn.addEventListener('click', () => {
+    // For demonstration, if email group is required show it
+    // We'll require email if button was enabled by default; otherwise prompt for email
+    if (emailInputGroup.style.display === 'none'){
+        // show the email group before proceeding for confirmation
+        emailInputGroup.style.display = '';
+        emailInput.focus();
+        payNowBtn.disabled = true;
+        return;
+    }
+    const email = emailInput.value.trim();
+    if (!validateEmail(email)){
+        emailError.style.display = '';
+        return;
+    }
+    // Fake success flow
+    hideDetails();
+    successModal.style.display = 'flex';
+    successModal.setAttribute('aria-hidden','false');
+});
+
+// Basic email regex
+function validateEmail(v){
+    if (!v) return false;
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+}
+
+/* --------------------------
+   Init
+-------------------------- */
+document.addEventListener('DOMContentLoaded', () => {
+    renderAllCars();   // fast initial render
+    buildInstallmentButtons(); // prepare modal buttons when opened
+
+    // Small accessibility helper: clear search on Esc
+    searchInput.addEventListener('keyup', (e) => {
+        if (e.key === 'Escape') {
+            searchInput.value = '';
+            performSearch();
+        }
+    });
+
+    // Immediately show count
+    resultCountEl.textContent = Object.keys(allCarsData).length;
+});
+</script>
+</body>
+</html>

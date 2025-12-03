@@ -1,40 +1,31 @@
 <?php
-include 'db_connect.php';
 session_start();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// If the form was submitted
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    // Collect form data
     $fullName = $_POST['fullName'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $state = $_POST['state'];
+    $email    = $_POST['email'];
+    $phone    = $_POST['phone'];
+    $state    = $_POST['state'];
     $password = $_POST['password'];
-    $referralCode = $_POST['referralCode'];
+    $referral = $_POST['referralCode'];
 
-    // Hash password
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    // Store user info in session
+    // Store user in session (acting as a temporary database)
     $_SESSION['user'] = [
         'fullName' => $fullName,
-        'email' => $email,
-        'phone' => $phone,
-        'state' => $state
+        'email'    => $email,
+        'phone'    => $phone,
+        'state'    => $state
     ];
 
-    // Insert into database
-    $stmt = $conn->prepare("INSERT INTO users (fullName, email, phone, state, password, referralCode) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssss", $fullName, $email, $phone, $state, $hashedPassword, $referralCode);
-
-    if ($stmt->execute()) {
-        // Redirect to dashboard
-        header("Location: dashboard.php");
-        exit;
-    } else {
-        echo "❌ Error: " . $stmt->error;
-    }
-
-    $stmt->close();
-    $conn->close();
+    // Redirect to dashboard
+    header("Location: dashboard.html");
+    exit;
+} else {
+    // If someone tries to access without submitting the form
+    header("Location: sign-up.html");
+    exit;
 }
 ?>
