@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard ⎮ CDcare</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+  
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0; height: 60px;
+    display: flex; background: #fff; border-top: 1px solid #ddd;
+    justify-content: space-around; align-items: center; z-index: 100;
+  }
+  .nav-item { text-align: center; font-size: 12px; color: #333; text-decoration: none; }
+  .nav-item i { display: block; font-size: 20px; margin-bottom: 2px; }
+  .nav-item.active { color: orange; }
+  #account-info { background: #fff; padding: 20px; border-radius: 10px; max-width: 400px; margin: auto; }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+<!-- Sections -->
+
+  <h2>Account</h2>
+  <div id="account-info">
+    <p><strong>Full Name:</strong> <span id="user-fullName"></span></p>
+    <p><strong>Email:</strong> <span id="user-email"></span></p>
+    <p><strong>Phone:</strong> <span id="user-phone"></span></p>
+    <p><strong>State:</strong> <span id="user-state"></span></p>
+  </div>
+</div>
+
+<!-- Bottom Nav -->
+<div class="bottom-nav">
+  <a href="dashboard.html" class="nav-item active" data-section="shop"><i class="fas fa-store"></i> Shop</a>
+  <a href="#cart" class="nav-item" data-section="cart"><i class="fas fa-shopping-cart"></i> Cart</a>
+  <a href="#history" class="nav-item" data-section="history"><i class="fas fa-history"></i> History</a>
+  <a href="#wishlist" class="nav-item" data-section="wishlist"><i class="fas fa-heart"></i> Wishlist</a>
+  <a href="account.html" class="nav-item" data-section="account" id="account-tab"><i class="fas fa-user"></i> Account</a>
+</div>
+
+<script>
+  // Load logged-in user
+  const user = JSON.parse(localStorage.getItem("user_registration"));
+  if (user) {
+    document.getElementById("user-fullName").textContent = user.fullName;
+    document.getElementById("user-email").textContent = user.email;
+    document.getElementById("user-phone").textContent = user.phone;
+    document.getElementById("user-state").textContent = user.state;
+
+    const firstName = user.fullName.split(" ")[0];
+    document.getElementById("account-tab").innerHTML = `<i class="fas fa-user"></i> ${firstName}`;
+  }
+
+  // Highlight current nav
+  const navItems = document.querySelectorAll(".nav-item");
+  navItems.forEach(item => {
+    const href = item.getAttribute('href');
+    if (href === window.location.pathname.split("/").pop()) {
+      item.classList.add("active");
+    } else {
+      item.classList.remove("active");
+    }
+  });
+</script>
+
+</body>
+</html>

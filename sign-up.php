@@ -1,71 +1,53 @@
 <?php
-include 'db_connect.php';
-
-if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    header("Location: sign-up.html");
-    exit;
-}
-
-// Start session for storing user data
 session_start();
 
-// Sanitize form inputs
-$fullName     = htmlspecialchars($_POST['fullName']);
-$email        = htmlspecialchars($_POST['email']);
-$phone        = htmlspecialchars($_POST['phone']);
-$state        = htmlspecialchars($_POST['state']);
-$password     = htmlspecialchars($_POST['password']); // Testing only
-$referralCode = htmlspecialchars($_POST['referralCode']);
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = ""; // adjust if you have a password
+$dbname = "user_registration"; // make sure this database exists
 
-// Recipient — for MailHog testing
-$to = 'test@example.com';
-$subject = "New Signup from $fullName";
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-// Build the message
-$message  = "Name: $fullName\n";
-$message .= "Email: $email\n";
-$message .= "Phone: $phone\n";
-$message .= "State: $state\n";
-$message .= "Referral Code: $referralCode\n";
+// Only process POST requests
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Sanitize user inputs
+    $fullName = $conn->real_escape_string($_POST['fullName']);
+    $email = $conn->real_escape_string($_POST['email']);
+    $phone = $conn->real_escape_string($_POST['phone']);
+    $state = $conn->real_escape_string($_POST['state']);
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // hash password
+    $referralCode = $conn->real_escape_string($_POST['referralCode']);
 
-// Build full email in RFC822 format
-$emailText  = "From: test@example.com\r\n";
-$emailText .= "To: $to\r\n";
-$emailText .= "Subject: $subject\r\n";
-$emailText .= "\r\n";
-$emailText .= $message;
+    // Optional: check if email already exists
+    $check = $conn->query("SELECT * FROM users WHERE email='$email'");
+    if ($check->num_rows > 0) {
+        die("Email already registered. Please use another email.");
+    }
 
-// Save to a temporary file
-$tmpFile = tempnam(sys_get_temp_dir(), 'mail');
-file_put_contents($tmpFile, $emailText);
+    // Insert user into database
+    $sql = "INSERT INTO users (fullName, email, phone, state, password, referralCode, created_at)
+            VALUES ('$fullName', '$email', '$phone', '$state', '$password', '$referralCode', NOW())";
 
-// Send email using msmtp pointing to MailHog
-$cmd = "/usr/bin/env msmtp -t < " . escapeshellarg($tmpFile);
-exec($cmd, $output, $return_var);
+    if ($conn->query($sql) === TRUE) {
+        // Save user in session
+        $_SESSION['user'] = [
+            'fullName' => $fullName,
+            'email' => $email,
+            'phone' => $phone,
+            'state' => $state
+        ];
 
-// Delete temp file
-unlink($tmpFile);
+        // Redirect to account page
+        header("Location: dashboard.html");
+        exit();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+}
 
-// ✅ Store user info in session
-$_SESSION['fullName'] = $fullName;
-$_SESSION['email'] = $email;
-$_SESSION['phone'] = $phone;
-$_SESSION['state'] = $state;
-$_SESSION['referralCode'] = $referralCode;
-
-// Optional: Save user in database (if needed)
-// $stmt = $conn->prepare("INSERT INTO users (fullName, email, phone, state, password, referralCode) VALUES (?, ?, ?, ?, ?, ?)");
-// $stmt->bind_param("ssssss", $fullName, $email, $phone, $state, $password, $referralCode);
-// $stmt->execute();
-// $stmt->close();
-// $conn->close();
-
-// ✅ Redirect based on email send result
-/*if ($return_var === 0) {
-    header("Location: productpage.php");
-    exit;
-} else {
-    header("Location: productpage.php?mail=failed");
-    exit;
-}*/
+$conn->close();
 ?>

@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Create a Free Account</title>
   <style>
+    * { max-width: 100%; box-sizing: border-box; }
+    html, body { overflow-x: hidden; }
     body {
       font-family: Arial, sans-serif;
       background: #f9f0e8;
@@ -14,132 +16,44 @@
       min-height: 100vh;
       margin: 0;
     }
-    .container {
-      background: #f9f0e8;
-      padding: 30px;
-      border-radius: 10px;
-      width: 600px;
+    .container { background: #f9f0e8; padding: 30px; border-radius: 10px; width: 600px; }
+    h3 { font-size: 24px; margin-bottom: 10px; color: #333; }
+    p { font-size: 14px; color: #666; margin-bottom: 20px; }
+    .login-link { color: #ff6600; text-decoration: none; }
+    .form-group { margin-bottom: 30px; position: relative; }
+    input[type="text"], input[type="email"], input[type="tel"], input[type="password"], select {
+      width: 100%; padding: 12px 40px 12px 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;
     }
-    h3 {
-      font-size: 24px;
-      margin-bottom: 10px;
-      color: #333;
-    }
-    p {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 20px;
-    }
-    .login-link {
-      color: #ff6600;
-      text-decoration: none;
-    }
-    .form-group {
-      margin-bottom: 30px;
-      position: relative;
-    }
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"],
-    input[type="password"],
-    select {
-      width: 100%;
-      padding: 12px 40px 12px 12px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 16px;
-      box-sizing: border-box;
-    }
-    .password-wrapper {
-      position: relative;
-    }
-    .toggle-password {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      width: 20px;
-      height: 20px;
-      fill: #999;
-    }
-    .toggle-password:hover {
-      fill: #ff6600;
-    }
-    .signup-later {
-      font-size: 14px;
-      color: #333;
-      text-decoration: none;
-      display: block;
-      margin: 15px 0;
-    }
-    .referral-box p {
-      margin: 5px 0;
-    }
-    .referral-box .referral-input {
-      margin-top: 8px;
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 16px;
-      box-sizing: border-box;
-      background-color: #f9f0e8;
-    }
-    .tc {
-      color: orange;
-      font-size: small;
-    }
-    .terms {
-      font-size: 12px;
-      color: #999;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    .signup-btn {
-      background: #ff6600;
-      color: #fff;
-      padding: 12px;
-      border: none;
-      border-radius: 20px;
-      font-size: 16px;
-      width: 100%;
-      cursor: pointer;
-    }
-    .signup-btn:hover {
-      background: #e65c00;
-    }
-    .footer-link {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 14px;
-    }
-    .footer-link a {
-      color: #ff6600;
-      text-decoration: none;
-    }
+    .password-wrapper { position: relative; }
+    .toggle-password { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; width: 20px; height: 20px; fill: #999; }
+    .toggle-password:hover { fill: #ff6600; }
+    .signup-later { font-size: 14px; color: #333; text-decoration: none; display: block; margin: 15px 0; }
+    .referral-box input { margin-top: 8px; width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; background-color: #f9f0e8; }
+    .tc { color: orange; font-size: small; }
+    .terms { font-size: 12px; color: #999; margin-bottom: 20px; text-align: center; }
+    .signup-btn { background: #ff6600; color: #fff; padding: 12px; border: none; border-radius: 20px; font-size: 16px; width: 100%; cursor: pointer; }
+    .signup-btn:hover { background: #e65c00; }
+    .footer-link { text-align: center; margin-top: 20px; font-size: 14px; }
+    .footer-link a { color: #ff6600; text-decoration: none; }
   </style>
 </head>
 <body>
-  <form action="register.php" method="POST">
+  <form id="signup-form" method="POST" action="sign-up.php">
     <div class="container">
       <h3>Create a Free Account</h3>
-      <p>
-        Welcome to CDcare! Create your account in seconds and start paying
-        small small for the things you love.
-      </p>
+      <p>Welcome to CDcare! Create your account in seconds and start paying small small for the things you love.</p>
       <p>Have an Account? <a href="#" class="login-link">Login</a></p>
 
       <div class="form-group">
-        <input type="text" id="fullName" name="fullName" placeholder="Full Name" required />
+        <input type="text" name="fullName" placeholder="Full Name" required />
       </div>
 
       <div class="form-group">
-        <input type="email" id="email" name="email" placeholder="Email Address" required />
+        <input type="email" name="email" placeholder="Email Address" required />
       </div>
 
       <div class="form-group">
-        <input type="tel" id="phone" name="phone" placeholder="Phone Number" required />
+        <input type="tel" name="phone" placeholder="Phone Number" required />
       </div>
 
       <div class="form-group">
@@ -154,32 +68,20 @@
       </div>
 
       <div class="form-group password-wrapper">
-        <input type="password" id="password" name="password" placeholder="Password" required />
+        <input type="password" name="password" placeholder="Password" required />
         <svg class="toggle-password" onclick="togglePassword()" viewBox="0 0 24 24">
           <path id="eyeIcon" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
         </svg>
       </div>
 
-      <a href="#" class="signup-later">Sign Up later &gt;&gt;</a>
-
       <div class="referral-box">
-        <input type="text" id="referralCode" name="referralCode" class="referral-input" placeholder="How did you hear about us?" />
+        <input type="text" name="referralCode" placeholder="How did you hear about us?" />
       </div>
-      <p class="tc">
-        If you input your friend's referral code, we'll send a thank you note
-        to them and also credit you with some money for remembering them when
-        you make your first purchase 😊 (T&Cs apply).
-      </p>
-      <p class="terms">
-        By clicking Sign Up, you agree to our
-        <a href="#">Terms and Conditions</a> and
-        <a href="#">Privacy Policy</a>.<br />
-        You may receive email/sms notifications from us.
-      </p>
 
-      <button class="signup-btn" type="submit">Sign Up
-        <a href="./register.php"></a>
-      </button>
+      <p class="tc">If you input your friend's referral code, we'll send a thank you note to them and credit you with some money for remembering them 😊 (T&Cs apply).</p>
+      <p class="terms">By clicking Sign Up, you agree to our <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>. You may receive email/sms notifications from us.</p>
+
+      <button class="signup-btn" type="submit">Sign Up</button>
 
       <div class="footer-link">
         Already have an Account? <a href="#">Log In</a>
@@ -189,13 +91,8 @@
 
   <script>
     function togglePassword() {
-      const pwd = document.getElementById("password");
-      const eye = document.getElementById("eyeIcon");
-      if (pwd.type === "password") {
-        pwd.type = "text";
-      } else {
-        pwd.type = "password";
-      }
+      const pwd = document.querySelector("input[name='password']");
+      pwd.type = pwd.type === "password" ? "text" : "password";
     }
   </script>
 </body>
