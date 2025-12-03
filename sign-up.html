@@ -38,7 +38,8 @@
   </style>
 </head>
 <body>
-  <form id="signup-form" method="POST" action="sign-up.php">
+  <!-----<form id="signup-form" method="POST" action="sign-up.php">-->
+    <form id="signup-form" onsubmit="redirectToDashboard(event)">
     <div class="container">
       <h3>Create a Free Account</h3>
       <p>Welcome to CDcare! Create your account in seconds and start paying small small for the things you love.</p>
@@ -95,5 +96,17 @@
       pwd.type = pwd.type === "password" ? "text" : "password";
     }
   </script>
+  <script>
+  function redirectToDashboard(event) {
+    event.preventDefault(); 
+    window.location.href = "dashboard.html";
+  }
+
+  function togglePassword() {
+    const pwd = document.querySelector("input[name='password']");
+    pwd.type = pwd.type === "password" ? "text" : "password";
+  }
+</script>
+
 </body>
 </html>
